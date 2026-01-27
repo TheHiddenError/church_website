@@ -1,14 +1,11 @@
-import NavBar from "./ui/root_components/navbar/navbar";
 import Image from "next/image";
 import styles from "./ui/homePage/homePage.module.css";
 import UpcomingSec from "./ui/homePage/upcomingSection";
 import Card from "./ui/homePage/cards";
-import Footer from "./ui/root_components/navbar/footer";
 
 export default function Start_Page(){
   return (
   <div>
-    <NavBar />
     <div className="w-screen mt-5 h-125 relative">
       <Image className="w-full object-cover object-bottom h-125 absolute"
         src={"/bible_open.jpg"}
@@ -64,7 +61,6 @@ export default function Start_Page(){
         button_name="Make a Prayer"
         />
     </div>
-    <Footer />
   </div> 
   );
 }
