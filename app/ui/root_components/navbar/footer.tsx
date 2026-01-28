@@ -5,11 +5,11 @@ type gridPartProp = {
 
 function GridPart({name, information }: gridPartProp){
     return(
-      <div className="py-10">
-        <div className=" text-5xl font-bold mt-4">
+      <div className="py-5">
+        <div className=" text-3xl font-bold mt-4">
           {name}
         </div>
-        <div className="text-3xl mt-6">
+        <div className="text-lg mt-6">
           {information}
         </div>
       </div>

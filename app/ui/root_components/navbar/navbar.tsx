@@ -8,10 +8,11 @@ import clsx from 'clsx';
 const links = [
     {name: "Home", href : "/"},
     {name: "About Us", href: "/about_us"},
-    {name: "Calendar", href: "calendar"},
+    {name: "Calendar", href: "/calendar"},
     {name: "Events", href: "/events"},
     {name: "Donate", href: "/donate"}
 ]
+
 
 
 export default function NavBar(){

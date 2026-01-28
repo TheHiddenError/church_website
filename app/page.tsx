@@ -6,7 +6,7 @@ import Card from "./ui/homePage/cards";
 export default function Start_Page(){
   return (
   <div>
-    <div className="w-screen mt-5 h-125 relative">
+    <div className="w-screen h-125 relative">
       <Image className="w-full object-cover object-bottom h-125 absolute"
         src={"/bible_open.jpg"}
         width={0}
@@ -47,14 +47,14 @@ export default function Start_Page(){
     </div>
     <div className="mt-20 grid grid-cols-2">
       <Card 
-        imageSrc=""
+        imageSrc="/church_image.jpg"
         title="About Our Church" 
         description="I'm a paragraph. Click here to add  your own text and edit me. 
               I'm a great place for you to tell a story and let your users know a little more about you." 
         button_name="Learn More"
       />
       <Card 
-        imageSrc=""
+        imageSrc="/prayer_hands.jpg"
         title="Prayer Request"
         description="I'm a paragraph. Click here to add  your own text and edit me. 
               I'm a great place for you to tell a story and let your users know a little more about you."

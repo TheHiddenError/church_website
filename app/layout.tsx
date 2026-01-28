@@ -27,10 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <NavBar />
-        <div>{children}</div>
+        <div className="mt-10">{children}</div>
         <Footer />
       </body>
     </html>

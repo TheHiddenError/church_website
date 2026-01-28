@@ -1,3 +1,5 @@
+import Image
+ from "next/image";
 type CardProps = {
     imageSrc: string,
     title: string, 
@@ -8,8 +10,9 @@ type CardProps = {
 export default function Card({imageSrc, title, description, button_name}: CardProps){
     return (
     <div className="w-full flex flex-col items-center">
-        <div className="w-3/5 bg-gray-200/80 py-3">
-          <div className="bg-gray-400 h-75">
+        <div className="w-4/5 bg-gray-200/80 pb-5">
+          <div className="bg-gray-400 h-75 relative">
+            {imageSrc != "" && <Image className="object-cover" src={imageSrc} alt="prayer photo" fill />}
           </div>
           <div className="p-3 text-center mt-4">
             <div className="w-full flex justify-center">
