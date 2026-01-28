@@ -1,20 +1,29 @@
 type UpcomingSecProps = {
-    title: string, 
+    title?: string, 
     date: string,
-    description: string
+    description?: string
+    time?: string
 }   
 
 
+export default function UpcomingSec({title, date, description, time}: UpcomingSecProps){
+    const dateArray = date.split(/-/);
+    const formattedDate = `${dateArray[1]}/${dateArray[2]}`;
 
-export default function UpcomingSec({date, title, description}: UpcomingSecProps){
+
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center px-10">
           <div className="text-5xl font-bold">
-            {date}
+            {formattedDate}
           </div>
-          <div className="w-3/5 text-center mt-3">
+          <div className="w-4/5 text-center mt-3">
             <div className="text-xl font-semibold">
-                {title}
+                <div>
+                    {title}
+                </div>
+                <div>
+                    {time}
+                </div>
             </div>
             <div className="text-md">
                 {description}

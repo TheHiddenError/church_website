@@ -18,7 +18,7 @@ const links = [
 export default function NavBar(){
     const pathname = usePathname();
 
-    return <div className="grid grid-cols-6 relative mt-2">
+    return <div className="grid grid-cols-6 relative mt-2 h-[20vh]">
         <div className="flex flex-col items-center text-center">
             <Image 
                 src={"/white_dove.png"}

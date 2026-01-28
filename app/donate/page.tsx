@@ -5,7 +5,7 @@ const donation_values: number [] = [5,10,25,50,100, 0]
 
 export default function Donate(){
     return(
-        <div>
+        <div className="mb-15">
             <div className="w-screen h-75 relative">
                 <Image className="object-cover" src={donation_image} alt="donation image" fill />
                 <div className="absolute top-0 left-0 bg-gray-200/60 w-full h-75"/>
@@ -35,10 +35,10 @@ export default function Donate(){
                 </div>
                 <div className="w-3/4">
                     <div className="grid grid-cols-2 text-center text-2xl gap-2">
-                        <div className="p-4 border-2">
+                        <div className="p-4 border-2 border-gray-700">
                             One Time Payment
                         </div>
-                        <div className="p-4 border-2">
+                        <div className="p-4 border-2 border-gray-700">
                             Monthly
                         </div>
                     </div>

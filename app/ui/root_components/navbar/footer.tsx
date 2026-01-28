@@ -18,7 +18,7 @@ function GridPart({name, information }: gridPartProp){
 
 export default function Footer(){
     return(
-        <div className="mt-15 grid grid-cols-2 bg-blue-700 w-screen text-gray-200 text-center divide-x-2 divide-white divide-solid">
+        <div className="grid grid-cols-2 bg-blue-700 w-screen text-gray-200 text-center divide-x-2 divide-white divide-solid h-[20vh]">
             <GridPart name = "Address" information = "3100 Billman Rd, Donna TX" />
             <GridPart name = "Contact Us" information="(956) 123-4567" />
         </div>
