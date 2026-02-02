@@ -1,24 +1,53 @@
+import clsx from "clsx"
 import styles from "./calendar.module.css"
+import { formatDate } from "@/app/helperFunctions/dates_functions"
 
-export default function ScriptureSec(){
+type readingType = {
+    text?: string
+    poem?: number
+}
+
+type Info = {
+    type: string,
+    number: number,
+    content: Array<string> | Array<readingType>
+}
+
+type Props ={
+    title: string,
+    apiInformation: Info[],
+    dateReading: string
+    reading: string
+}
+
+export default function ScriptureSec(dailyReading: Props){
+    let information = dailyReading.apiInformation;
+    // for (const testing of information) {
+    //     console.log(testing.content[0]);
+    // }
+    let theDate = formatDate(dailyReading.dateReading);
     return (
         <div className={`${styles.calendarBG} mt-4 py-7 w-screen flex justify-center`}>
             <div className="w-9/10 text-center">
                 <div className="font-extrabold text-3xl border-b-2 border-b-black pb-3">
-                    Daily Bible Reading: 9/10 
+                    Daily Bible Reading: {theDate}
                 </div>
                 <div className="font-bold text-2xl my-5">
-                    Victory Through Obedience
+                    {dailyReading.title}
                 </div>
-                <div className="text-lg">
+                <div>
                     <div>
-                        22 Then the Philistines went up once again and deployed themselves in the Valley of Rephaim.  
-                        23 Therefore David inquired of the Lord, and He said, “You shall not go up; circle around behind them, and come upon them in front of the mulberry trees.  
-                        24 And it shall be, when you hear the sound of marching in the tops of the mulberry trees, then you shall advance quickly. For then the Lord will go out before you to strike the camp of the Philistines.”  
-                        25 And David did so, as the Lord commanded him; and he drove back the Philistines from Geba[f] as far as Gezer.
+                        {information.map((element) => { return (
+                            <div key={element.number * 1000} className={`inline text-lg relative px-${element.number >=100 ? 4 : element.number >= 10 ? 3 : 2}`}>
+                                {`${element.content}`} 
+                                <div className={clsx("text-sm font-bold absolute -top-1", {"-left-3": element.number >=100, "-left-1": element.number < 100})}>
+                                    {`${element.number}`} 
+                                </div>
+                            </div>
+                            ) })}
                     </div> 
                     <div className="mt-3 font-semibold">
-                        - 2 Samuel 5:22-25 (NKJV)
+                        - {dailyReading.reading} (KJV)
                     </div>
                 </div>
             </div>

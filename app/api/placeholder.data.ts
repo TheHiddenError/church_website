@@ -5,7 +5,8 @@ const dailyScripture = [
     {title: "Joy Replaces Sorrow", scripture: "Psalm 126:1-6", date: "2026-01-25"},
     {title: "News of Great Joy", scripture: "Luke 2:8-14", date: "2026-01-26"},
     {title: "Blessed Joy", scripture: "Luke 6:20-23", date: "2026-01-27"},
-    {title: "Serving with Joy", scripture: "Philippians 4:4", date: "2026-01-28"}
+    {title: "Serving with Joy", scripture: "Philippians 4:4", date: "2026-01-28"},
+    {title: "Testing large", scripture: "Psalm 119:169-176", date: "2026-01-29"}
 ]
 
 const theEvents = [

@@ -1,6 +1,11 @@
+
+
 import ScriptureSec from "./ui/scriptureSection"
 import clsx from "clsx";
 import {getFirstWeekday, getGridRows} from "../helperFunctions/dates_functions"
+
+
+
 
 
 type Event = {
@@ -12,7 +17,6 @@ type Event = {
 }
 
 const current: Date = new Date();
-
 
 const firstDay = getFirstWeekday(current.getFullYear(), current.getMonth());
 
@@ -88,10 +92,13 @@ const daysOfWeek: string [] = [
 const current_month: string = monthNames[the_month];
 
 
-export default function Calendar(){
+export default async function Calendar(){
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; //for dev portion
+    // const apiInformation = await fetch(`${baseUrl}/api/scripture`).then(res => res.json());
     return (
         <>
-            <ScriptureSec />
+            {/* <ScriptureSec  {...apiInformation}/> */}
             <div className="w-screen flex flex-col items-center mb-15">
                 <div className="text-4xl font-extrabold my-6">
                     {current_month}
@@ -137,6 +144,56 @@ export default function Calendar(){
                         </div>
                         )
                     })}
+                </div>
+            </div>
+            <div className="fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen hidden">
+                <div className="w-full h-full flex justify-center items-center">
+                    <div className="w-3/5 h-3/5 bg-white p-5 relative">
+                        <div className="h-2/5">
+                            <div className="text-3xl font-bold h-2/5">
+                                Title
+                            </div>
+                            <div className="h-3/5 w-full border-b-1 border-gray-300 pb-2">
+                                <div className="h-full w-1/10 bg-gray-200">
+                                </div>
+                            </div>
+                        </div>
+                        <div className="h-3/5 mt-2 flex flex-col justify-center gap-5">
+                            <div>
+                                <div className="font-bold text-xl inline-block">
+                                    Description: 
+                                </div>
+                                <span className="text-md pl-2">
+                                    This is the description for the event
+                                </span>
+                            </div>
+                            <div className="">
+                                <div className="font-bold text-xl inline-block">
+                                    Location: 
+                                </div>
+                                <span className="text-md pl-2">
+                                    This is the location for the event
+                                </span>
+                            </div>
+                            <div className="">
+                                <div className="font-bold text-xl inline-block">
+                                    Time: 
+                                </div>
+                                <span className="text-md pl-2">
+                                    7:00 PM
+                                </span>
+                            </div>
+                            <div className="">
+                                <div className="font-bold text-xl inline-block">
+                                    Questions?: 
+                                </div>
+                                <span className="text-md pl-2">
+                                    956-123-4567
+                                </span>
+                            </div>
+                        </div>
+                        <div className="absolute top-0 right-0 w-1/20 h-1/10 bg-gray-300 mt-2 mr-2"></div>
+                    </div>
                 </div>
             </div>
         </>

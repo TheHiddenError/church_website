@@ -1,13 +1,14 @@
-import Image
- from "next/image";
+import Image from "next/image";
+
 type CardProps = {
     imageSrc: string,
     title: string, 
     description: string,
-    button_name: string
+    button_name: string,
+    button_action: ()=> void
 }
 
-export default function Card({imageSrc, title, description, button_name}: CardProps){
+export default function Card({imageSrc, title, description, button_name, button_action}: CardProps){
     return (
     <div className="w-full flex flex-col items-center">
         <div className="w-4/5 bg-gray-200/80 pb-5">
@@ -23,8 +24,8 @@ export default function Card({imageSrc, title, description, button_name}: CardPr
             <div className="text-xl px-4">
                 {description}
             </div>
-            <div className="flex justify-center w-full mt-6">
-              <div className="bg-blue-600/80 rounded-xl text-white w-1/2 text-xl p-3 font-semibold">
+            <div onClick={button_action} className="flex justify-center w-full mt-6">
+              <div className="cursor-pointer bg-blue-600/80 rounded-xl text-white w-1/2 text-xl p-3 font-semibold">
                 {button_name}
               </div>
             </div>

@@ -6,7 +6,7 @@ import center_bible from "../../public/flyers/center_bible.jpg"
 import prayerHands from"../../public/flyers/groupPrayer.jpg"
 import { useState } from "react"
 import clsx from "clsx"
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 
 
 
@@ -14,14 +14,60 @@ export default function Event(){
 
     const [index, setIndex] = useState(0);
     const [fullSize, setFullSize] = useState(false);
+    const [cooldown, setCooldown] = useState(false);
 
     const sectionRef = useRef<HTMLDivElement>(null); 
-    function fullScreenHandler() { 
+
+    useEffect(() => {
+        function handleFullscreenChange() {
+            if (!document.fullscreenElement) {
+                setFullSize((current) => !current);
+            }
+        }
+
+        document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+        return () => {
+            document.removeEventListener("fullscreenchange", handleFullscreenChange);
+        };
+    }, []);
+
+
+    useEffect(() => { 
+        if (!fullSize) 
+            return; 
+        const id = setInterval(() => { 
+            changePhoto(); }, 5000); 
+        return () => clearInterval(id); 
+    }, [fullSize]);
+
+    useEffect(() => {
+        console.log(fullSize)
+        if (!fullSize) return;
+        function handleKey(e: KeyboardEvent) {
+            if (cooldown) return;
+            if (e.key === "ArrowLeft") {
+                changePhoto(true);
+                setCooldown(true);
+            }
+            else if (e.key == "ArrowRight") {
+                changePhoto();
+                setCooldown(true);
+            }
+            setTimeout(() => setCooldown(false), 300); // 300ms cooldown
+
+        }
+
+        window.addEventListener("keydown", handleKey);
+        return () => window.removeEventListener("keydown", handleKey);
+    }, [cooldown, fullSize]);
+
+
+
+    function fullScreenHandler() {
         if (fullSize == false)
             sectionRef.current?.requestFullscreen(); 
-        else 
-            document.exitFullscreen();
-        setFullSize((current) => !current)
+        setFullSize((current) => !current);
     } 
 
     function changePhoto(increase= false){
@@ -91,11 +137,15 @@ export default function Event(){
                         </div> 
                     </div>
                 </div>
-                <div onClick={()=> changePhoto(true)} className="absolute bottom-0 right-0 rounded-full w-10 h-10 m-2 bg-green-300 z-10"></div>
-                <div onClick={()=> changePhoto()} className="absolute bottom-0 right-15 rounded-full w-10 h-10 m-2 bg-red-600 z-10"></div>
-                <a href="#flyer">
-                    <div onClick={fullScreenHandler} className="absolute top-0 right-0 rounded-lg w-10 h-10 m-2 bg-blue-300 z-10"></div>                
-                </a>            
+                {fullSize == false &&
+                <>
+                    <div onClick={()=> changePhoto(true)} className="absolute bottom-0 right-0 rounded-full w-10 h-10 m-2 bg-green-300 z-10"></div>
+                    <div onClick={()=> changePhoto()} className="absolute bottom-0 right-15 rounded-full w-10 h-10 m-2 bg-red-600 z-10"></div>
+                    <a href="#flyer">
+                        <div onClick={fullScreenHandler} className="absolute top-0 right-0 rounded-lg w-10 h-10 m-2 bg-blue-300 z-10"></div>                
+                    </a>    
+                </>  
+                }      
             </div>
         </div>
     )

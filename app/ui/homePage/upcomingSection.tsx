@@ -1,3 +1,5 @@
+import { formatDate } from "@/app/helperFunctions/dates_functions"
+
 type UpcomingSecProps = {
     title?: string, 
     date: string,
@@ -7,9 +9,8 @@ type UpcomingSecProps = {
 
 
 export default function UpcomingSec({title, date, description, time}: UpcomingSecProps){
-    const dateArray = date.split(/-/);
-    const formattedDate = `${dateArray[1]}/${dateArray[2]}`;
 
+    const formattedDate = formatDate(date);
 
     return (
         <div className="flex flex-col items-center px-10">

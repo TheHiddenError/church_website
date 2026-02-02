@@ -27,4 +27,10 @@ function getGridRows(year: number, month: number, startDay: number){
     return {maxDays: dayOfMonth, gridRows: Math.ceil((startDay+dayOfMonth)/7)};
 }
 
-export {getFirstWeekday, getGridRows};
+function formatDate(theDate: string){
+    const dateArray = theDate.split(/-/);
+    const formattedDate = `${dateArray[1].search(/0/) == 0 ? dateArray[1][1]: dateArray[1]}/${dateArray[2]}`;
+    return formattedDate;
+}
+
+export {getFirstWeekday, getGridRows, formatDate};

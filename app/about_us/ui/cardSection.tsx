@@ -63,10 +63,10 @@ function Cards({image, title, info, reverse = false}: CardProps){
 
 export default function CardSection(){
     return(
-        <>
+        <div id = "churchInfo">
             <Cards image="" title="Meet Our Leader" info={lines2} />
             <Cards image="/cross_image.jpg" title="Our Beliefs" info={lines1} reverse = {true} />
-        </>
+        </div>
 
     )
 }

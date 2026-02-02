@@ -11,7 +11,7 @@ export default function About(){
             <div className="absolute top-0 left-0 w-full h-75 bg-gray-200/20"/>         
         </div>
         <GridSection />
-        <CardSection />
+        <CardSection/>
     </div>
     )
 
