@@ -24,10 +24,10 @@ for (const event of eventList) {
 export default async function Calendar(){
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; //for dev portion
-    // const apiInformation = await fetch(`${baseUrl}/api/scripture`).then(res => res.json());
+    const apiInformation = await fetch(`${baseUrl}/api/scripture`).then(res => res.json());
     return (
         <>
-            {/* <ScriptureSec  {...apiInformation}/> */}
+            <ScriptureSec  {...apiInformation}/>
             <CalendarSec eventData={validData}/>
         </>
     )

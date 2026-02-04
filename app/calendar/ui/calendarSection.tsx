@@ -63,7 +63,7 @@ const the_month: number = current.getMonth();
 
 const monthNames: string [] = [
     "January",
-    "Feburary",
+    "February",
     "March", 
     "April",
     "May",
@@ -86,6 +86,17 @@ const daysOfWeek: string [] = [
     "Sat"
 ]
 
+const eventFor = [
+    ["Men", "Blue"],
+    ["Women", "Violet"],
+    ["Children", "Yellow"],
+    ["Youth", "Cyan"],
+    ["Church", "Red"],
+    ["Other", "Green"]
+]
+
+const fixedLocation = "Iglesia Nueva Esperanza"
+
 const current_month: string = monthNames[the_month];
 
 
@@ -107,7 +118,12 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
             eventMap.set(theDay, [...eventReturn, event]);
         }
         else {
-            eventMap.set(theDay, [event]);
+            if (event.location == undefined)
+                eventMap.set(theDay, [{...event, location: ""}]);
+
+            else {
+                eventMap.set(theDay, [event]);
+            }
         }
         
     }
@@ -120,6 +136,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
     }
 
     function PopupPartialSection({title, info}: {title: string, info: string}){
+        console.log(info);
         const properTitle = title[0].toUpperCase() + title.slice(1);
         return (
         <div>
@@ -127,7 +144,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                 {properTitle}:
             </div>
             <span className="text-md pl-2">
-                {info}
+                {title == "location" && info == "" ? fixedLocation: info}
             </span>
         </div>
         )
@@ -150,6 +167,11 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                 />
                 );
             })}
+            <div className="flex w-full justify-center">
+                <div className="w-1/2 rounded-lg bg-red-400 text-center text-white text-lg cursor-pointer">
+                    Send a Reminder
+                </div>
+            </div>
         </div>
         )
     }
@@ -160,6 +182,19 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
         <div className="w-screen flex flex-col items-center mb-15">
             <div className="text-4xl font-extrabold my-6">
                 {current_month}
+            </div>
+            <div className={`grid grid-cols-${eventFor.length + 1} w-4/5 my-3`}>
+                <div className="justify-self-center font-extrabold text-lg pr-3">
+                    Legend:
+                </div>
+                {eventFor.map((element, index) => {
+                    return (
+                        <div className="h-full flex items-center" key = {index.toString() + element[0]}>
+                            <div className={`w-1/5 inline-block h-full bg-${element[1].toLowerCase()}-500 justify-self-end-safe`}/>   
+                            <span className="w-1/2 font-bold text-md pl-2">{element[0]}</span>
+                        </div>
+                    )
+                })}
             </div>
             <div className="grid grid-rows w-4/5">
                 <div className="grid grid-cols-7">
@@ -227,13 +262,13 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
         </div>
         <div className={clsx("fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen", {"hidden": !eventClick})}>
             <div className="w-full h-full flex justify-center items-center">
-                <div className="w-3/5 h-3/5 bg-white p-5 relative">
+                <div className="w-1/2 h-3/5 bg-white p-5 relative">
                     <div className="h-2/5">
                         <div className="text-3xl font-bold h-2/5">
                             {eventInfo ? eventInfo.title : ""}
                         </div>
                         <div className="h-3/5 w-full border-b-1 border-gray-300 pb-2">
-                            <div className="h-full w-1/10 relative">
+                            <div className="h-full w-1/8 relative">
                                 <Image className="object-cover"
                                     src={eventInfo ? `/eventIcon/${eventInfo.type}.png`: "/missingImage.png"}
                                     alt ={"Descriptive Icon"}
@@ -242,8 +277,8 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                             </div>
                         </div>
                     </div>
-                        <PopupInfoSection />
-                    <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/20 h-1/10 bg-gray-300 mt-2 mr-2"/>
+                        <PopupInfoSection/>
+                    <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/20 h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer"/>
                 </div>
             </div>
         </div>

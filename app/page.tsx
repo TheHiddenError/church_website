@@ -9,7 +9,7 @@ import { getGridRows } from "./helperFunctions/dates_functions";
 import { useState } from "react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import EventFlyerSection from "./ui/homePage/eventFlyers";
 
 type PartialEvent = {
   title: string, 
@@ -82,36 +82,8 @@ export default function Start_Page(){
   return (
   <>
     <div className="mb-15">
-      <div className="w-screen h-125 relative">
-        <Image className="w-full object-cover object-bottom h-125 absolute"
-          src={"/bible_open.jpg"}
-          width={0}
-          height={0}
-          sizes="100vw"
-          alt = "bible open"
-        />
-        <div className="absolute bg-gray-100/30 h-125 w-full"/>
-        <div className="absolute top-25 left-25 w-2/5 text-center">
-          <div className="text-5xl font-bold">
-            Our Mission
-          </div>
-          <div className="flex justify-center w-full mt-7">
-            <div className="w-2/3">
-              <div className="font-semibold italic text-xl">
-                Go therefore and make disciples of all the nations, 
-                baptizing them in the name of the  
-                Father and of the Son and of the Holy Spirit. -Matthew 28:19 (NKJV)
-              </div>
-              <Link href={"/about_us"}>
-                <div className="flex justify-center w-full mt-3">
-                  <div className="bg-blue-600/80 rounded-xl text-white w-1/2 text-xl p-3 font-semibold">
-                    Learn More
-                  </div>
-                </div>
-              </Link>
-            </div> 
-          </div>
-        </div>
+      <div className="w-screen h-150 relative">
+        <EventFlyerSection />
       </div>
       <div className={`${styles.upcoming} w-screen flex flex-col justify-center items-center py-10`}>
         <div className="text-5xl font-extrabold">
