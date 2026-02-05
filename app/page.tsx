@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image";
 import styles from "./ui/homePage/homePage.module.css";
 import UpcomingSec from "./ui/homePage/upcomingSection";
 import Card from "./ui/homePage/cards";
@@ -82,8 +81,8 @@ export default function Start_Page(){
   return (
   <>
     <div className="mb-15">
-      <div className="w-screen h-150 relative">
-        <EventFlyerSection />
+      <div className="w-screen h-150 relative overflow-hidden">
+          <EventFlyerSection />
       </div>
       <div className={`${styles.upcoming} w-screen flex flex-col justify-center items-center py-10`}>
         <div className="text-5xl font-extrabold">

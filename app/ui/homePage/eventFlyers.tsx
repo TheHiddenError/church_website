@@ -6,6 +6,7 @@ import prayerHands from "../../../public/flyers/groupPrayer.jpg"
 import sundayImage from "../../../public/flyers/sunday_service.jpg"
 import prayerImage from "../../../public/flyers/prayer.jpg"
 import { useState, useEffect } from "react"
+import clsx from "clsx"
 
 
 function MissionFlyer() {
@@ -139,23 +140,53 @@ export default function EventFlyerSection(){
     const arrayFlyers = [MissionFlyer(), DiscpleFlyer(), PrayerWorshipNight(), SundayService(), PrayerService()];
 
     const [index, setIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(true);
 
 
     function changePhoto(increase= false){
         if (increase)
-            setIndex((i) => (i + 1) % arrayFlyers.length);
-        else 
-            setIndex((i) => (i - 1) < 0 ? 2 : i-1);
-
+            setIndex((i) => i + 1);
     }
 
     useEffect(() => {  
     const id = setInterval(() => { 
-        changePhoto(true); }, 5000); 
+        changePhoto(true); }, 10000); 
     return () => clearInterval(id); 
-}, []);
+}   , []);
+
+    useEffect(()=> {
+        if (index === arrayFlyers.length){
+            setTimeout(()=> {
+                setIsAnimating(false);
+                setIndex(0);
+            }, 700);
+        }
+        else {
+            setIsAnimating(true);
+        }
+    }, [index, arrayFlyers.length]);
 
     return(
-        arrayFlyers[index]
+        <>    
+            <div className={clsx("flex w-full h-full", {"transition-all duration-700 ease-out": isAnimating})} style={{ transform: `translateX(-${index * 100}%)` }}>
+                {arrayFlyers.map((element, mapindex) => (
+                    <div key={(mapindex + 1) * 7} className="w-full h-full flex-shrink-0 relative">
+                        {element}
+                    </div>
+                ))}
+                <div className= "w-full h-full flex-shrink-0 relative">
+                    {arrayFlyers[0]}
+                </div>
+            </div> 
+            <div className="absolute right-0 bottom-0">
+                <div className="flex pr-3 pb-2">
+                    {arrayFlyers.map((s, mapIndex) => {
+                        return (
+                            <div key={mapIndex * 2000} className={clsx("rounded-full h-8 w-8 mr-2", {"bg-gray-500/80": index != mapIndex,  "bg-blue-700/80": index == mapIndex})}/>
+                        )
+                    })}
+                </div>
+            </div>
+        </>
     )
 }
