@@ -1,7 +1,7 @@
 "use client"
 
 import clsx from "clsx";
-import {getFirstWeekday, getGridRows} from "../../helperFunctions/dates_functions"
+import {getFirstWeekday, getGridRows, getMaxDays} from "../../helperFunctions/dates_functions"
 import { useState } from "react";
 import { EventDef } from "@/app/lib/placeholder_data";
 import Image from "next/image";
@@ -16,38 +16,12 @@ type Event = {
 }
 
 const current: Date = new Date();
+const current_year = current.getFullYear();
 
-const firstDay = getFirstWeekday(current.getFullYear(), current.getMonth());
-
-// const firstDay = getFirstWeekday(2024, testingMonth);
-
-// console.log(firstDay);
-
-const {maxDays, gridRows} = getGridRows(current.getFullYear(),current.getMonth(), firstDay);
-
-const calendarCols: number [] = Array.from({length: 7}, () => 0);
-const calendarRows: number [] = Array.from({length: gridRows}, () => 0);
-
-
-// const dummyEvents: Event [] = [
-//     {date: "01-10-26", time: "5:00 PM", title: "Church Anniversary"},
-//     {date: "01-14-26", time: "", title: "No Church"},
-//     {date: "01-24-26", time: "10:00 AM", title: "Chicken Plate Sale", importance: true},
-//     {date: "01-5-26", time: "7:00 PM ", title: "Prayer and Worship", importance: true}
-// ]
-
-// const regexEx = /(?<=-)\d+(?=-)/
-
-
-// const datesDummyEvents = new Map<number, Event>();
-
-// for (const event of dummyEvents){
-//     const regexMatch = event.date?.match(regexEx);
-//     if (regexMatch == null)
-//         continue;
-//     datesDummyEvents.set(Number(regexMatch[0]), {time: event.time, title: event.title, importance: event.importance ?? false})
-// }
-
+const monthDaysMax: number [] = Array.from({length: 12}, () => 0);
+for (let i = 1; i < monthDaysMax.length; i++){
+    monthDaysMax[i] = monthDaysMax[i-1] + getMaxDays(current_year, i-1);
+}
 
 
 const constantEvents: Event [] = Array.from({length: 7}, () => ({}));
@@ -58,8 +32,9 @@ constantEvents[3] = {title: "Disciple Service", time: "7:00 PM"}
 
 
 const current_day: number = current.getDate();
+const monthToCompare = current.getMonth();
 
-const the_month: number = current.getMonth();
+const the_month: number = current.getMonth() + 1;
 
 const monthNames: string [] = [
     "January",
@@ -86,46 +61,62 @@ const daysOfWeek: string [] = [
     "Sat"
 ]
 
-const eventFor = [
-    ["Men", "Blue"],
-    ["Women", "Violet"],
-    ["Children", "Yellow"],
-    ["Youth", "Cyan"],
-    ["Church", "Red"],
-    ["Other", "Green"]
-]
+const eventFor = {
+    Men: "bg-blue-500",
+    Women: "bg-rose-500",
+    Children: "bg-yellow-500",
+    Youth: "bg-violet-500",
+    Church: "bg-red-500",
+    Other: "bg-green-500"
+}
 
 const fixedLocation = "Iglesia Nueva Esperanza"
 
-const current_month: string = monthNames[the_month];
 
 
 
 export default function CalendarSec({eventData}: {eventData: EventDef []}){
 
+    const [calendarTracker, setTracker] = useState(the_month);
     const [eventClick, setEventClick] = useState(false);
     const [eventInfo, setEventInfo] = useState <EventDef | undefined>(undefined);
 
-    const regexEx = /(?<=-)\d+(?=-)/
+    const current_month: string = monthNames[calendarTracker];
+    const firstDay = getFirstWeekday(current_year, calendarTracker);
+
+    const maxDays = getMaxDays(current_year, calendarTracker);
+    const gridRows = getGridRows(current_year,calendarTracker, firstDay);
+
+    
+    const calendarCols: number [] = Array.from({length: 7}, () => 0);
+    const calendarRows: number [] = Array.from({length: gridRows}, () => 0);
+
+
+    const regexEx = /(?<month>\d+)\-(?<day>\d+)(?=-)/
     const eventMap = new Map<number, EventDef []>();
     for (const event of eventData){
         const regexMatch = event.date?.match(regexEx);
         if (regexMatch == null)
             continue;
-        const theDay = Number(regexMatch[0]);
-        const eventReturn = eventMap.get(theDay);
+        const theDay = Number(regexMatch?.groups?.day);
+        const eventMonth = monthDaysMax[Number(regexMatch?.groups?.month) - 1];
+        const eventReturn = eventMap.get(theDay + eventMonth);
         if (eventReturn != undefined){
-            eventMap.set(theDay, [...eventReturn, event]);
+            eventMap.set(theDay + eventMonth, [...eventReturn, event]);
         }
         else {
             if (event.location == undefined)
-                eventMap.set(theDay, [{...event, location: ""}]);
+                eventMap.set(theDay + eventMonth, [{...event, location: ""}]);
 
             else {
-                eventMap.set(theDay, [event]);
+                eventMap.set(theDay + eventMonth, [event]);
             }
         }
         
+    }
+
+    function changeCalendarMonth(increase=false){
+        setTracker((element)=> increase ? element + 1: element -1);
     }
 
 
@@ -180,18 +171,54 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
     return(
     <>
         <div className="w-screen flex flex-col items-center mb-15">
-            <div className="text-4xl font-extrabold my-6">
-                {current_month}
+            <div className="grid grid-cols-3 w-full my-6">
+                <div onClick={()=>changeCalendarMonth()} className={clsx("place-self-end cursor-pointer", {"invisible pointer-events-none": calendarTracker == monthToCompare})}>
+                    <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    >
+                    <path
+                        d="M11 3L5 8L11 13"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    </svg>
+                </div>
+                <div className="text-4xl font-extrabold place-self-center">
+                    {current_month}
+                </div>
+                <div onClick={()=> changeCalendarMonth(true)} className={clsx("place-self-start cursor-pointer", {"invisible pointer-events-none": calendarTracker == monthToCompare + 2})}>
+                    <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    >
+                    <path
+                        d="M5 3L11 8L5 13"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                    </svg>
+                </div>
             </div>
-            <div className={`grid grid-cols-${eventFor.length + 1} w-4/5 my-3`}>
+            <div className={`grid grid-cols-${Object.keys(eventFor).length + 1} w-4/5 my-3`}>
                 <div className="justify-self-center font-extrabold text-lg pr-3">
                     Legend:
                 </div>
-                {eventFor.map((element, index) => {
+                {Object.entries(eventFor).map(([key, value], index) => {
                     return (
-                        <div className="h-full flex items-center" key = {index.toString() + element[0]}>
-                            <div className={`w-1/5 inline-block h-full bg-${element[1].toLowerCase()}-500 justify-self-end-safe`}/>   
-                            <span className="w-1/2 font-bold text-md pl-2">{element[0]}</span>
+                        <div className="h-full flex items-center" key = {index.toString() + key}>
+                            <div className={`w-1/5 inline-block h-full ${value} justify-self-end-safe`}/>   
+                            <span className="w-1/2 font-bold text-md pl-2">{key}</span>
                         </div>
                     )
                 })}
@@ -211,12 +238,12 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                     <div key={(upperIndex + 1) * 100} className=" grid grid-cols-7">
                         {calendarCols.map((something, index)=> {
                             const iterateDay: number = (index + 1 + (7 * upperIndex)) - firstDay;
-                            const eventsInformation = eventMap.get(iterateDay);
+                            const eventsInformation = eventMap.get(iterateDay + monthDaysMax[calendarTracker]);
                         return <div key={index + (7 * upperIndex)}>
                             <div className={clsx( "border-l-2 border-b-2 border-black w-full h-40 relative",
                                 {"border-t-2": upperIndex === 0, 
                                 "border-r-2": index === 6,
-                                "bg-blue-300": (iterateDay) === current_day,
+                                "bg-blue-300": current.getMonth() == calendarTracker && (iterateDay) === current_day,
                                 })}>
                                 {iterateDay > 0 && iterateDay <= maxDays &&
                                 <>
@@ -233,12 +260,8 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                             return (
                                             <div className="w-full" key={eve.title}>
                                                 <div onClick={eve?.summary ? ()=> eventClickHandler(eve): undefined} className={clsx("text-center w-full", 
+                                                    eventFor[eve.for as keyof typeof eventFor] ?? "bg-gray-200",
                                                     {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
-                                                      "bg-red-500" : eve.for == "Church",
-                                                      "bg-yellow-500": eve.for == "Children",
-                                                      "bg-blue-500": eve.for == "Men",
-                                                      "bg-violet-500": eve.for == "Women",
-                                                      "bg-green-500": eve.for == "Open" 
                                                     })}>
                                                     <div className="">
                                                         {eve === undefined ? constantEvents[index]?.title ?? "" : eve.title}
@@ -248,7 +271,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                             )
                                         })}
                                     </div>
-                                    <div className= {clsx("w-1 h-35 absolute bg-red-600 z-10 top-0 left-20 inset-0 -rotate-45", {"hidden": (iterateDay) >= current_day})} />
+                                    <div className= {clsx("w-1 h-35 absolute bg-red-600 z-10 top-0 left-20 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
                                     <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
                                 </>
                                 }

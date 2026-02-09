@@ -182,7 +182,7 @@ export default function EventFlyerSection(){
                 <div className="flex pr-3 pb-2">
                     {arrayFlyers.map((s, mapIndex) => {
                         return (
-                            <div key={mapIndex * 2000} className={clsx("rounded-full h-8 w-8 mr-2", {"bg-gray-500/80": index != mapIndex,  "bg-blue-700/80": index == mapIndex})}/>
+                            <div key={mapIndex * 2000} className={clsx("rounded-full h-8 w-8 mr-2", {"bg-gray-500/50": index != mapIndex,  "bg-blue-700/50": index == mapIndex})}/>
                         )
                     })}
                 </div>

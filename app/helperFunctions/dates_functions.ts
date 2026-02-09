@@ -2,7 +2,7 @@ function getFirstWeekday(year: number, month: number) {
   return new Date(year, month, 1).getDay();
 }
 
-function getGridRows(year: number, month: number, startDay: number){
+function getMaxDays(year: number, month: number){
     const months_with_30 = [3,5,8,10]; //April, June, September, November
     let dayOfMonth = 0;
     if (months_with_30.includes(month)){
@@ -24,7 +24,12 @@ function getGridRows(year: number, month: number, startDay: number){
     else {
         dayOfMonth = 31;
     }
-    return {maxDays: dayOfMonth, gridRows: Math.ceil((startDay+dayOfMonth)/7)};
+    return dayOfMonth;
+}
+
+function getGridRows(year: number, month: number, startDay: number){
+    const dayOfMonth = getMaxDays(year, month);
+    return Math.ceil((startDay+dayOfMonth)/7);
 }
 
 function formatDate(theDate: string){
@@ -33,4 +38,4 @@ function formatDate(theDate: string){
     return formattedDate;
 }
 
-export {getFirstWeekday, getGridRows, formatDate};
+export {getFirstWeekday, getMaxDays, getGridRows, formatDate};

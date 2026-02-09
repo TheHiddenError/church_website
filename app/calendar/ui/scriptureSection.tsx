@@ -40,7 +40,7 @@ export default function ScriptureSec(dailyReading: Props){
                         {information.map((element) => { return (
                             <div key={element.number * 1000} className={`inline text-lg relative px-${element.number >=100 ? 4 : element.number >= 10 ? 3 : 2}`}>
                                 {`${element.content}`} 
-                                <div className={clsx("text-sm font-bold absolute -top-1", {"-left-3": element.number >=100, "-left-1": element.number < 100})}>
+                                <div className={clsx("text-sm font-bold absolute -top-1", {"-left-3": element.number >=100, "-left-2": element.number < 100})}>
                                     {`${element.number}`} 
                                 </div>
                             </div>

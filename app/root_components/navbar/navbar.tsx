@@ -9,7 +9,6 @@ const links = [
     {name: "Home", href : "/"},
     {name: "About Us", href: "/about_us"},
     {name: "Calendar", href: "/calendar"},
-    {name: "Events", href: "/events"},
     {name: "Donate", href: "/donate"}
 ]
 
@@ -18,7 +17,7 @@ const links = [
 export default function NavBar(){
     const pathname = usePathname();
 
-    return <div className="grid grid-cols-6 relative mt-2 h-[20vh]">
+    return <div className={`grid grid-cols-5 relative mt-2 h-[20vh]`}>
         <div className="flex flex-col items-center text-center">
             <Image 
                 src={"/white_dove.png"}
@@ -26,9 +25,9 @@ export default function NavBar(){
                 height = {100}
                 alt="white dove"
             />
-            <div className="font-bold text-xl ml-4 text-wrap w-4/5">Iglesia Nueva Esperanza</div>
+            <div className="font-bold text-xl ml-4 text-wrap w-3/5">Iglesia Nueva Esperanza</div>
         </div>
-        <div className="col-span-5 grid grid-cols-5 items-end text-lg text-center">
+        <div className="col-span-4 grid grid-cols-4 items-end text-xl text-center">
             {links.map((link) => {
                 return (
                 <Link

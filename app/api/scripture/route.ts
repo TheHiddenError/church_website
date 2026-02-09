@@ -23,7 +23,7 @@ export async function GET(){
 
 
 
-    const testOne = dailyScripture[dailyScripture.length-1];
+    const testOne = dailyScripture[dailyScripture.length-3];
 
     const getBook = /(^\d* )?\w+/
 

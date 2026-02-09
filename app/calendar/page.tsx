@@ -14,7 +14,7 @@ for (const event of eventList) {
     const temp = event.date.match(getMonthRegex);
     if (temp)
         month = Number(temp[0]) -1;
-    if (month && month == currentMonth){
+    if (month && month <= currentMonth + 2){
         validData.push(event);
     }
 
