@@ -3,12 +3,24 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 import clsx from 'clsx';
 
 
 
 export default function NavBar(){
+    const locale = useLocale();
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const switchLocale = (newLocale: string) => {
+        if (newLocale !== locale) {
+        router.replace(pathname, { locale: newLocale });
+        router.refresh();
+        }
+    };
 
     const t = useTranslations("Header");
 
@@ -18,13 +30,6 @@ export default function NavBar(){
         {name: t("calendar"), href: "/calendar"},
         {name: t("donate"), href: "/donate"}
     ]
-
-    const temp = usePathname();
-    const temp2 = temp.match(/(?<=\w{2})(\/\w*)*/);
-    let pathname: string = "/";
-    if (temp2 && temp2[0] != "")
-        pathname = temp2[0];
-    
 
     return <div className={`grid grid-cols-5 relative mt-2 h-[20vh]`}>
         <div className="flex flex-col items-center text-center">
@@ -48,9 +53,15 @@ export default function NavBar(){
                 )
             })}
         </div>
-        <div className="flex absolute right-10 top-10 text-lg mt-2">
-            <div className="w-5 h-5 bg-blue-500 rounded"/>
-            <div className="pl-2">
+        <div onClick={()=> switchLocale(locale == "en" ? "es": "en")} className="flex absolute right-10 items-center top-10 text-md mt-2 bg-blue-600 p-1 rounded-lg cursor-pointer hover:bg-blue-400">
+            <div className="relative w-7 h-7">
+                <Image className="object-cover"
+                    src="/white_arrows_circle.png"
+                    alt = "double arrow circle"
+                    fill
+                />
+            </div>
+            <div className="px-2 text-white font-bolds">
                 {t("translator")}  
             </div>
         </div>
