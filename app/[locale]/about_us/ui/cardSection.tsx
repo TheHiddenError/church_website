@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 type CardProps = {
@@ -62,10 +63,11 @@ function Cards({image, title, info, reverse = false}: CardProps){
 
 
 export default function CardSection(){
+    const t = useTranslations("AboutPage")
     return(
         <div id = "churchInfo">
-            <Cards image="" title="Meet Our Leader" info={lines2} />
-            <Cards image="/cross_image.jpg" title="Our Beliefs" info={lines1} reverse = {true} />
+            <Cards image="" title={t("leader_heading")} info={lines2} />
+            <Cards image="/cross_image.jpg" title={t("beliefs_heading")} info={lines1} reverse = {true} />
         </div>
 
     )

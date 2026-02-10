@@ -5,6 +5,7 @@ import { theEvents } from "./api/placeholder.data";
 import { getMaxDays } from "./helperFunctions/dates_functions";
 import EventFlyerSection from "./homePage/ui/eventFlyers";
 import HomeCardSection from "./homePage/ui/card_section";
+import { useTranslations } from "next-intl";
 
 type PartialEvent = {
   title: string, 
@@ -71,7 +72,7 @@ const sortArray: Event [] = topThree.sort((a, b) => Date.parse(a.date)- Date.par
 
 
 export default function Start_Page(){
-
+  const t = useTranslations("HomePage");
   return (
   <>
     <div className="mb-15">
@@ -80,7 +81,7 @@ export default function Start_Page(){
       </div>
       <div className={`${styles.upcoming} w-screen flex flex-col justify-center items-center py-10`}>
         <div className="text-5xl font-extrabold">
-          Upcoming Events
+          {t("upcoming_events")}
         </div>
         <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
           {sortArray.map((element, index) => {

@@ -3,8 +3,9 @@
 import clsx from "clsx";
 import {getFirstWeekday, getGridRows, getMaxDays} from "../../helperFunctions/dates_functions"
 import { useState } from "react";
-import { EventDef } from "@/app/lib/placeholder_data";
+import { EventDef } from "@/app/[locale]/lib/placeholder_data";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 type Event = {
     date?: string,
@@ -24,46 +25,29 @@ for (let i = 1; i < monthDaysMax.length; i++){
 }
 
 
-const constantEvents: Event [] = Array.from({length: 7}, () => ({}));
-
-constantEvents[0] = {title: "Sunday Service", time: "10:30 AM"}
-constantEvents[1] = {title: "Prayer Night", time: "7:00 PM"}
-constantEvents[3] = {title: "Disciple Service", time: "7:00 PM"}
-
-
 const current_day: number = current.getDate();
 const monthToCompare = current.getMonth();
 
-const the_month: number = current.getMonth() + 1;
+const the_month: number = current.getMonth();
 
 const monthNames: string [] = [
-    "January",
-    "February",
-    "March", 
-    "April",
-    "May",
-    "June", 
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-]
-
-const daysOfWeek: string [] = [
-    "Sun", 
-    "Mon",
-    "Tues",
-    "Wed",
-    "Thurs",
-    "Fri", 
-    "Sat"
+    "jan",
+    "feb",
+    "mar", 
+    "apr",
+    "may",
+    "jun", 
+    "july",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec"
 ]
 
 const eventFor = {
     Men: "bg-blue-500",
-    Women: "bg-rose-500",
+    Women: "bg-pink-500",
     Children: "bg-yellow-500",
     Youth: "bg-violet-500",
     Church: "bg-red-500",
@@ -77,12 +61,23 @@ const fixedLocation = "Iglesia Nueva Esperanza"
 
 export default function CalendarSec({eventData}: {eventData: EventDef []}){
 
+    const t = useTranslations("Calendar");
+
+    const daysOfWeek = Object.values(t.raw("days") as Record<string, string>);
+
+
     const [calendarTracker, setTracker] = useState(the_month);
     const [eventClick, setEventClick] = useState(false);
     const [eventInfo, setEventInfo] = useState <EventDef | undefined>(undefined);
 
-    const current_month: string = monthNames[calendarTracker];
+    const current_month: string = t('months.'+ monthNames[calendarTracker]);
     const firstDay = getFirstWeekday(current_year, calendarTracker);
+
+    const constantEvents: Event [] = Array.from({length: 7}, () => ({}));
+
+    constantEvents[0] = {title: t("events.sun"), time: "10:30 AM"}
+    constantEvents[1] = {title: t("events.mon"), time: "7:00 PM"}
+    constantEvents[3] = {title: t("events.wed"), time: "7:00 PM"}
 
     const maxDays = getMaxDays(current_year, calendarTracker);
     const gridRows = getGridRows(current_year,calendarTracker, firstDay);
@@ -218,7 +213,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                     return (
                         <div className="h-full flex items-center" key = {index.toString() + key}>
                             <div className={`w-1/5 inline-block h-full ${value} justify-self-end-safe`}/>   
-                            <span className="w-1/2 font-bold text-md pl-2">{key}</span>
+                            <span className="w-1/2 font-bold text-md pl-2">{t("legend."+key.toLowerCase())}</span>
                         </div>
                     )
                 })}
@@ -243,7 +238,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                             <div className={clsx( "border-l-2 border-b-2 border-black w-full h-40 relative",
                                 {"border-t-2": upperIndex === 0, 
                                 "border-r-2": index === 6,
-                                "bg-blue-300": current.getMonth() == calendarTracker && (iterateDay) === current_day,
+                                "bg-blue-300 font-bold": current.getMonth() == calendarTracker && (iterateDay) === current_day,
                                 })}>
                                 {iterateDay > 0 && iterateDay <= maxDays &&
                                 <>

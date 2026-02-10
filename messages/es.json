@@ -1,0 +1,108 @@
+{
+    "Header": {
+        "home": "Incio",
+        "about": "Sobre Nosotros",
+        "calendar": "Calendario",
+        "donate": "Donar",
+        "translator": "Speak English?"
+    },
+
+    "Footer": {
+        "address": "Dirección",
+        "phone": "Contacta"
+    },
+
+    "HomePage":{
+        "about": "Sobre Nuestra Iglesia",
+        "about_button": "Aprende Más",
+        "prayer": "Solicitud de Oración",
+        "prayer_button": "Hace un Oracion",
+        "prayer_description": "Nos encantaría orar por ti. Por favor, comparte tu petición y oraremos por ti. Si lo deseas, puedes hacerlo de forma anónima.",
+        "prayer_p1": "Nombre (opcional)",
+        "prayer_p2": "Entra su petición aquí (obligatorio)",
+        "prayer_send": "Manda Oracion",
+        "upcoming_events": "Próximos Eventos",
+        "flyers": {
+            "mission": {
+                "heading": "Nuestra Misión",
+                "text": "Por tanto, id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo;",
+                "verse": "Mateo 28:19 (RV1960)"
+            },
+            "disciple":{
+                "heading": "Servicio de Discipulado",
+                "text": "Todos los Miércoles"
+            },
+            "worship": {
+                "heading": "Noche de Oración y Adoración",
+                "subheading": "¡Acompáñanos en oración y adoración a nuestro asombroso Dios!",
+                "text": "El primer lunes de cada mes"
+            },
+            "prayer": {
+                "heading": "Noche de Oración",
+                "subheading": "Una noche llena de oración y peticiones",
+                "text": "Todos los lunes (excepto el primer lunes de cada mes)"
+            },
+            "sunday": {
+                "heading": "Servicio Dominical",
+                "subheading": "Únete a nosotros cada domingo por la mañana para una predicación que ayudará a tu vida y a tu familia",
+                "text": "Todos los domingos"
+            }
+
+        }
+    },
+    "AboutPage": {
+        "mission_heading": "Nuestra Misión",
+        "about_heading": "Lo Que Hacemos",
+        "leader_heading": "Conoce a Nuestro Líder",
+        "beliefs_heading": "Nuestras Creencias"
+    },
+    "Calendar": {
+        "months": {
+            "jan": "Enero",
+            "feb": "Febrero",
+            "mar": "Marzo", 
+            "apr": "Abril",
+            "may": "Mayo",
+            "jun": "Junio", 
+            "july": "Julio",
+            "aug": "Agosto",
+            "sep": "Septiembre",
+            "oct": "Octubre",
+            "nov": "Noviembre",
+            "dec": "Diciembre"
+        },
+        "days": { 
+            "sun": "Dom", 
+            "mon": "Lun",
+            "tues": "Mar",
+            "wed": "Mié",
+            "thurs": "Jue",
+            "fri": "Vie", 
+            "sat": "Sáb"
+        },
+        "legend" : {
+            "men": "Hombres",
+            "women": "Mujeres",
+            "children": "Niños",
+            "youth": "Jóvenes",
+            "church": "Iglesia",
+            "other": "Otro"
+        },
+        "events": {
+            "sun": "Servicio Dominical",
+            "mon": "Servicio de Oración",
+            "wed": "Servicio de Discipulado"
+        }
+    },
+    "Donate": {
+        "bible_text": "Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre.",
+        "bible_verse": "2 Corintios 9:7 (RV1960)",
+        "note": "Nota: No queremos obligar a nadie a hacer una donación. No hacemos esto por dinero, sino por la voluntad de Dios. Sin embargo, si sientes que Dios te inspira a apoyar nuestra misión, puedes donar abajo. Gracias.",
+        "heading": "¡Haz una donación abajo!",
+        "subheading": "¡Gracias por su apoyo! ¡Que Dios los bendiga!",
+        "one_time": "Pago Unico",
+        "monthly": "Mensual",
+        "repair": "Indisponible"
+    }
+
+}

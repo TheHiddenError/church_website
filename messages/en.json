@@ -1,0 +1,105 @@
+{
+    "Header": {
+        "home": "Home",
+        "about": "About Us",
+        "calendar": "Calendar",
+        "donate": "Donate",
+        "translator": "Habla Espanol?"
+    },
+    "Footer": {
+        "address": "Address",
+        "phone": "Contact Us"
+    },
+    "HomePage":{
+        "about": "About Our Church",
+        "about_button": "Learn More",
+        "prayer": "Prayer Request",
+        "prayer_button": "Make a Prayer",
+        "prayer_description": "We would love to pray for you. Please put your petition before and we will pray for you. You can choose to make it anonymous if you like as well.",
+        "prayer_p1": "Name (optional)",
+        "prayer_p2": "Enter your petition here (required)",
+        "prayer_send": "Send Prayer",
+        "upcoming_events": "Upcoming Events",
+        "flyers": {
+            "mission": {
+                "heading": "Our Mission",
+                "text": "Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit.",
+                "verse": "Matthew 28:19 (NKJV)"
+            },
+            "disciple":{
+                "heading": "Disciple Service",
+                "text": "Every Wednesday"
+            },
+            "worship": {
+                "heading": "Prayer and Worship Night",
+                "subheading": "Join Us in Prayer and Worship of Our Awesome God!",
+                "text": "Every First Monday of Month"
+            },
+            "prayer": {
+                "heading": "Prayer Night",
+                "subheading": "A night filled with prayer and petitions",
+                "text": "Every Monday (Except for First Monday of Every Month)"
+            },
+            "sunday": {
+                "heading": "Sunday Service",
+                "subheading": "Join us every morning for preaching for the family that would help your life",
+                "text": "Every Sunday"
+            }
+        }
+    },
+    "AboutPage": {
+        "mission_heading": "Our Mission",
+        "about_heading": "What We Do",
+        "leader_heading": "Meet Our Leader",
+        "beliefs_heading": "Our Beliefs"
+    },
+    "Calendar": {
+        "months": {
+            "jan": "January",
+            "feb": "February",
+            "mar": "March", 
+            "apr": "April",
+            "may": "May",
+            "jun": "June", 
+            "july": "July",
+            "aug": "August",
+            "sep": "September",
+            "oct": "October",
+            "nov": "November",
+            "dec": "December"
+        },
+        "days": { 
+            "sun": "Sun", 
+            "mon": "Mon",
+            "tues": "Tues",
+            "wed": "Wed",
+            "thurs": "Thurs",
+            "fri": "Fri", 
+            "sat": "Sat"
+        },
+        "legend" : {
+            "men": "Men",
+            "women": "Women",
+            "children": "Children",
+            "youth": "Youth",
+            "church": "Church",
+            "other": "Other"
+        },
+        "events": {
+            "sun": "Sunday Service",
+            "mon": "Prayer Service",
+            "wed": "Disciple Service"
+        }
+    },
+    "Donate": {
+        "bible_text": "So let each one give as he purposes in his heart, not grudgingly or of necessity; for God loves a cheerful giver.",
+        "bible_verse": "2 Corinthians 9:7 (NKJV)",
+        "note": "Note: We do not want to force anyone to make a donation. We do not do this for the money. Only for God's will. However, if you feel God put it in your heart to support our mission, you can donate below. Thank you.",
+        "heading": "Make a Donation Below!",
+        "subheading": "Thank you for your support! God Bless!",
+        "one_time": "One Time Payment",
+        "monthly": "Monthly",
+        "repair": "Unavailable"
+    }
+
+}

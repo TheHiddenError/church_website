@@ -1,15 +1,18 @@
 "use client"
 
 import Image from "next/image"
-import centerbible from "../../../public/flyers/center_bible.jpg"
-import prayerHands from "../../../public/flyers/groupPrayer.jpg"
-import sundayImage from "../../../public/flyers/sunday_service.jpg"
-import prayerImage from "../../../public/flyers/prayer.jpg"
+import centerbible from "../../../../public/flyers/center_bible.jpg"
+import prayerHands from "../../../../public/flyers/groupPrayer.jpg"
+import sundayImage from "../../../../public/flyers/sunday_service.jpg"
+import prayerImage from "../../../../public/flyers/prayer.jpg"
 import { useState, useEffect } from "react"
 import clsx from "clsx"
+import { useTranslations } from "next-intl"
 
 
 function MissionFlyer() {
+    const t = useTranslations("HomePage.flyers.mission");
+
     return (
         <>
             <Image className="w-full object-cover object-bottom absolute"
@@ -20,14 +23,12 @@ function MissionFlyer() {
             <div className="absolute bg-gray-100/30 h-full w-full"/>
             <div className="absolute top-50 left-25 w-2/5 text-center">
             <div className="text-5xl font-bold">
-                Our Mission
+                {t("heading")}
             </div>
             <div className="flex justify-center w-full mt-7">
                 <div className="w-2/3">
                 <div className="font-semibold italic text-2xl">
-                    Go therefore and make disciples of all the nations, 
-                    baptizing them in the name of the  
-                    Father and of the Son and of the Holy Spirit. -Matthew 28:19 (NKJV)
+                    {t("text")} - {t("verse")}
                 </div>
                 </div> 
             </div>
@@ -37,16 +38,18 @@ function MissionFlyer() {
 }
 
 function DiscpleFlyer(){
+    const t = useTranslations("HomePage.flyers.disciple")
+
     return(
         <>
             <Image className="object-cover object-bottom" src={centerbible} alt = "bible open" fill />
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300/40"/>
             <div className="absolute top-1/3 left-1/2 transform -translate-y-1/2 -translate-x-1/2 text-center">
                 <div className="text-6xl font-extrabold italic">
-                    Disciple Service
+                    {t("heading")}
                 </div>
                 <div className="my-7 text-4xl">
-                    Every Wednesday
+                    {t("text")}
                 </div>
                 <div className="text-2xl font-bold">
                     7:00 PM
@@ -58,19 +61,20 @@ function DiscpleFlyer(){
 
 
 function PrayerWorshipNight() {
+    const t = useTranslations("HomePage.flyers.worship")
     return (
         <>
             <Image className="object-cover object-top" src={prayerHands} alt = "prayer group" fill />
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300/60"/>
             <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 text-center">
                 <div className="text-6xl font-extrabold italic">
-                    Prayer and Worship Night
+                    {t("heading")}
                 </div>
                 <div className="my-7 text-3xl">
-                    Join Us in Prayer and Worship of Our Awesome God!
+                    {t("subheading")}
                 </div>
                 <div className="text-2xl font-bold">
-                    Every First Monday of Month
+                    {t("text")}
                 </div>
                 <div className="text-2xl font-bold">
                     7:00 PM
@@ -81,6 +85,8 @@ function PrayerWorshipNight() {
 }
 
 function PrayerService(){
+    const t = useTranslations("HomePage.flyers.prayer")
+
     return (
         <>
             <Image className="object-cover"
@@ -91,13 +97,13 @@ function PrayerService(){
             <div className="absolute bg-gray-100/30 h-full w-full"/>
             <div className="absolute top-50 right-25 w-2/5 text-center">
                 <div className="text-6xl font-bold">
-                    Prayer Night
+                    {t("heading")}
                 </div>
                 <div className="text-xl my-3">
-                    A night filled with prayer and petitions
+                    {t("subheading")}
                 </div>
                 <div className="text-2xl font-bold">
-                    Every Monday (Except for First Monday of Every Month)
+                    {t("text")}
                 </div>
                 <div className="text-2xl font-bold italic">
                     7:00PM
@@ -108,6 +114,7 @@ function PrayerService(){
 }
 
 function SundayService(){
+    const t = useTranslations("HomePage.flyers.sunday")
     return (
         <>
             <Image className="object-cover object-top"
@@ -118,13 +125,13 @@ function SundayService(){
             <div className="absolute bg-gray-100/30 h-full w-full"/>
             <div className="absolute top-50 left-25 w-2/5 text-center">
                 <div className="text-6xl font-bold">
-                    Sunday Service
+                    {t("heading")}
                 </div>
                 <div className="text-xl my-3">
-                    Join us every morning for preaching for the family that would help your life
+                    {t("subheading")}
                 </div>
                 <div className="text-2xl font-bold">
-                    Every Sunday
+                    {t("text")}
                 </div>
                 <div className="text-2xl font-bold italic">
                     10:30 AM

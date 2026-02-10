@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl"
+
 function GridPart({title, info}: {title:string, info: string }) {
     return (
         <div className="flex justify-center w-full">
@@ -17,11 +19,13 @@ function GridPart({title, info}: {title:string, info: string }) {
 }
 
 export default function GridSection(){
+    const t = useTranslations("AboutPage")
+
     return(
         <div className="grid grid-cols-2 my-10">
-            <GridPart title = "Our Mission" info = {`I'm a paragraph. Click here to add  your own text and edit me. 
+            <GridPart title = {t("mission_heading")} info = {`I'm a paragraph. Click here to add  your own text and edit me. 
             I'm a great place for you to tell a story and let your users know a little more about you.`}/>
-            <GridPart title="What We Do" info = {`I'm a paragraph. Click here to add  your own text and edit me. 
+            <GridPart title={t("about_heading")} info = {`I'm a paragraph. Click here to add  your own text and edit me. 
             I'm a great place for you to tell a story and let your users know a little more about you.`} />
         </div>
     )
