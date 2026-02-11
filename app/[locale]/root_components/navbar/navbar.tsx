@@ -31,7 +31,7 @@ export default function NavBar(){
         {name: t("donate"), href: "/donate"}
     ]
 
-    return <div className={`grid grid-cols-5 relative mt-2 h-[20vh]`}>
+    return <div className={`grid grid-cols-5 relative mt-2 h-[20vh] font-inter`}>
         <div className="flex flex-col items-center text-center">
             <Image 
                 src={"/white_dove.png"}
@@ -61,7 +61,7 @@ export default function NavBar(){
                     fill
                 />
             </div>
-            <div className="px-2 text-white font-bolds">
+            <div className="px-2 text-white font-bold">
                 {t("translator")}  
             </div>
         </div>

@@ -54,6 +54,8 @@
         "beliefs_heading": "Our Beliefs"
     },
     "Calendar": {
+        "verse_day": "Verse of the Day",
+        "full_chapter": "Read Full Chapter",
         "months": {
             "jan": "January",
             "feb": "February",

@@ -1,3 +1,9 @@
 .calendarBG{
     background-color: #FFE7C8;
 }
+
+.wrapper :global(h3) {
+    font-size: large;
+    font-weight: bolder;
+    margin: 10px 0px;
+}

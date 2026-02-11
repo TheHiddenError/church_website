@@ -57,6 +57,8 @@
         "beliefs_heading": "Nuestras Creencias"
     },
     "Calendar": {
+        "verse_day": "Versículo del Día",
+        "full_chapter": "Leer Capítulo Completo",
         "months": {
             "jan": "Enero",
             "feb": "Febrero",
