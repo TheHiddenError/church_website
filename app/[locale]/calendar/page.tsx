@@ -3,6 +3,7 @@ import CalendarSec from "./ui/calendarSection";
 import eventList from "../lib/placeholder_data";
 import { EventDef } from "../lib/placeholder_data"; //find better way
 import { getLocale } from "next-intl/server";
+import { headers } from "next/headers";
 
 const currentMonth = (new Date()).getMonth();
 
@@ -23,10 +24,12 @@ for (const event of eventList) {
 
 
 export default async function Calendar(){
-
+    const host = (await headers()).get("host"); 
     const locale = await getLocale();
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https"; 
+    const baseUrl = `${protocol}://${host}/${locale}`;
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/" + locale ; //for dev portion
+
     console.log(baseUrl)
     const {text, verse, translation, link} = await fetch(`${baseUrl}/api/scripture`).then(res => res.json());
     return (
