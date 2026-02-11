@@ -1,10 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import centerbible from "../../../../public/flyers/center_bible.jpg"
-import prayerHands from "../../../../public/flyers/groupPrayer.jpg"
-import sundayImage from "../../../../public/flyers/sunday_service.jpg"
-import prayerImage from "../../../../public/flyers/prayer.jpg"
 import { useState, useEffect, useRef } from "react"
 import clsx from "clsx"
 import { useTranslations } from "next-intl"
@@ -43,7 +39,7 @@ function DiscpleFlyer(sizeFull:boolean){
 
     return(
         <>
-            <Image className="object-cover object-bottom" src={centerbible} alt = "bible open" fill />
+            <Image className="object-cover object-bottom" src={"/flyers/center_bible.jpg"} alt = "bible open" fill />
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300/40"/>
             <div className="absolute top-1/3 left-1/2 transform -translate-y-1/2 -translate-x-1/2 text-center">
                 <div className={clsx("text-6xl font-extrabold italic", {"text-7xl": sizeFull})}>
@@ -65,7 +61,7 @@ function PrayerWorshipNight(sizeFull: boolean) {
     const t = useTranslations("HomePage.flyers.worship")
     return (
         <>
-            <Image className="object-cover object-top" src={prayerHands} alt = "prayer group" fill />
+            <Image className="object-cover object-top" src={"/flyers/groupPrayer.jpg"} alt = "prayer group" fill />
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300/60"/>
             <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 text-center">
                 <div className={clsx("text-6xl font-extrabold italic", {"text-7xl": sizeFull})}>
@@ -93,7 +89,7 @@ function PrayerService(sizeFull: boolean){
     return (
         <>
             <Image className="object-cover"
-            src ={prayerImage}
+            src ={"/flyers/prayer.jpg"}
             fill
             alt = "sunday image"
             />
@@ -123,7 +119,7 @@ function SundayService(sizeFull: boolean){
     return (
         <>
             <Image className="object-cover object-top"
-            src ={sundayImage}
+            src ={"/flyers/sunday_service.jpg"}
             fill
             alt = "sunday image"
             />

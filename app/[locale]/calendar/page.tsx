@@ -25,7 +25,6 @@ for (const event of eventList) {
 export default async function Calendar(){
 
     const locale = await getLocale();
-    console.log(locale);
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/" + locale ; //for dev portion
     console.log(baseUrl)

@@ -1,5 +1,4 @@
 import Image from "next/image"
-import donation_image from "../../../public/donation.png"
 import { useTranslations } from "next-intl"
 
 const donation_values: number [] = [5,10,25,50,100, 0]
@@ -11,7 +10,7 @@ export default function Donate(){
     return(
         <div className="mb-15">
             <div className="w-screen h-75 relative">
-                <Image className="object-cover" src={donation_image} alt="donation image" fill />
+                <Image className="object-cover" src={"/donation.png"} alt="donation image" fill />
                 <div className="absolute top-0 left-0 bg-gray-200/60 w-full h-75"/>
                 <div className="absolute top-0 left-0 flex justify-center items-center w-full h-75 text-center text-3xl/12 italic">
                     <div className="w-3/4">
