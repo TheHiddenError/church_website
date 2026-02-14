@@ -1,11 +1,13 @@
 "use client"
 
 import clsx from "clsx";
-import {getFirstWeekday, getGridRows, getMaxDays} from "../../helperFunctions/dates_functions"
+import {getFirstWeekday, getGridRows, getMaxDays, getFirstMonday, change24to12Format } from "../../helperFunctions/dates_functions"
 import { useState } from "react";
-import { EventDef } from "@/app/[locale]/lib/placeholder_data";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { EventDef } from "../../lib/types";
+
 
 type Event = {
     date?: string,
@@ -54,12 +56,10 @@ const eventFor = {
     Other: "bg-green-500"
 }
 
-const fixedLocation = "Iglesia Nueva Esperanza"
-
-
-
 
 export default function CalendarSec({eventData}: {eventData: EventDef []}){
+
+    const locale = useLocale();
 
     const t = useTranslations("Calendar");
 
@@ -87,10 +87,28 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
     const calendarRows: number [] = Array.from({length: gridRows}, () => 0);
 
 
-    const regexEx = /(?<month>\d+)\-(?<day>\d+)(?=-)/
+    const regexEx = /(?<month>\d+)\/(?<day>\d+)(?=\/)/
     const eventMap = new Map<number, EventDef []>();
+    // const importantMap = new Map<number, EventDef>();
+
+    // for (const imp of ImportantEvents){
+    //     const checker = imp.date.match(/[A-z][a-z]/) //Only monday service would be constant. The rest would be a date
+
+    //     if (checker) {
+    //         let temp_month = current.getMonth()
+    //         for (let i = 0; i < 3; i ++){
+    //             const firstMonday = getFirstMonday(current.getFullYear(), temp_month);
+    //             const temp_obj =  {...imp, date: `${temp_month < 10 ? `0${temp_month}`: temp_month }-0${firstMonday}-26`}
+    //             importantMap.set(monthDaysMax[temp_month], temp_obj);
+    //             temp_month ++;
+    //         }
+    //     }
+
+    // }
+
     for (const event of eventData){
-        const regexMatch = event.date?.match(regexEx);
+        const regexMatch = event.date.match(regexEx);
+        console.log(regexMatch);
         if (regexMatch == null)
             continue;
         const theDay = Number(regexMatch?.groups?.day);
@@ -101,7 +119,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
         }
         else {
             if (event.location == undefined)
-                eventMap.set(theDay + eventMonth, [{...event, location: ""}]);
+                eventMap.set(theDay + eventMonth, [{...event, location: "Iglesia Nueva Esperanza"}]);
 
             else {
                 eventMap.set(theDay + eventMonth, [event]);
@@ -122,15 +140,15 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
     }
 
     function PopupPartialSection({title, info}: {title: string, info: string}){
-        console.log(info);
-        const properTitle = title[0].toUpperCase() + title.slice(1);
+
+        const properTitle = t("pop_up." + title);
         return (
         <div>
             <div className="font-bold text-xl inline-block">
                 {properTitle}:
             </div>
             <span className="text-md pl-2">
-                {title == "location" && info == "" ? fixedLocation: info}
+                {info}
             </span>
         </div>
         )
@@ -139,26 +157,34 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
     function PopupInfoSection(){
         if (eventInfo == undefined)
             return;
-        const valuesToShow = ["summary", "date", "time", "location"]
+        const valuesToShow = [locale == "en" ? "summary": "summary_es", "date", "time", "location"]
         return (
-        <div className="h-3/5 mt-2 flex flex-col gap-5">
-            {Object.entries(eventInfo).map(([key, value]) => {
-                if (!(valuesToShow.includes(key))) 
-                    return null;
-                return (
-                <PopupPartialSection
-                    key={key}
-                    title={key}
-                    info={value == undefined || typeof value == "boolean"? "": value}
-                />
-                );
-            })}
-            <div className="flex w-full justify-center">
-                <div className="w-1/2 rounded-lg bg-red-400 text-center text-white text-lg cursor-pointer">
-                    Send a Reminder
+        <>
+            <div className="h-3/5 mt-2 flex flex-col gap-5">
+                {Object.entries(eventInfo).map(([key, value]) => {
+                    if (!(valuesToShow.includes(key))) 
+                        return null;
+                    return (
+                    <PopupPartialSection
+                        key={key}
+                        title={key.replace(/_\w*/, "")}
+                        info={value == undefined || typeof value == "boolean"? "": value}
+                    />
+                    );
+                })}
+                <div className="flex w-full justify-center">
+                    <div className="w-1/2 rounded-lg bg-red-400 text-center text-white text-lg cursor-pointer">
+                        {t("pop_up.reminder")}
+                    </div>
                 </div>
             </div>
-        </div>
+            <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/20 h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer">
+                <Image className="object-cover" src ="/x_icon.jpg"
+                fill 
+                alt = "x icon" 
+                />
+            </div>
+        </>
         )
     }
 
@@ -207,7 +233,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
             </div>
             <div className={`grid grid-cols-${Object.keys(eventFor).length + 1} w-4/5 my-3`}>
                 <div className="justify-self-center font-extrabold text-lg pr-3">
-                    Legend:
+                    {t("legend.name")}:
                 </div>
                 {Object.entries(eventFor).map(([key, value], index) => {
                     return (
@@ -233,6 +259,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                     <div key={(upperIndex + 1) * 100} className=" grid grid-cols-7">
                         {calendarCols.map((something, index)=> {
                             const iterateDay: number = (index + 1 + (7 * upperIndex)) - firstDay;
+                            // const importEvent = importantMap.get(iterateDay + monthDaysMax[calendarTracker]);
                             const eventsInformation = eventMap.get(iterateDay + monthDaysMax[calendarTracker]);
                         return <div key={index + (7 * upperIndex)}>
                             <div className={clsx( "border-l-2 border-b-2 border-black w-full h-40 relative",
@@ -240,36 +267,50 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                 "border-r-2": index === 6,
                                 "bg-blue-300 font-bold": current.getMonth() == calendarTracker && (iterateDay) === current_day,
                                 })}>
-                                {iterateDay > 0 && iterateDay <= maxDays &&
-                                <>
-                                    <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2">
-                                        <div>
+                                {/* {importEvent != undefined ?
+                                    <div className="w-full" key={importEvent.title}>
+                                        <div onClick={importEvent?.summary ? ()=> eventClickHandler(importEvent): undefined} className={clsx("text-center w-full", 
+                                            eventFor[importEvent.for as keyof typeof eventFor] ?? "bg-gray-200",
+                                            {"text-white rounded-lg cursor-pointer py-1" : importEvent?.summary,
+                                            })}>
                                             <div className="">
-                                                {constantEvents[index]?.title ?? ""}
-                                            </div>
-                                            <div>
-                                                {constantEvents[index]?.time ?? ""}
+                                                {importEvent === undefined ? constantEvents[index]?.title : (locale == "en" ?  importEvent.title: importEvent.title_es)}
                                             </div>
                                         </div>
-                                        {eventsInformation?.map((eve) => {
-                                            return (
-                                            <div className="w-full" key={eve.title}>
-                                                <div onClick={eve?.summary ? ()=> eventClickHandler(eve): undefined} className={clsx("text-center w-full", 
-                                                    eventFor[eve.for as keyof typeof eventFor] ?? "bg-gray-200",
-                                                    {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
-                                                    })}>
-                                                    <div className="">
-                                                        {eve === undefined ? constantEvents[index]?.title ?? "" : eve.title}
-                                                    </div>
+                                    </div>
+                                : */}
+                                    <>
+                                    {iterateDay > 0 && iterateDay <= maxDays &&
+                                    <>
+                                        <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2">
+                                            <div>
+                                                <div className="">
+                                                    {constantEvents[index]?.title ?? ""}
+                                                </div>
+                                                <div>
+                                                    {constantEvents[index]?.time ?? ""}
                                                 </div>
                                             </div>
-                                            )
-                                        })}
-                                    </div>
-                                    <div className= {clsx("w-1 h-35 absolute bg-red-600 z-10 top-0 left-20 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
-                                    <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
+                                            {eventsInformation?.map((eve) => {
+                                                return (
+                                                <div className="w-full" key={eve.title}>
+                                                    <div onClick={eve?.summary ? ()=> eventClickHandler(eve): undefined} className={clsx("text-center w-full drop-shadow-md", 
+                                                        eventFor[eve.for as keyof typeof eventFor] ?? "bg-gray-200",
+                                                        {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
+                                                        })}>
+                                                        <div className="">
+                                                            {eve === undefined ? constantEvents[index]?.title : (locale == "en" ?  eve.title: eve.title_es)}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                )
+                                            })}
+                                        </div>
+                                        <div className= {clsx("w-1 h-35 absolute bg-red-600 z-10 top-0 left-20 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
+                                        <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
+                                    </>
+                                    }
                                 </>
-                                }
                             </div>
                         </div>
                         })}
@@ -283,7 +324,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                 <div className="w-1/2 h-3/5 bg-white p-5 relative">
                     <div className="h-2/5">
                         <div className="text-3xl font-bold h-2/5">
-                            {eventInfo ? eventInfo.title : ""}
+                            {eventInfo ? (locale == "en" ? eventInfo.title : eventInfo.title_es) : ""}
                         </div>
                         <div className="h-3/5 w-full border-b-1 border-gray-300 pb-2">
                             <div className="h-full w-1/8 relative">
@@ -296,7 +337,6 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                         </div>
                     </div>
                         <PopupInfoSection/>
-                    <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/20 h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer"/>
                 </div>
             </div>
         </div>

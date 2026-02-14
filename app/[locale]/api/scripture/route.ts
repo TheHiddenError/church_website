@@ -14,7 +14,6 @@ export async function GET(){
     const locale = await getLocale();
     const translation = locale == "en" ? "nkjv": "rvr1960"
 
-    const removingExcess = /&[^;]*;/g
     const gettingChapter = /\d* [A-Z][a-z]*/
 
     const votd_url = `https://www.biblegateway.com/votd/get/?format=json&version=${translation}`
@@ -25,7 +24,7 @@ export async function GET(){
     await fetch(votd_url)
     .then(request=> request.json())
     .then(result=>{
-        const temp_text = result.votd.content.replace(removingExcess, "");
+        const temp_text = result.votd.content;
         clean_text = sanitizeHtml(temp_text, {
             allowedTags: [ 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'strong', 'a' ],
             });

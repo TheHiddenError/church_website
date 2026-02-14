@@ -9,7 +9,7 @@ export default function Card({card_info}: CardObj){
     return (
       <>
         <div className="w-full flex flex-col items-center">
-          <div className="w-4/5 bg-gray-200/80 pb-5">
+          <div className="w-4/5 bg-gray-200/80 pb-5 rounded-lg">
             <div className="bg-gray-400 h-75 relative">
               {card_info.imageSrc != "" && <Image className="object-cover" src={card_info.imageSrc} alt="prayer photo" fill />}
             </div>

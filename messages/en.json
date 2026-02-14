@@ -4,7 +4,7 @@
         "about": "About Us",
         "calendar": "Calendar",
         "donate": "Donate",
-        "translator": "Habla Espanol?"
+        "translator": "Habla Espanol? Clic Aquí"
     },
     "Footer": {
         "address": "Address",
@@ -80,6 +80,7 @@
             "sat": "Sat"
         },
         "legend" : {
+            "name": "Legend",
             "men": "Men",
             "women": "Women",
             "children": "Children",
@@ -91,6 +92,13 @@
             "sun": "Sunday Service",
             "mon": "Prayer Service",
             "wed": "Disciple Service"
+        },
+        "pop_up": {
+            "date": "Date",
+            "time": "Time",
+            "summary": "Summary",
+            "location": "Location",
+            "reminder": "Send a Reminder"
         }
     },
     "Donate": {

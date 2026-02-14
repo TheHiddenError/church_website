@@ -72,7 +72,7 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
                     </div>
                 </div>
                     <div className="text-center font-bold text-2xl">
-                        -{verse} ({translation})
+                        - {verse} ({translation})
                     </div>
                     <div className="text-center text-lg underline text-blue-600 hover:text-blue-400 my-2">
                         <a className="" href={link} target="_blank" rel="noopener noreferrer">

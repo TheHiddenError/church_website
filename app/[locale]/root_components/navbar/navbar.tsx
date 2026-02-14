@@ -61,7 +61,7 @@ export default function NavBar(){
                     fill
                 />
             </div>
-            <div className="px-2 text-white font-bold">
+            <div className="px-2 text-white text-sm font-bold p-3">
                 {t("translator")}  
             </div>
         </div>

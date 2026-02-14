@@ -4,7 +4,7 @@
         "about": "Sobre Nosotros",
         "calendar": "Calendario",
         "donate": "Donar",
-        "translator": "Speak English?"
+        "translator": "Speak English? Click Here"
     },
 
     "Footer": {
@@ -83,6 +83,7 @@
             "sat": "Sáb"
         },
         "legend" : {
+            "name": "Leyenda",
             "men": "Hombres",
             "women": "Mujeres",
             "children": "Niños",
@@ -94,6 +95,14 @@
             "sun": "Servicio Dominical",
             "mon": "Servicio de Oración",
             "wed": "Servicio de Discipulado"
+        },
+        "pop_up": {
+            "title": "Título",
+            "date": "Fecha",
+            "time": "Tiempo",
+            "summary": "Sumario",
+            "location": "Ubicación",
+            "reminder" : "Enviar un recordatorio"
         }
     },
     "Donate": {

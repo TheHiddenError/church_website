@@ -1,16 +1,26 @@
 import { formatDate } from "@/app/[locale]/helperFunctions/dates_functions"
+import { useLocale } from "next-intl"
+
+type Event = {
+  title: string,
+  title_es: string,
+  time?: string
+  summary?: string | null,
+  summary_es?: string | null,
+  date: string 
+}
 
 type UpcomingSecProps = {
-    title?: string, 
-    date: string,
-    description?: string
-    time?: string
+   temp: Event
 }   
 
 
-export default function UpcomingSec({title, date, description, time}: UpcomingSecProps){
+export default function UpcomingSec({temp}: UpcomingSecProps){
 
-    const formattedDate = formatDate(date);
+    const locale = useLocale();
+
+    const regexDate = /\d+\/\d{2}/
+    const formattedDate = temp.date.match(regexDate)![0];
 
     return (
         <div className="flex flex-col items-center px-10">
@@ -20,14 +30,14 @@ export default function UpcomingSec({title, date, description, time}: UpcomingSe
           <div className="w-4/5 text-center mt-3">
             <div className="text-xl font-semibold">
                 <div>
-                    {title}
+                    {locale == 'en' ? temp.title: temp.title_es}
                 </div>
                 <div>
-                    {time}
+                    {temp.time}
                 </div>
             </div>
             <div className="text-md">
-                {description}
+                {locale == 'en' ? temp.summary: temp.summary_es}
             </div>
           </div>  
         </div>

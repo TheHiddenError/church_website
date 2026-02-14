@@ -1,6 +1,7 @@
 "use client"
 
 import { ModalInfo } from "../types/modal"
+import Image from "next/image"
 
 type ModalInfoProps = {
     info: ModalInfo
@@ -13,7 +14,12 @@ export default function ModalOverlay({info}: ModalInfoProps){
                 <div className="w-full h-full flex justify-center items-center">
                     <div className="w-1/3 h-7/10 rounded-lg bg-white p-8">
                         <div className="h-3/10 w-full relative">
-                            <div onClick = {info.button_action} className="cursor-pointer absolute top-0 right-0 w-1/10 h-3/10 bg-gray-400"/>
+                            <div onClick = {info.button_action} className="cursor-pointer absolute top-0 right-0 w-1/10 h-3/10">
+                                <Image className="object-cover" src ="/x_icon.jpg"
+                                fill 
+                                alt = "x icon" 
+                                />
+                            </div>
                             <div className="flex h-1/2  items-center font-extrabold text-3xl">
                                 {info.title}
                             </div>
