@@ -18,13 +18,13 @@ function MissionFlyer(sizeFull: boolean) {
             alt = "bible open cross"
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
-            <div className={clsx("absolute w-2/5 text-center", {"top-50 left-25": !sizeFull, "top-1/3 left-1/10": sizeFull})}>
-            <div className={clsx("font-bold text-5xl", {"text-7xl": sizeFull})}>
+            <div className={clsx("absolute w-2/5 text-center", {"top-50 left-25": !sizeFull, "top-3/20 left-1/10": sizeFull})}>
+            <div className={clsx("font-bold text-5xl", {"text-8xl": sizeFull})}>
                 {t("heading")}
             </div>
             <div className="flex justify-center w-full mt-7">
                 <div className={clsx("w-2/3", {"w-full": sizeFull})}>
-                    <div className={clsx("font-semibold italic text-2xl", {"text-3xl": sizeFull})}>
+                    <div className={clsx("font-semibold italic text-2xl", {"text-5xl": sizeFull})}>
                         {t("text")} - {t("verse")}
                     </div>
                 </div> 
@@ -42,13 +42,13 @@ function DiscpleFlyer(sizeFull:boolean){
             <Image className="object-cover object-bottom" src={"/flyers/center_bible.jpg"} alt = "bible open" fill />
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300/40"/>
             <div className="absolute top-1/3 left-1/2 transform -translate-y-1/2 -translate-x-1/2 text-center">
-                <div className={clsx("text-6xl font-extrabold italic", {"text-7xl": sizeFull})}>
+                <div className={clsx("text-6xl font-extrabold italic", {"text-8xl": sizeFull})}>
                     {t("heading")}
                 </div>
-                <div className={clsx("my-7 text-4xl", {"text-5xl": sizeFull})}>
+                <div className={clsx("my-7 text-4xl", {"text-7xl": sizeFull})}>
                     {t("text")}
                 </div>
-                <div className={clsx("text-2xl font-bold", {"text-4xl": sizeFull})}>
+                <div className={clsx("text-2xl font-bold italic", {"text-6xl": sizeFull})}>
                     7:00 PM
                 </div>
             </div> 
@@ -63,18 +63,18 @@ function PrayerWorshipNight(sizeFull: boolean) {
         <>
             <Image className="object-cover object-top" src={"/flyers/groupPrayer.jpg"} alt = "prayer group" fill />
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300/60"/>
-            <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 text-center">
-                <div className={clsx("text-6xl font-extrabold italic", {"text-7xl": sizeFull})}>
+            <div className={clsx("absolute text-center top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2")}>
+                <div className={clsx("text-6xl font-extrabold italic", {"text-9xl w-screen": sizeFull})}>
                     {t("heading")}
                 </div>
-                <div className={clsx("my-7 text-3xl", {"text-4xl": sizeFull})}>
+                <div className={clsx("my-7 text-3xl", {"text-6xl": sizeFull})}>
                     {t("subheading")}
                 </div>
-                <div className={clsx("text-2xl font-bold", {"text-4xl": sizeFull})}>
+                <div className={clsx("text-2xl font-bold", {"text-6xl": sizeFull})}>
                     <div>
                         {t("text")}
                     </div>
-                    <div>
+                    <div className="italic">
                         7:00 PM
                     </div>
                 </div>
@@ -94,14 +94,14 @@ function PrayerService(sizeFull: boolean){
             alt = "sunday image"
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
-            <div className={clsx("absolute w-2/5 text-center", {"top-50 right-25": !sizeFull, "top-1/3 right-1/10": sizeFull})}>
-                <div className={clsx("text-6xl font-bold", {"text-7xl": sizeFull})}>
+            <div className={clsx("absolute w-2/5 text-center", {"top-50 right-25": !sizeFull, "top-1/5 right-1/10": sizeFull})}>
+                <div className={clsx("text-6xl font-bold", {"text-9xl": sizeFull})}>
                     {t("heading")}
                 </div>
-                <div className={clsx("text-3xl my-3", {"text-4xl": sizeFull})}>
+                <div className={clsx("text-3xl my-3", {"text-6xl": sizeFull})}>
                     {t("subheading")}
                 </div>
-                <div className={clsx("text-2xl font-bold", {"text-3xl": sizeFull})}>
+                <div className={clsx("text-2xl font-bold", {"text-5xl": sizeFull})}>
                     <div>
                         {t("text")}
                     </div>
@@ -124,14 +124,14 @@ function SundayService(sizeFull: boolean){
             alt = "sunday image"
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
-            <div className={clsx("absolute w-2/5 text-center", { "top-50 left-25" :!sizeFull,"top-1/4 left-1/10": sizeFull})}>
-                <div className={clsx("text-6xl font-bold", {"text-7xl": sizeFull})}>
+            <div className={clsx("absolute w-2/5 text-center", { "top-50 left-25" :!sizeFull,"top-1/10 left-1/10": sizeFull})}>
+                <div className={clsx("text-6xl font-bold", {"text-9xl": sizeFull})}>
                     {t("heading")}
                 </div>
-                <div className={clsx("text-2xl my-3", {"text-3xl": sizeFull})}>
+                <div className={clsx("text-2xl my-3", {"text-5xl": sizeFull})}>
                     {t("subheading")}
                 </div>
-                <div className={clsx("text-2xl font-bold", {"text-3xl": sizeFull})}>
+                <div className={clsx("text-2xl font-bold", {"text-5xl": sizeFull})}>
                     <div>
                         {t("text")}
                     </div>
