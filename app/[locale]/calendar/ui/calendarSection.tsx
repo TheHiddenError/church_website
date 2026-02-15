@@ -329,7 +329,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                         <div className="h-3/5 w-full border-b-1 border-gray-300 pb-2">
                             <div className="h-full w-1/8 relative">
                                 <Image className="object-cover"
-                                    src={eventInfo ? `/eventIcon/${eventInfo.type}.png`: "/missingImage.png"}
+                                    src={eventInfo ? `/eventIcon/${eventInfo.type.toLowerCase()}.png`: "/missingImage.png"}
                                     alt ={"Descriptive Icon"}
                                     fill
                                 />
