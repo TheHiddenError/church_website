@@ -14,7 +14,7 @@ export async function GET(){
     const locale = await getLocale();
     const translation = locale == "en" ? "nkjv": "rvr1960"
 
-    const gettingChapter = /\d* [A-Z][a-z]*/
+    const gettingChapter = /(\d* )*[A-Z][a-z]* \d*/
 
     const votd_url = `https://www.biblegateway.com/votd/get/?format=json&version=${translation}`
     let clean_text = ""
@@ -29,6 +29,7 @@ export async function GET(){
             allowedTags: [ 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'strong', 'a' ],
             });
         scripture_verse = result.votd.reference;
+        console.log(scripture_verse)
         const temp_chapter = scripture_verse.match(gettingChapter)
         if (temp_chapter)
             link_verse+=(temp_chapter[0] + "&version=" + translation);

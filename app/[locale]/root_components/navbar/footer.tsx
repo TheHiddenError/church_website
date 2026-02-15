@@ -23,7 +23,7 @@ export default function Footer(){
     const t = useTranslations("Footer");
 
     return(
-        <div className="grid grid-cols-2 bg-blue-700 w-screen text-gray-200 text-center divide-x-2 divide-white divide-solid h-[20vh]">
+        <div className="grid grid-cols-2 bg-blue-700 w-screen text-gray-200 text-center divide-x-2 divide-white divide-solid h-[25vh]">
             <GridPart name = {t("address")} information = "3100 Billman Rd, Donna TX" />
             <GridPart name = {t("phone")} information="(956) 123-4567" />
         </div>

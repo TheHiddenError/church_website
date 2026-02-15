@@ -298,7 +298,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                                         eventFor[eve.for as keyof typeof eventFor] ?? "bg-gray-200",
                                                         {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
                                                         })}>
-                                                        <div className="">
+                                                        <div className={clsx("text-md", {"text-sm" : eve.title_es.length > 20})}>
                                                             {eve === undefined ? constantEvents[index]?.title : (locale == "en" ?  eve.title: eve.title_es)}
                                                         </div>
                                                     </div>

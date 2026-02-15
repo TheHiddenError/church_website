@@ -19,7 +19,7 @@ function MissionFlyer(sizeFull: boolean) {
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
             <div className={clsx("absolute w-2/5 text-center", {"top-50 left-25": !sizeFull, "top-3/20 left-1/10": sizeFull})}>
-            <div className={clsx("font-bold text-5xl", {"text-8xl": sizeFull})}>
+            <div className={clsx("font-bold text-5xl", {"text-7xl": sizeFull})}>
                 {t("heading")}
             </div>
             <div className="flex justify-center w-full mt-7">
@@ -95,7 +95,7 @@ function PrayerService(sizeFull: boolean){
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
             <div className={clsx("absolute w-2/5 text-center", {"top-50 right-25": !sizeFull, "top-1/5 right-1/10": sizeFull})}>
-                <div className={clsx("text-6xl font-bold", {"text-9xl": sizeFull})}>
+                <div className={clsx("text-6xl font-bold", {"text-8xl": sizeFull})}>
                     {t("heading")}
                 </div>
                 <div className={clsx("text-3xl my-3", {"text-6xl": sizeFull})}>
@@ -125,10 +125,10 @@ function SundayService(sizeFull: boolean){
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
             <div className={clsx("absolute w-2/5 text-center", { "top-50 left-25" :!sizeFull,"top-1/10 left-1/10": sizeFull})}>
-                <div className={clsx("text-6xl font-bold", {"text-9xl": sizeFull})}>
+                <div className={clsx("text-6xl font-bold", {"text-8xl": sizeFull})}>
                     {t("heading")}
                 </div>
-                <div className={clsx("text-2xl my-3", {"text-5xl": sizeFull})}>
+                <div className={clsx("text-2xl my-3", {"text-4xl": sizeFull})}>
                     {t("subheading")}
                 </div>
                 <div className={clsx("text-2xl font-bold", {"text-5xl": sizeFull})}>
