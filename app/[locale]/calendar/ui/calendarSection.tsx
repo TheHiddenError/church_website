@@ -144,10 +144,10 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
         const properTitle = t("pop_up." + title);
         return (
         <div>
-            <div className="font-bold text-xl inline-block">
+            <div className="font-bold text-lg lg:text-xl inline-block">
                 {properTitle}:
             </div>
-            <span className="text-md pl-2">
+            <span className="text-sm lg:text-base pl-2">
                 {info}
             </span>
         </div>
@@ -173,12 +173,12 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                     );
                 })}
                 <div className="flex w-full justify-center">
-                    <div className="w-1/2 rounded-lg bg-red-400 text-center text-white text-lg cursor-pointer">
+                    <div className="w-3/4 lg:w-1/2 rounded-lg bg-red-400 text-center text-white text-lg cursor-pointer">
                         {t("pop_up.reminder")}
                     </div>
                 </div>
             </div>
-            <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/20 h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer">
+            <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/10 h-1/20 lg:w-1/10 lg:h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer">
                 <Image className="object-cover" src ="/x_icon.jpg"
                 fill 
                 alt = "x icon" 
@@ -192,7 +192,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
     return(
     <>
         <div className="w-screen flex flex-col items-center mb-15">
-            <div className="grid grid-cols-3 w-full my-6">
+            <div className="grid grid-cols-3 w-full my-6 gap-5">
                 <div onClick={()=>changeCalendarMonth()} className={clsx("place-self-end cursor-pointer", {"invisible pointer-events-none": calendarTracker == monthToCompare})}>
                     <svg
                     width="40"
@@ -210,7 +210,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                     />
                     </svg>
                 </div>
-                <div className="text-4xl font-extrabold place-self-center">
+                <div className="text-3xl lg:text-4xl font-extrabold place-self-center">
                     {current_month}
                 </div>
                 <div onClick={()=> changeCalendarMonth(true)} className={clsx("place-self-start cursor-pointer", {"invisible pointer-events-none": calendarTracker == monthToCompare + 2})}>
@@ -231,24 +231,30 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                     </svg>
                 </div>
             </div>
-            <div className={`grid grid-cols-${Object.keys(eventFor).length + 1} w-4/5 my-3`}>
-                <div className="justify-self-center font-extrabold text-lg pr-3">
-                    {t("legend.name")}:
+            <div className="w-4/5 flex">
+                <div className = "w-1/10">
+                    <div className="flex justify-center items-center h-full font-extrabold text-lg pr-3">
+                        {t("legend.name")}:
+                    </div>
                 </div>
-                {Object.entries(eventFor).map(([key, value], index) => {
-                    return (
-                        <div className="h-full flex items-center" key = {index.toString() + key}>
-                            <div className={`w-1/5 inline-block h-full ${value} justify-self-end-safe`}/>   
-                            <span className="w-1/2 font-bold text-md pl-2">{t("legend."+key.toLowerCase())}</span>
-                        </div>
-                    )
-                })}
+                <div className="w-9/10">
+                    <div className={`grid grid-cols-2 lg:grid-cols-6 w-4/5 my-3 ml-10 gap-2`}>
+                        {Object.entries(eventFor).map(([key, value], index) => {
+                            return (
+                                <div className="h-full flex items-center" key = {index.toString() + key}>
+                                    <div className={`w-1/5 inline-block h-full ${value} justify-self-end-safe`}/>   
+                                    <span className="w-1/2 font-bold text-md pl-2">{t("legend."+key.toLowerCase())}</span>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
             </div>
-            <div className="grid grid-rows w-4/5">
+            <div className="grid grid-rows w-full lg:w-4/5 ">
                 <div className="grid grid-cols-7">
                     {daysOfWeek.map((elementName) => {
                         return(
-                            <div key = {elementName} className="font-semibold text-xl text-center">
+                            <div key = {elementName} className="font-semibold text-md lg:text-xl text-center">
                                 {elementName}
                             </div>
                         )
@@ -283,7 +289,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                     {iterateDay > 0 && iterateDay <= maxDays &&
                                     <>
                                         <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2">
-                                            <div>
+                                            <div className="text-[10px] md:text-base">
                                                 <div className="">
                                                     {constantEvents[index]?.title ?? ""}
                                                 </div>
@@ -298,7 +304,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                                         eventFor[eve.for as keyof typeof eventFor] ?? "bg-gray-200",
                                                         {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
                                                         })}>
-                                                        <div className={clsx("text-md", {"text-sm" : eve.title_es.length > 20})}>
+                                                        <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : eve.title_es.length > 20})}>
                                                             {eve === undefined ? constantEvents[index]?.title : (locale == "en" ?  eve.title: eve.title_es)}
                                                         </div>
                                                     </div>
@@ -306,7 +312,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                                 )
                                             })}
                                         </div>
-                                        <div className= {clsx("w-1 h-35 absolute bg-red-600 z-10 top-0 left-20 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
+                                        <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
                                         <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
                                     </>
                                     }
@@ -321,13 +327,13 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
         </div>
         <div className={clsx("fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen", {"hidden": !eventClick})}>
             <div className="w-full h-full flex justify-center items-center">
-                <div className="w-1/2 h-3/5 bg-white p-5 relative">
+                <div className="w-4/5 lg:w-1/2 h-3/5 bg-white p-5 relative rounded-lg">
                     <div className="h-2/5">
-                        <div className="text-3xl font-bold h-2/5">
+                        <div className="text-2xl lg:text-3xl font-bold h-2/5">
                             {eventInfo ? (locale == "en" ? eventInfo.title : eventInfo.title_es) : ""}
                         </div>
                         <div className="h-3/5 w-full border-b-1 border-gray-300 pb-2">
-                            <div className="h-full w-1/8 relative">
+                            <div className="h-3/4 h-full w-1/4 lg:w-2/8 relative">
                                 <Image className="object-cover"
                                     src={eventInfo ? `/eventIcon/${eventInfo.type.toLowerCase()}.png`: "/missingImage.png"}
                                     alt ={"Descriptive Icon"}

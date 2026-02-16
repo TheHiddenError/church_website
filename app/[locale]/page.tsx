@@ -68,11 +68,11 @@ export default async function Start_Page(){
   return (
   <>
     <div className="mb-15">
-      <div className="w-screen h-150 relative overflow-hidden">
+      <div className="w-screen h-110 lg:h-150 relative overflow-hidden">
           <EventFlyerSection />
       </div>
       <div className={`${styles.upcoming} w-screen flex flex-col justify-center items-center py-10`}>
-        <div className="text-5xl font-extrabold">
+        <div className="text-4xl lg:text-5xl font-extrabold">
           {t("upcoming_events")}
         </div>
         <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">

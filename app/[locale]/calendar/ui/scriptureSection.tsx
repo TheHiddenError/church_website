@@ -64,10 +64,10 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
     return (
         <div className={`${styles.calendarBG} mt-4 py-7 w-screen flex justify-center`}>
             <div className="w-9/10">
-                <div className="font-extrabold text-3xl border-b-2 border-b-black pb-3 text-center">
+                <div className="font-extrabold text-3xl border-b-2 border-b-black pb-3 text-center w-full">
                     {t("verse_day")}: {todays_date}
                 </div>
-                <div className={`${styles.wrapper}`}>
+                <div className={`${styles.wrapper} flex w-full justify-center`}>
                     <div className="text-xl py-3" dangerouslySetInnerHTML={{ __html: text }} >
                     </div>
                 </div>

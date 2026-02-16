@@ -31,17 +31,17 @@ export default function NavBar(){
         {name: t("donate"), href: "/donate"}
     ]
 
-    return <div className={`grid grid-cols-5 relative mt-2 h-[20vh] font-inter`}>
-        <div className="flex flex-col items-center text-center">
+    return <div className={`grid lg:grid-cols-5 relative mt-2 h-[25vh] lg:h-[25vh] gap-2`}>
+        <div className="flex flex-col w-full lg:items-center justify-center text-center place-self-center">
             <Image 
                 src={"/white_dove.png"}
                 width = {100}
                 height = {100}
                 alt="white dove"
             />
-            <div className="font-bold text-xl ml-4 text-wrap w-3/5">Iglesia Nueva Esperanza</div>
+            <div className="font-bold text-sm lg:text-2xl lg:ml-4 text-wrap w-1/5 lg:w-3/5">Iglesia Nueva Esperanza</div>
         </div>
-        <div className="col-span-4 grid grid-cols-4 items-end text-xl text-center">
+        <div className="lg:col-span-4 grid grid-cols-4 items-end text-base md:text-xl lg:text-2xl text-center">
             {links.map((link) => {
                 return (
                 <Link
@@ -53,15 +53,15 @@ export default function NavBar(){
                 )
             })}
         </div>
-        <div onClick={()=> switchLocale(locale == "en" ? "es": "en")} className="flex absolute right-10 items-center top-10 text-md mt-2 bg-blue-600 p-1 rounded-lg cursor-pointer hover:bg-blue-400">
-            <div className="relative w-7 h-7">
+        <div onClick={()=> switchLocale(locale == "en" ? "es": "en")} className="flex absolute top-5 right-5 lg:right-10 items-center lg:top-10 text-sm lg:text-md mt-2 bg-blue-600 p-1 rounded-lg cursor-pointer hover:bg-blue-400">
+            <div className="relative w-5 h-5 lg:w-7 lg:h-7">
                 <Image className="object-cover"
                     src="/white_arrows_circle.png"
                     alt = "double arrow circle"
                     fill
                 />
             </div>
-            <div className="px-2 text-white text-sm font-bold p-3">
+            <div className="px-2 text-white text-xs md:text-lg font-bold p-3">
                 {t("translator")}  
             </div>
         </div>

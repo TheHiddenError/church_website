@@ -12,18 +12,18 @@ export default function ModalOverlay({info}: ModalInfoProps){
     return (
         <div className="fixed inset-0 z-10 h-screen w-screen bg-black/80">
                 <div className="w-full h-full flex justify-center items-center">
-                    <div className="w-1/3 h-7/10 rounded-lg bg-white p-8">
+                    <div className="w-9/10 md:w-4/5 lg:w-2/5 h-4/5 lg:h-7/10 rounded-lg bg-white p-8">
                         <div className="h-3/10 w-full relative">
-                            <div onClick = {info.button_action} className="cursor-pointer absolute top-0 right-0 w-1/10 h-3/10">
+                            <div onClick = {info.button_action} className="cursor-pointer absolute top-0 right-0 w-1/10 h-1/5 lg:w-1/10 lg:h-3/10">
                                 <Image className="object-cover" src ="/x_icon.jpg"
                                 fill 
                                 alt = "x icon" 
                                 />
                             </div>
-                            <div className="flex h-1/2  items-center font-extrabold text-3xl">
+                            <div className="flex h-1/2  items-center font-extrabold text-2xl md:text-3xl">
                                 {info.title}
                             </div>
-                            <div className="h-1/2 text-md text-gray-600">
+                            <div className="h-1/2 text-sm md:text-xl lg:text-base text-gray-600">
                                 {info.description}
                             </div>
                         </div>  

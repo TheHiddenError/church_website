@@ -44,7 +44,7 @@ export default function HomeCardSection(){
 
     return (
         <>
-            <div className="mt-20 grid grid-cols-2">
+            <div className="mt-20 lg:grid lg:grid-cols-2">
                 <Card card_info={aboutCard}
                 />
                 <Card card_info={prayerCard} />   

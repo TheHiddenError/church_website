@@ -23,23 +23,27 @@ export default function UpcomingSec({temp}: UpcomingSecProps){
     const formattedDate = temp.date.match(regexDate)![0];
 
     return (
-        <div className="flex flex-col items-center px-10">
-          <div className="text-5xl font-bold">
+        <div className="grid grid-rows-4 items-center px-2 lg:px-10 gap-2 items-start justify-center">
+          <div className="text-4xl lg:text-5xl font-bold place-self-center">
             {formattedDate}
           </div>
-          <div className="w-4/5 text-center mt-3">
-            <div className="text-xl font-semibold">
+          <div className=" text-center w-full">
+            <div className="text-md lg:text-2xl font-semibold">
                 <div>
                     {locale == 'en' ? temp.title: temp.title_es}
                 </div>
-                <div>
-                    {temp.time}
-                </div>
             </div>
-            <div className="text-md">
+          </div>
+          <div className=" text-center w-full">
+              <div className="text-xl lg:text-3xl italic">
+                {temp.time}
+              </div>
+          </div>
+          <div className=" text-center w-full">
+            <div className="text-sm lg:text-lg">
                 {locale == 'en' ? temp.summary: temp.summary_es}
             </div>
-          </div>  
+          </div>    
         </div>
     )
 }
