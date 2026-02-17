@@ -79,6 +79,12 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
                             {t("full_chapter")}
                         </a>
                     </div>
+                    <div className = "text-center text-base">
+                        {"Powered by "}
+                        <a className="text-blue-600 underline hover:text-blue-400" href = "https://www.biblegateway.com/"  target="_blank" rel="noopener noreferrer">
+                            Bible Gateway
+                        </a>
+                    </div>
             </div>
         </div>
 

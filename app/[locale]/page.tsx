@@ -65,11 +65,14 @@ export default async function Start_Page(){
   }
 
   const t = await getTranslations("HomePage");
+  const flyers_en = await getTranslations({locale: "en", namespace: "Homepage.flyers"});
+  const flyers_es = await getTranslations({locale: "es", namespace: "Homepage.flyers"});
+
   return (
   <>
     <div className="mb-15">
       <div className="w-screen h-110 lg:h-150 relative overflow-hidden">
-          <EventFlyerSection />
+          <EventFlyerSection/>
       </div>
       <div className={`${styles.upcoming} w-screen flex flex-col justify-center items-center py-10`}>
         <div className="text-4xl lg:text-5xl font-extrabold">

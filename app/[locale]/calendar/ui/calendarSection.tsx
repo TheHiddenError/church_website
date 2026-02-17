@@ -108,7 +108,6 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
 
     for (const event of eventData){
         const regexMatch = event.date.match(regexEx);
-        console.log(regexMatch);
         if (regexMatch == null)
             continue;
         const theDay = Number(regexMatch?.groups?.day);
