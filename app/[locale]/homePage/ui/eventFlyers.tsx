@@ -189,6 +189,8 @@ export default function EventFlyerSection(){
     function changePhoto(increase= false){
         if (increase)
             setIndex((i) => i + 1);
+        else 
+            setIndex((i) => i - 1 < 0 ? arrayFlyers.length - 1 : i -1)
 
     }
 
@@ -207,27 +209,46 @@ export default function EventFlyerSection(){
         };
     }, []);
 
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-    // useEffect(() => {
-    //     console.log(fullSize)
-    //     if (!fullSize) return;
-    //     function handleKey(e: KeyboardEvent) {
-    //         if (cooldown) return;
-    //         if (e.key === "ArrowLeft") {
-    //             changePhoto(true);
-    //             setCooldown(true);
-    //         }
-    //         else if (e.key == "ArrowRight") {
-    //             changePhoto();
-    //             setCooldown(true);
-    //         }
-    //         setTimeout(() => setCooldown(false), 300); // 300ms cooldown
+    useEffect(() => {  
+    intervalRef.current = setInterval(() => { 
+        changePhoto(true);
+        setIsAnimating(true);
+     }, 10000); 
+    return () => {
+     if (intervalRef.current)
+        clearInterval(intervalRef.current)   
+    }; 
+}   , []);
 
-    //     }
 
-    //     window.addEventListener("keydown", handleKey);
-    //     return () => window.removeEventListener("keydown", handleKey);
-    // }, [cooldown, fullSize]);
+    useEffect(() => {
+        console.log(fullSize)
+        if (!fullSize) return;
+        function handleKey(e: KeyboardEvent) {
+            if (cooldown) return;
+            if (e.key === "ArrowRight") {
+                changePhoto(true);
+                setCooldown(true);
+                setIsAnimating(true);
+                if (intervalRef.current)
+                    clearInterval(intervalRef.current)
+            }
+            else if (e.key === "ArrowLeft") {
+                changePhoto();
+                setCooldown(true);
+                setIsAnimating(true);
+                if (intervalRef.current)
+                    clearInterval(intervalRef.current)
+            }
+            setTimeout(() => setCooldown(false), 500); // 300ms cooldown
+
+        }
+
+        window.addEventListener("keydown", handleKey);
+        return () => window.removeEventListener("keydown", handleKey);
+    }, [cooldown, fullSize]);
 
 
 
@@ -238,16 +259,6 @@ export default function EventFlyerSection(){
             return;
         setFullSize((current) => !current);
     } 
-
-
-
-    useEffect(() => {  
-    const id = setInterval(() => { 
-        changePhoto(true);
-        setIsAnimating(true);
-     }, 5000); 
-    return () => clearInterval(id); 
-}   , []);
 
 
     return(

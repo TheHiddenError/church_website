@@ -7,3 +7,9 @@
     font-weight: bolder;
     margin: 10px 0px;
 }
+
+.wrapper :global(h4) {
+    font-size: large;
+    font-weight: bold;
+    margin: 10px 0px;
+}

@@ -159,7 +159,7 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
         const valuesToShow = [locale == "en" ? "summary": "summary_es", "date", "time", "location"]
         return (
         <>
-            <div className="h-3/5 mt-2 flex flex-col gap-5">
+            <div className="h-7/10 mt-2 flex flex-col gap-5">
                 {Object.entries(eventInfo).map(([key, value]) => {
                     if (!(valuesToShow.includes(key))) 
                         return null;
@@ -326,14 +326,14 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
         </div>
         <div className={clsx("fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen", {"hidden": !eventClick})}>
             <div className="w-full h-full flex justify-center items-center">
-                <div className="w-4/5 lg:w-1/2 h-3/5 bg-white p-5 relative rounded-lg">
-                    <div className="h-2/5">
-                        <div className="text-2xl lg:text-3xl font-bold h-2/5">
+                <div className="w-4/5 lg:w-1/2 h-3/5 lg:h-3/5 bg-white p-5 relative rounded-lg">
+                    <div className="h-3/10">
+                        <div className="text-2xl lg:text-3xl font-bold h-2/5 w-9/10">
                             {eventInfo ? (locale == "en" ? eventInfo.title : eventInfo.title_es) : ""}
                         </div>
                         <div className="h-3/5 w-full border-b-1 border-gray-300 pb-2">
-                            <div className="h-3/4 h-full w-1/4 lg:w-2/8 relative">
-                                <Image className="object-cover"
+                            <div className="h-full w-1/4 lg:w-1/8 relative">
+                                <Image className="object-contain"
                                     src={eventInfo ? `/eventIcon/${eventInfo.type.toLowerCase()}.png`: "/missingImage.png"}
                                     alt ={"Descriptive Icon"}
                                     fill
