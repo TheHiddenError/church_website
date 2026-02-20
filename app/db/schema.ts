@@ -14,9 +14,11 @@ export const eventsTable = pgTable("events", {
 });
 
 export const votdTable = pgTable("votd", {
-    date: date("day").primaryKey(),
-    content: text("content").notNull(),
+    day: date("day").primaryKey(),
+    content_en: text("content_en").notNull(),
     content_es: text("content_es").notNull(),
-    verse_name: text("verse_name").notNull(),
-    verse_name_es: text("verse_name_es").notNull()
+    verse_name_en: text("verse_name_en").notNull(),
+    verse_name_es: text("verse_name_es").notNull(),
+    verse_link_en: text("verse_link_en").notNull(),
+    verse_link_es: text("verse_link_es").notNull()
 })

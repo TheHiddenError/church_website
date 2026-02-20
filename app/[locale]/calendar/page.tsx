@@ -2,7 +2,7 @@ import ScriptureSec from "./ui/scriptureSection"
 import CalendarSec from "./ui/calendarSection";
 import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
-import { getThreeMonthsEvents } from "@/app/actions/events";
+import {getDailyReadings, getThreeMonthsEvents } from "@/app/actions/events";
 import { EventDef } from "../lib/types";
 import { change24to12Format } from "../helperFunctions/dates_functions";
 
@@ -25,12 +25,17 @@ const getMonthRegex = /\d{2}(?=-)/
 
 
 export default async function Calendar(){
-    const host = (await headers()).get("host"); 
     const locale = await getLocale();
-    const protocol = process.env.NODE_ENV === "development" ? "http" : "https"; 
-    const baseUrl = `${protocol}://${host}/${locale}`;
 
-    const {text, verse, translation, link} = await fetch(`${baseUrl}/api/scripture`).then(res => res.json());
+    const info = await getDailyReadings(locale);
+
+    const {
+    text: textV = "",
+    verse: verseN = "",
+    link: linkV = "",
+    translation: translationV = ""
+    } = info ?? {};
+
     const raw_data = await getThreeMonthsEvents();
     const valid_data: EventDef[] = [];
 
@@ -44,7 +49,7 @@ export default async function Calendar(){
 
     return (
         <>
-            <ScriptureSec text={text} verse={verse} translation={translation} link={link}/>
+            <ScriptureSec text={textV} verse={verseN} translation={translationV} link={linkV}/>
             <CalendarSec eventData={valid_data}/>
         </>
     )

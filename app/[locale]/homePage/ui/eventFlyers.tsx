@@ -153,7 +153,7 @@ function SundayService(sizeFull: boolean, sLocale: string){
 
 function ChickenPlate(locale: string){
     return <>
-        <Image src ={`/flyers/chicken_plates/${locale}.png`}
+        <Image src ={`/flyers/zoo_flyer.png`}
         fill 
         alt = "chicken plate flyer"/>
     </>
@@ -215,7 +215,7 @@ export default function EventFlyerSection(){
     intervalRef.current = setInterval(() => { 
         changePhoto(true);
         setIsAnimating(true);
-     }, 10000); 
+     }, 2000); 
     return () => {
      if (intervalRef.current)
         clearInterval(intervalRef.current)   

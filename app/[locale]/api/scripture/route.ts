@@ -1,19 +1,15 @@
-import { dailyScripture } from "../placeholder.data";
 import sanitizeHtml from 'sanitize-html';
-import { getLocale } from "next-intl/server";
 import * as cheerio from "cheerio";
+import { db } from '@/app';
+import { votdTable } from '@/app/db/schema';
 
-
-type bibleObject ={
-    type: string,
-    number: number,
-    content: Array<string>
-}
 
 export async function GET(){
 
-    const locale = await getLocale();
-    const translation = locale == "en" ? "nkjv": "rvr1960"
+    const today = new Date(); 
+    const local = new Date( today.toLocaleString("en-US", { timeZone: "America/Chicago" }) );
+
+    const translations = ["nkjv", "rvr1960"]
 
     const bookName = /(\d* )*[A-Z][a-z]*/
 
@@ -22,90 +18,22 @@ export async function GET(){
     const verseAlone = /(?<=:)(\d*(-\d*)?,)*\d*(-\d*)?/
 
     const gettingChapter = /(\d* )*[A-Z][a-z]* \d*/
-
-
-    const votd_url = `https://www.biblegateway.com/votd/get/?format=json&version=${translation}`
-    let clean_text = ""
+    let verse_en = "";
+    let verse_es = "";
+    const votd_url = `https://www.biblegateway.com/votd/get/?format=json&version=nkjv`
+    let clean_text_en = ""
+    let clean_text_es = ""
     let scripture_verse = "Matthew 5:43-45"
+    let scripture_verse_es = "";
     let link_verse = "https://www.biblegateway.com/passage/?search="
+
+    let error;
 
     let webVerses: string [] = [];
 
     let spanish_ref: string | undefined = ""
 
     let full_text = "";
-
-    // const bibleBooksMap = new Map([
-    // // Old Testament
-    // ["Génesis", "Genesis"],
-    // ["Éxodo", "Exodus"],
-    // ["Levítico", "Leviticus"],
-    // ["Números", "Numbers"],
-    // ["Deuteronomio", "Deuteronomy"],
-    // ["Josué", "Joshua"],
-    // ["Jueces", "Judges"],
-    // ["Rut", "Ruth"],
-    // ["1 Samuel", "1 Samuel"],
-    // ["2 Samuel", "2 Samuel"],
-    // ["1 Reyes", "1 Kings"],
-    // ["2 Reyes", "2 Kings"],
-    // ["1 Crónicas", "1 Chronicles"],
-    // ["2 Crónicas", "2 Chronicles"],
-    // ["Esdras", "Ezra"],
-    // ["Nehemías", "Nehemiah"],
-    // ["Ester", "Esther"],
-    // ["Job", "Job"],
-    // ["Salmos", "Psalms"],
-    // ["Proverbios", "Proverbs"],
-    // ["Eclesiastés", "Ecclesiastes"],
-    // ["Cantares", "Song of Solomon"],
-    // ["Isaías", "Isaiah"],
-    // ["Jeremías", "Jeremiah"],
-    // ["Lamentaciones", "Lamentations"],
-    // ["Ezequiel", "Ezekiel"],
-    // ["Daniel", "Daniel"],
-    // ["Oseas", "Hosea"],
-    // ["Joel", "Joel"],
-    // ["Amós", "Amos"],
-    // ["Abdías", "Obadiah"],
-    // ["Jonás", "Jonah"],
-    // ["Miqueas", "Micah"],
-    // ["Nahúm", "Nahum"],
-    // ["Habacuc", "Habakkuk"],
-    // ["Sofonías", "Zephaniah"],
-    // ["Hageo", "Haggai"],
-    // ["Zacarías", "Zechariah"],
-    // ["Malaquías", "Malachi"],
-
-    // // New Testament
-    // ["Mateo", "Matthew"],
-    // ["Marcos", "Mark"],
-    // ["Lucas", "Luke"],
-    // ["Juan", "John"],
-    // ["Hechos", "Acts"],
-    // ["Romanos", "Romans"],
-    // ["1 Corintios", "1 Corinthians"],
-    // ["2 Corintios", "2 Corinthians"],
-    // ["Gálatas", "Galatians"],
-    // ["Efesios", "Ephesians"],
-    // ["Filipenses", "Philippians"],
-    // ["Colosenses", "Colossians"],
-    // ["1 Tesalonicenses", "1 Thessalonians"],
-    // ["2 Tesalonicenses", "2 Thessalonians"],
-    // ["1 Timoteo", "1 Timothy"],
-    // ["2 Timoteo", "2 Timothy"],
-    // ["Tito", "Titus"],
-    // ["Filemón", "Philemon"],
-    // ["Hebreos", "Hebrews"],
-    // ["Santiago", "James"],
-    // ["1 Pedro", "1 Peter"],
-    // ["2 Pedro", "2 Peter"],
-    // ["1 Juan", "1 John"],
-    // ["2 Juan", "2 John"],
-    // ["3 Juan", "3 John"],
-    // ["Judas", "Jude"],
-    // ["Apocalipsis", "Revelation"],
-    // ]);
 
 const bibleBookMap = new Map([
     // Old Testament
@@ -232,16 +160,14 @@ const bibleBookMap = new Map([
     await fetch(votd_url)
     .then(request=> request.json())
     .then(result=>{
-        // scripture_verse = result.votd.reference;
+        scripture_verse = result.votd.reference;
         const bibleName = scripture_verse.match(bookName);
         const chapterNumber = scripture_verse.match(chapterAlone);
         const verseNumbers = scripture_verse.match(verseAlone);
         let classId;
         if (bibleName){
             let temp_chap: string | undefined = bibleName[0];
-            if (locale == "es"){
-                spanish_ref = bibleBookMap.get(temp_chap);
-            }
+            spanish_ref = bibleBookMap.get(temp_chap);
             if (temp_chap){
                 let no_spaces = temp_chap.replace(" ", "");
                 if (threeLetters.has(temp_chap)){
@@ -260,8 +186,6 @@ const bibleBookMap = new Map([
 
             }
         }
-        console.log(classId);
-        console.log(chapterNumber);
         if (classId && chapterNumber && verseNumbers){
             let temporaryVerses = verseNumbers[0];
             let arrayVerses;
@@ -290,141 +214,87 @@ const bibleBookMap = new Map([
                     webVerses.push(`${classId}-${chapterNumber[0]}-${temporaryVerses}`)
                 }
             }
-            console.log(webVerses)
-            
         }
 
-        // console.log(scripture_verse)
-        const temp_chapter = scripture_verse.match(gettingChapter)
-        if (temp_chapter)
-            link_verse+=(temp_chapter[0] + "&version=" + translation);
         
-    }) //work on a way to deal with comma passages. Example: Romans 8:35,37
+    }) 
 
-    try {
-        const response = await fetch(link_verse);
-        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-        const html = await response.text();
-        const $ = cheerio.load(html);
-        for (const element of webVerses){
-            if (element == " "){
-                full_text += "<div> </div>"
+
+    for (const translation of translations){
+        if (error)
+            break;
+        try {
+            const temp_chapter = scripture_verse.match(gettingChapter);
+            let pageURL: string = "";
+            if (temp_chapter){
+                if (translation == "nkjv") {
+                    verse_en = link_verse + (temp_chapter[0] + "&version=" + translation);
+                    pageURL = verse_en;
+                }
+                else {
+                    verse_es = link_verse + (temp_chapter[0] + "&version=" + translation);
+                    pageURL = verse_es
+                }            
+            }
+            const response = await fetch(pageURL);
+            if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+            const html = await response.text();
+            const $ = cheerio.load(html);
+            for (const element of webVerses){
+                if (element == " "){
+                    full_text += "<div> </div>"
+                }
+                else {
+                    $(`span.${element}`).each((i, el) => {
+                        const $el = $(el);
+
+                        $el.find("sup").not(".versenum").remove();
+
+                        $el.find("span.chapternum").replaceWith("<sup>1&nbsp;</sup>");
+
+                        let result = $el.html()?.trim();
+                        const isHeader = $el.parent().prop('tagName')?.match(/H\d/);
+                        if (isHeader){
+                            result = `<${isHeader[0].toLowerCase()}> ${result} </${isHeader[0].toLowerCase()}>`
+                        };
+                        full_text += result + " ";
+                    });
+
+                }
+            }
+            if (translation == "nkjv") {
+                clean_text_en = sanitizeHtml(full_text, {
+                                allowedTags: [ 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'strong', 'sup', 'span', 'div' ],
+                                });
             }
             else {
-                $(`span.${element}`).each((i, el) => {
-                    const $el = $(el);
-
-                    $el.find("sup").not(".versenum").remove();
-
-                    $el.find("span.chapternum").replaceWith("<sup>1&nbsp;</sup>");
-
-                    let result = $el.html()?.trim();
-                    const isHeader = $el.parent().prop('tagName')?.match(/H\d/);
-                    if (isHeader){
-                        result = `<${isHeader[0].toLowerCase()}> ${result} </${isHeader[0].toLowerCase()}>`
-                    };
-                    full_text += result + " ";
-                });
-
+                clean_text_es = sanitizeHtml(full_text, {
+                                allowedTags: [ 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'strong', 'sup', 'span', 'div' ],
+                                });
             }
+        }catch(err){
+            error = err;
+            console.error('Error loading HTML:', err);
         }
-        clean_text = sanitizeHtml(full_text, {
-            allowedTags: [ 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'strong', 'sup', 'span', 'div' ],
-            });
-    }catch(err){
-        console.error('Error loading HTML:', err);
+        full_text = ""
     }
 
     if (spanish_ref && spanish_ref != ""){
-        scripture_verse = scripture_verse.replace(bookName, spanish_ref);
+        scripture_verse_es = scripture_verse.replace(bookName, spanish_ref);
     }
 
+    const formattedDate = local.toISOString().split("T")[0]; // "2026-02-19"
 
-    // const bibleIds = new Map<string, string>
+    if (!error)
+        await db.insert(votdTable).values({
+            day: formattedDate,
+            content_en: clean_text_en,
+            content_es: clean_text_es,
+            verse_name_en: scripture_verse,
+            verse_name_es: scripture_verse_es,
+            verse_link_en: verse_en,
+            verse_link_es: verse_es
+        })
 
-    // let info;
-
-    // bibleIds.set("Judges", "JDG")
-    //         .set("Song of Songs", "SNG")
-    //         .set("Joel", "JOL")
-    //         .set("Nahum", "NAM")
-    //         .set("Mark", "MRK")
-    //         .set("John", "JHN")
-    //         .set("Philippians", "PHP")
-    //         .set("Philemon", "PHM")
-    //         .set("James", "JAS")
-
-
-
-    // const testOne = dailyScripture[dailyScripture.length-3];
-
-    // const getBook = /(^\d* )?\w+/
-
-    // const getChapter = /\d+(?=:)/
-
-    // const getStart = /(?<=:)\d+/
-    // const getEnd = /(?<=-)\d+/
-
-    // const theStart = testOne?.scripture.match(getStart);
-    // const startScripture = theStart == null ? -1: Number(theStart[0]);
-
-    // const theEnd = testOne.scripture.match(getEnd);
-    // const theEndScripture = theEnd == null ? startScripture : Number(theEnd[0]);  
-
-
-    // const temp = testOne.scripture.match(getBook); 
-    // let book = temp === null ? "" : temp[0];
-    // let bookMapLookup = bibleIds.get(book);
-    // if (bookMapLookup === undefined){
-    //     if (book.includes("John")){
-    //         const regexPat = /^(\d [A-Z])\w+([a-z])$/
-    //         const regexMat = book.match(regexPat);
-    //         console.log(regexMat);
-    //         if (regexMat)
-    //             book = regexMat[1].replace(" ", "") + regexMat[2].toUpperCase();
-    //     }
-    //     else {
-    //         const regexPattern = /^\d \w{2}|^\w{3}/
-    //         const regexMatch = book.match(regexPattern);
-    //         if (regexMatch){
-    //             book = regexMatch[0].replace(" ", "").toUpperCase();
-    //         }
-    //     }
-    // }
-    // else {
-    //     book = bookMapLookup;
-    // }
-    // const temp2 = (testOne.scripture.match(getChapter));
-    // const the_chapter = temp2 === null ? 0 : temp2[0];
-
-    // // const translation = "spa_r09"
-    // const translation = "eng_kjv"
-
-    // const today = "01-22-26";
-
-    // let theInfo: bibleObject[] = [];
-
-    // await fetch(`https://bible.helloao.org/api/${translation}/${book}/${the_chapter}.json`)
-    // .then(request => request.json())
-    // .then(result => {
-    //     let scriptureIndex = startScripture - 1;
-    //     let i = scriptureIndex;
-    //     while (scriptureIndex < theEndScripture) {
-    //         const possibleVerse = result.chapter.content[i];
-    //         if (possibleVerse.type == "verse"){
-    //             for (const element of possibleVerse.content) {
-    //                 if (element.text) {
-    //                     possibleVerse.content = element.text;
-    //                     break;
-    //                 }
-    //             }      
-    //             theInfo.push(possibleVerse);
-    //             scriptureIndex ++;
-    //         }
-    //         i ++;
-    //     }
-
-    // });
-    return Response.json({text: clean_text, verse: scripture_verse, translation: (locale == "en" ? "NKJV": "RV1960"), link: link_verse});
-    // return Response.json({apiInformation: theInfo, title: testOne.title, dateReading: testOne.date, reading: testOne.scripture});
+    return Response.json({status: error ? error: "Data added correctly"});
 }

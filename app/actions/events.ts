@@ -1,6 +1,6 @@
 import { and, asc, gt, sql, lt, gte, lte } from "drizzle-orm"
 import { db } from ".."
-import { eventsTable } from "../db/schema"
+import { eventsTable, votdTable } from "../db/schema"
 
 export async function getTopThree(){
     const info = await db.select({
@@ -33,4 +33,28 @@ export async function getThreeMonthsEvents(){
     )
     .orderBy(asc(eventsTable.date))
     return info;
+}
+
+export async function getDailyReadings(locale: string){
+    try {
+        const db_info = await db.select({
+            text: locale == "en" ? votdTable.content_en : votdTable.content_es,
+            verse: locale == "en" ? votdTable.verse_name_en: votdTable.verse_name_es,
+            link: locale == "en" ? votdTable.verse_link_en: votdTable.verse_link_es
+        }
+        )
+        .from(votdTable)
+        .where(sql`day = CURRENT_DATE`);
+        if (db_info.length != 0){
+            const info = {...db_info[0], translation: locale == "en" ? "NKJV": "RV1960"}
+            return info;
+        }
+        else 
+            return undefined;
+    }catch(err){
+        console.error("Database error fetching VOTD:", err);
+        throw new Error("Failed to fetch verse of the day");
+    }
+
+    
 }
