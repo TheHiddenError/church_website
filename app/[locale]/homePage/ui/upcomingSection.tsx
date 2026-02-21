@@ -1,5 +1,5 @@
 import { formatDate } from "@/app/[locale]/helperFunctions/dates_functions"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 type Event = {
   title: string,
@@ -7,7 +7,7 @@ type Event = {
   time?: string
   summary?: string | null,
   summary_es?: string | null,
-  date: string 
+  date: Date
 }
 
 type UpcomingSecProps = {
@@ -19,11 +19,15 @@ export default function UpcomingSec({temp}: UpcomingSecProps){
 
     const locale = useLocale();
 
+    const t = useTranslations("HomePage")
+
     const regexDate = /\d+\/\d{2}/
-    const formattedDate = temp.date.match(regexDate)![0];
+    const formattedDate = temp.date.toLocaleDateString().match(regexDate)![0];
+
+    const days = Object.values(t.raw("upcoming_events_day") as Record<string, string>);
 
     return (
-        <div className="grid grid-rows-4 items-center px-2 lg:px-10 gap-2 items-start justify-center">
+        <div className="grid grid-rows-5 items-center px-2 lg:px-10 gap-2 items-start justify-center">
           <div className="text-4xl lg:text-5xl font-bold place-self-center">
             {formattedDate}
           </div>
@@ -34,8 +38,13 @@ export default function UpcomingSec({temp}: UpcomingSecProps){
                 </div>
             </div>
           </div>
-          <div className=" text-center w-full">
-              <div className="text-xl lg:text-3xl italic">
+          <div className="text-center w-full text-lg lg:text-2xl">
+              <div>
+                {days[temp.date.getDay()]}
+              </div>
+          </div>
+          <div className="text-center w-full text-xl lg:text-3xl italic">
+              <div>
                 {temp.time}
               </div>
           </div>

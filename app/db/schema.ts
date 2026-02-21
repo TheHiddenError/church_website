@@ -10,7 +10,7 @@ export const eventsTable = pgTable("events", {
   for: text("for").default("Church"),
   type: text("type").notNull(),
   location: text("location").default("Iglesia Nueva Esperanza"),
-  importance: boolean("importance").default(false)
+  importance: boolean("importance").default(false),
 });
 
 export const votdTable = pgTable("votd", {

@@ -22,6 +22,15 @@
         "prayer_p2": "Entra su petición aquí (obligatorio)",
         "prayer_send": "Manda Oracion",
         "upcoming_events": "Próximos Eventos",
+        "upcoming_events_day": {
+            "sun": "Domingo",
+            "mon": "Lunes",
+            "tues": "Martes",
+            "wed": "Miércoles",
+            "thurs": "Jueves",
+            "fri": "Viernes",
+            "sat": "Sábado"
+        },
         "flyers": {
             "mission": {
                 "heading": "Nuestra Misión",
@@ -59,6 +68,7 @@
     "Calendar": {
         "verse_day": "Versículo del Día",
         "full_chapter": "Leer Capítulo Completo",
+        "error_message": "Las Escrituras no están disponibles en este momento. Vuelva más tarde.",
         "months": {
             "jan": "Enero",
             "feb": "Febrero",

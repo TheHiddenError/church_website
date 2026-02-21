@@ -20,6 +20,15 @@
         "prayer_p2": "Enter your petition here (required)",
         "prayer_send": "Send Prayer",
         "upcoming_events": "Upcoming Events",
+        "upcoming_events_day": {
+            "sun": "Sunday",
+            "mon": "Monday",
+            "tues": "Tuesday",
+            "wed": "Wednesday",
+            "thurs": "Thursday",
+            "fri": "Friday",
+            "sat": "Saturday"
+        },
         "flyers": {
             "mission": {
                 "heading": "Our Mission",
@@ -56,6 +65,7 @@
     "Calendar": {
         "verse_day": "Verse of the Day",
         "full_chapter": "Read Full Chapter",
+        "error_message": "Scripture is unavailable at the moment. Check back later.",
         "months": {
             "jan": "January",
             "feb": "February",

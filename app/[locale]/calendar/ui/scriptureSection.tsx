@@ -59,7 +59,10 @@ type Props ={
 export default function ScriptureSec({text, verse, translation, link}: {text: string, verse: string, translation: string, link: string}){
     const temp = new Date();
     const todays_date = `${temp.getMonth() + 1 }/${temp.getDate()}`
-    const t = useTranslations("Calendar")
+    const t = useTranslations("Calendar");
+    let successful = false;
+    if (text != "")
+        successful = true;
 
     return (
         <div className={`${styles.calendarBG} mt-4 py-7 w-screen flex justify-center`}>
@@ -67,10 +70,12 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
                 <div className="font-extrabold text-3xl border-b-2 border-b-black pb-3 text-center w-full">
                     {t("verse_day")}: {todays_date}
                 </div>
-                <div className={`${styles.wrapper} flex w-full justify-center`}>
-                    <div className="text-xl py-3" dangerouslySetInnerHTML={{ __html: text }} >
+                {successful == true ?
+                <>
+                    <div className={`${styles.wrapper} flex w-full justify-center`}>
+                        <div className="text-xl py-3" dangerouslySetInnerHTML={{ __html: text }} >
+                        </div>
                     </div>
-                </div>
                     <div className="text-center font-bold text-2xl">
                         - {verse} ({translation})
                     </div>
@@ -85,9 +90,14 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
                             Bible Gateway
                         </a>
                     </div>
+                </>
+                    :
+                    <div className="text-center text-2xl my-5">
+                        {t("error_message")}
+                    </div>    
+                }
             </div>
         </div>
-
     )
     
 }

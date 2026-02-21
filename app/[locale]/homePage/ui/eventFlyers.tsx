@@ -153,6 +153,14 @@ function SundayService(sizeFull: boolean, sLocale: string){
 
 function ChickenPlate(locale: string){
     return <>
+        <Image src ={`/flyers/chicken_plates/${locale}.png`}
+        fill 
+        alt = "chicken plate flyer"/>
+    </>
+}
+
+function ZooFlyer(locale: string){
+    return <>
         <Image src ={`/flyers/zoo_flyer.png`}
         fill 
         alt = "chicken plate flyer"/>
@@ -163,10 +171,25 @@ function ChurchFellowship(locale: string){
     return <>
         <Image className="" src ={`/flyers/church_fellowships/${locale}.png`}
         fill 
-        alt = "chicken plate flyer"/>
+        alt = "Church fellowship flyer"/>
     </>
 }
 
+function NursingHome(locale: string) {
+    return <>
+        <Image src ={`/flyers/nursing_home_visit/${locale}.png`}
+        fill 
+        alt = "Nursing home flyer"/>
+    </>
+}
+
+function MenFellowship(locale: string){
+    return <>
+        <Image src ={`/flyers/men_fellowship/${locale}.png`}
+        fill 
+        alt = "Men fellowship flyer"/>
+    </>
+}
 
 
 
@@ -177,7 +200,8 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), ChurchFellowship(sliderLocale), ChickenPlate(sliderLocale)];
+        PrayerService(fullSize, sliderLocale), ChurchFellowship(sliderLocale), ZooFlyer(sliderLocale),
+        NursingHome(sliderLocale), MenFellowship(sliderLocale)];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
@@ -188,7 +212,7 @@ export default function EventFlyerSection(){
 
     function changePhoto(increase= false){
         if (increase)
-            setIndex((i) => i + 1);
+            setIndex((i) => (i + 1)  % (arrayFlyers.length + 1));
         else 
             setIndex((i) => i - 1 < 0 ? arrayFlyers.length - 1 : i -1)
 
@@ -215,7 +239,7 @@ export default function EventFlyerSection(){
     intervalRef.current = setInterval(() => { 
         changePhoto(true);
         setIsAnimating(true);
-     }, 2000); 
+     }, 10000); 
     return () => {
      if (intervalRef.current)
         clearInterval(intervalRef.current)   
@@ -266,7 +290,8 @@ export default function EventFlyerSection(){
             <div ref={sectionRef} className={clsx("w-full h-full", {" overflow-hidden": fullSize})}>
                 <div onClick={isLaptop ? fullScreenHandler: undefined} onTransitionEnd={()=> {
                     if (index === arrayFlyers.length){
-                        setSliderLocale(loc => loc == "en" ? "es": "en");
+                        if (fullSize)
+                            setSliderLocale(loc => loc == "en" ? "es": "en");
                         setIsAnimating(false);
                         setIndex(0);
                     }}
@@ -285,7 +310,7 @@ export default function EventFlyerSection(){
                 <div className="flex pr-3 pb-2">
                     {arrayFlyers.map((s, mapIndex) => {
                         return (
-                            <div key={mapIndex * 2000} className={clsx("rounded-full h-8 w-8 mr-2", {"bg-gray-500/50": index != mapIndex,  "bg-blue-700/50": index == mapIndex})}/>
+                            <div key={mapIndex * 2000} className={clsx("rounded-full h-4 w-4 md:h-6 md:w-6 lg:h-8 lg:w-8 mr-2", {"bg-gray-500/50": index != mapIndex,  "bg-blue-700/50": index == mapIndex})}/>
                         )
                     })}
                 </div>

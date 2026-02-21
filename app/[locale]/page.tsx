@@ -15,7 +15,7 @@ type Event = {
   time?: string
   summary: string | null,
   summary_es: string | null,
-  date: string 
+  date: Date
 }
 
 
@@ -36,21 +36,21 @@ let topThree: Event [] = [];
 
 
 export default async function Start_Page(){
-
   const theData = await getTopThree();
   let temp_date = current_date;
   let tracker = 0;
   for (let i = 0; i < 7; i++){ //work on cases where on same day
     if (topThree.length == 3)
       break;
-    const eventDate = theData[tracker].date
-    if (eventDate.getMonth() == temp_date.getMonth() && eventDate.getDate() == temp_date.getDate()){
+    let temp_day = temp_date.getDay();
+    const eventDate = theData.length == 0 || tracker == theData.length ? undefined :theData[tracker].date
+    if (eventDate && eventDate.getDay() == temp_day){
       const eventObj: Event = {
         title: theData[tracker].title,
         title_es: theData[tracker].title_es,
         summary: theData[tracker].summary,
         summary_es: theData[tracker].summary_es,
-        date: theData[tracker].date.toLocaleDateString(),
+        date: theData[tracker].date,
         time: change24to12Format(theData[tracker].date),
       }
       topThree.push(eventObj);
@@ -58,10 +58,12 @@ export default async function Start_Page(){
     }
     else {
       let checkMap = staticEvents.get(temp_date.getDay())
-      if (checkMap != undefined)
-        topThree.push({...checkMap, date: `${temp_date.getMonth() + 1}/${temp_date.getDate()}/${(temp_date.getFullYear()).toString().substring(2)}`})
+      if (checkMap != undefined) {
+        const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
+        topThree.push({...checkMap, date: staticDate})
+      }
     }
-    temp_date.setDate(temp_date.getDate() +1); 
+    temp_date.setDate(temp_date.getDate() + 1);
   }
 
   const t = await getTranslations("HomePage");
@@ -87,7 +89,6 @@ export default async function Start_Page(){
         </div>
       </div>
       <HomeCardSection />
-
     </div> 
   </>
   );

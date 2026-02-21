@@ -2,12 +2,23 @@ import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { eventsTable } from './db/schema';
 import { dbDate } from './[locale]/helperFunctions/dates_functions';
+import { eq, sql } from 'drizzle-orm';
 
 
 
 export const db = drizzle(process.env.DATABASE_URL!);
 
+
 async function main(){
+
+
+
+
+    // for (let i = 2; i <= 23; i ++){
+    //     await db.update(eventsTable).set({
+    //         date_time: sql`${eventsTable.date} - INTERVAL '6' hour`
+    //     }).where(eq(eventsTable.id, i));
+    // }
     // console.log("RAN");
     // for (const event of eventList){
     //     const temp: typeof eventsTable.$inferInsert = {
@@ -25,5 +36,5 @@ async function main(){
     // }
 } 
 
-
+// main();
 
