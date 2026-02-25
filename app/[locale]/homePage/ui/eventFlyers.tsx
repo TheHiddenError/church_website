@@ -169,7 +169,7 @@ function ZooFlyer(locale: string){
 
 function ChurchFellowship(locale: string){
     return <>
-        <Image className="" src ={`/flyers/church_fellowships/${locale}.png`}
+        <Image className="" src ={`/flyers/church_fellowship.png`}
         fill 
         alt = "Church fellowship flyer"/>
     </>
@@ -200,8 +200,7 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), ChurchFellowship(sliderLocale), ZooFlyer(sliderLocale),
-        NursingHome(sliderLocale), MenFellowship(sliderLocale)];
+        PrayerService(fullSize, sliderLocale), ChurchFellowship(sliderLocale), MenFellowship(sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
