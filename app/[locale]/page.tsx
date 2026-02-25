@@ -80,13 +80,18 @@ export default async function Start_Page(){
         <div className="text-4xl lg:text-5xl font-extrabold">
           {t("upcoming_events")}
         </div>
-        <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
+        <div className="flex w-full justify-center">
+          <div className="text-4xl italic mt-5">
+            Under Maintenance
+          </div>
+        </div>
+        {/* <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
           {topThree.map((element, index) => {
             return(
               <UpcomingSec key= {`${index}${element.title}`} temp = {element} />
             )
           })}
-        </div>
+        </div> */}
       </div>
       <HomeCardSection />
     </div> 
