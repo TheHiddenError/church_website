@@ -108,15 +108,15 @@ function PrayerService(sizeFull: boolean, sLocale: string){
                 <div className={clsx("text-4xl lg:text-6xl font-bold", {"lg:text-8xl": sizeFull})}>
                     {t.heading}
                 </div>
-                <div className={clsx("text-2xl lg:text-3xl my-3", {"lg:text-6xl": sizeFull})}>
+                <div className={clsx("text-2xl lg:text-3xl my-3", {"lg:text-5xl": sizeFull})}>
                     {t.subheading}
                 </div>
-                <div className={clsx("text-xl lg:text-2xl font-bold", {"lg:text-5xl": sizeFull})}>
+                <div className={clsx("text-xl lg:text-2xl font-bold", {"lg:text-6xl": sizeFull})}>
                     <div>
                         {t.text}
                     </div>
                     <div className="italic">
-                        7:00PM
+                        7:00 PM
                     </div>
                 </div>
             </div>
@@ -179,16 +179,19 @@ function ChurchFellowship(locale: string){
 }
 
 function NursingHome(locale: string) {
+    const imagePath = `/flyers/nursing_home_visit/${locale}.png`
+
     return <>
-        <Image src ={`/flyers/nursing_home_visit/${locale}.png`}
+        <Image src ={imagePath}
         fill 
         alt = "Nursing home flyer"/>
     </>
 }
 
 function MenFellowship(locale: string){
+    const imagePath = `/flyers/men_fellowship/${locale}.png`
     return <>
-        <Image src ={`/flyers/men_fellowship/${locale}.png`}
+        <Image src ={imagePath}
         fill 
         alt = "Men fellowship flyer"/>
     </>
@@ -203,7 +206,7 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), ChurchFellowship(sliderLocale), MenFellowship(sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
+        PrayerService(fullSize, sliderLocale), MenFellowship(sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
