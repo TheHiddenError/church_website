@@ -42,7 +42,7 @@ export async function getDailyReadings(locale: string){
         }
         )
         .from(votdTable)
-        .where(sql`${votdTable.day} AT TIME ZONE 'America/Chicago' = (CURRENT_DATE AT TIME ZONE 'America/Chicago')`);
+        .where(sql`${votdTable.day} = (NOW() AT TIME ZONE 'America/Chicago')::date`);
         if (db_info.length != 0){
             const info = {...db_info[0], translation: locale == "en" ? "NKJV": "RV1960"}
             return info;

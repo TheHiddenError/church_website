@@ -9,6 +9,10 @@ export async function GET(){
     const today = new Date(); 
     const local = new Date( today.toLocaleString("en-US", { timeZone: "America/Chicago" }) );
 
+    const isMidnight = local.getHours() === 0 && local.getMinutes() === 0;
+
+    if (!isMidnight)
+        return Response.json({ status: "Not local midnight" });
     const translations = ["nkjv", "rvr1960"]
 
     const bookName = /(\d* )*[A-Z][a-z]*/

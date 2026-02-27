@@ -21,8 +21,7 @@ export default function UpcomingSec({temp}: UpcomingSecProps){
 
     const t = useTranslations("HomePage")
 
-    const regexDate = /\d+\/\d{2}/
-    const formattedDate = temp.date.toLocaleDateString().match(regexDate)![0];
+    const formattedDate = `${temp.date.getMonth() + 1}/${temp.date.getDate()}`;
 
     const days = Object.values(t.raw("upcoming_events_day") as Record<string, string>);
 

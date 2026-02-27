@@ -57,6 +57,7 @@ export default async function Start_Page(){
       tracker ++;
     }
     else {
+
       let checkMap = staticEvents.get(temp_date.getDay())
       if (checkMap != undefined) {
         const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
@@ -65,10 +66,11 @@ export default async function Start_Page(){
     }
     temp_date.setDate(temp_date.getDate() + 1);
   }
-
   const t = await getTranslations("HomePage");
-  const flyers_en = await getTranslations({locale: "en", namespace: "Homepage.flyers"});
-  const flyers_es = await getTranslations({locale: "es", namespace: "Homepage.flyers"});
+
+  const now = new Date(); 
+  const local = now.getHours()
+  console.log(local)
 
   return (
   <>
@@ -80,18 +82,18 @@ export default async function Start_Page(){
         <div className="text-4xl lg:text-5xl font-extrabold">
           {t("upcoming_events")}
         </div>
-        <div className="flex w-full justify-center">
+        {/* <div className="flex w-full justify-center">
           <div className="text-4xl italic mt-5">
             Under Maintenance
           </div>
-        </div>
-        {/* <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
+        </div> */}
+        <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
           {topThree.map((element, index) => {
             return(
               <UpcomingSec key= {`${index}${element.title}`} temp = {element} />
             )
           })}
-        </div> */}
+        </div>
       </div>
       <HomeCardSection />
     </div> 
