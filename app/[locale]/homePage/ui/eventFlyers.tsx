@@ -25,14 +25,17 @@ function MissionFlyer(sizeFull: boolean, sLocale: string) {
             alt = "bible open cross"
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
-            <div className={clsx("absolute w-3/5 md:w-2/5 text-center", {"top-1/10 left-1/20 md:top-1/5 lg:top-1/5 lg:left-1/10": !sizeFull, "lg:top-1/10 lg:left-1/10": sizeFull})}>
+            <div className={clsx("absolute text-center", {"top-1/10 left-1/20 md:top-1/5 lg:top-1/5 lg:left-1/10 w-3/5 md:w-2/5": !sizeFull, "lg:top-1/10 lg:left-1/10 w-1/2": sizeFull})}>
                 <div className={clsx("font-bold text-4xl lg:text-5xl", {"lg:text-7xl": sizeFull})}>
                     {t.heading}
                 </div>
                 <div className="flex justify-center w-full mt-7">
                     <div className={clsx("w-full lg:w-2/3", {"lg:w-full": sizeFull})}>
-                        <div className={clsx("font-semibold italic text-md md:text-lg lg:text-2xl", {"lg:text-5xl": sizeFull})}>
-                            {t.text} - {t.verse}
+                        <div className={clsx("italic text-md md:text-lg lg:text-2xl", {"lg:text-5xl": sizeFull})}>
+                            {t.text}
+                            <div className="font-semibold">
+                                - {t.verse}
+                            </div>
                         </div>
                     </div> 
                 </div>
@@ -101,7 +104,7 @@ function PrayerService(sizeFull: boolean, sLocale: string){
             alt = "sunday image"
             />
             <div className="absolute bg-gray-100/30 h-full w-full"/>
-            <div className={clsx("absolute w-1/2 md:w-2/5 text-center", {"top-1/10 right-1/20 md:top-1/5 lg:top-50 lg:right-25": !sizeFull, "lg:top-1/10 lg:right-1/10": sizeFull})}>
+            <div className={clsx("absolute text-center", {"top-1/10 right-1/20 md:top-1/5 lg:top-50 lg:right-25 w-1/2 md:w-2/5": !sizeFull, "lg:top-1/5 lg:right-1/30 w-1/2": sizeFull})}>
                 <div className={clsx("text-4xl lg:text-6xl font-bold", {"lg:text-8xl": sizeFull})}>
                     {t.heading}
                 </div>

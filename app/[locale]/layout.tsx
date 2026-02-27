@@ -48,7 +48,7 @@ export default async function RootLayout({
           <NextIntlClientProvider>
             <div className="min-h-screen flex flex-col">
               <NavBar />
-              <div className="mt-10 h-[70vh] overflow-auto-y flex-1">{children}</div>
+              <div className="mt-10 h-[40vh] overflow-auto-y flex-1">{children}</div>
               <Footer />
             </div>
           </NextIntlClientProvider>

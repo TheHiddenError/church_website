@@ -31,7 +31,7 @@ export default function NavBar(){
         {name: t("donate"), href: "/donate"}
     ]
 
-    return <div className={`grid lg:grid-cols-5 relative mt-2 h-[25vh] lg:h-[25vh] gap-2`}>
+    return <div className={`grid lg:grid-cols-5 relative mt-2 h-[25vh] lg:h-[30vh] gap-2`}>
         <div className="flex flex-col w-full lg:items-center justify-center text-center place-self-center">
             <Image 
                 src={"/white_dove.png"}
