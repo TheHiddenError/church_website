@@ -1,7 +1,7 @@
 "use client"
 
 import clsx from "clsx";
-import {getFirstWeekday, getGridRows, getMaxDays, getFirstMonday, change24to12Format } from "../../helperFunctions/dates_functions"
+import {getFirstWeekday, getGridRows, getMaxDays, getFirstMonday, change24to12Format } from "../../../helperFunctions/dates_functions"
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import Image from "next/image";

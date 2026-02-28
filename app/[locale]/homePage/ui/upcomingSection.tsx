@@ -1,5 +1,5 @@
-import { formatDate } from "@/app/[locale]/helperFunctions/dates_functions"
 import { useLocale, useTranslations } from "next-intl"
+
 
 type Event = {
   title: string,

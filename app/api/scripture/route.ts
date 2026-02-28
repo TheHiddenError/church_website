@@ -3,11 +3,13 @@ import * as cheerio from "cheerio";
 import { db } from '@/app';
 import { votdTable } from '@/app/db/schema';
 
+export const revalidate = 0;
 
 export async function GET(){
 
     const today = new Date(); 
     const local = new Date( today.toLocaleString("en-US", { timeZone: "America/Chicago" }) );
+
 
     const isMidnight = local.getHours() === 0 && local.getMinutes() === 0;
 

@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from 'next/link';
-// import { usePathname } from 'next/navigation';
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import clsx from 'clsx';

@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import styles from "./calendar.module.css"
-import { formatDate } from "@/app/[locale]/helperFunctions/dates_functions"
+import { formatDate } from "@/app/helperFunctions/dates_functions"
 import { useTranslations } from "next-intl";
 
 /*

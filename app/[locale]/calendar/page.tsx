@@ -4,7 +4,7 @@ import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
 import {getDailyReadings, getThreeMonthsEvents } from "@/app/actions/events";
 import { EventDef } from "../lib/types";
-import { change24to12Format } from "../helperFunctions/dates_functions";
+import { change24to12Format } from "../../helperFunctions/dates_functions";
 
 const currentMonth = (new Date()).getMonth();
 

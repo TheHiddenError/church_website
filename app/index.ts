@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { eventsTable } from './db/schema';
-import { dbDate } from './[locale]/helperFunctions/dates_functions';
+import { dbDate } from './helperFunctions/dates_functions';
 import { eq, sql } from 'drizzle-orm';
 
 

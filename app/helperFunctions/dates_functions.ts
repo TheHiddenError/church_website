@@ -30,13 +30,6 @@ function dbDate(date: string, timeStr: string | undefined){
     }
     const temp_date = new Date(`${year}-${month}-${day}T${hours}:${minutes}:00Z`)
 
-    // const temp_date =  new Date( 
-    //     Number(year), 
-    //     Number(month) - 1, 
-    //     Number(day), 
-    //     Number(hours) , 
-    //     Number(minutes)
-    // );
     return new Date(temp_date.toLocaleString("en-US", {timeZone: "America/Chicago"}))
 }
 
