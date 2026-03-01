@@ -90,24 +90,6 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
 
     const importantMap = calenderMaps(importantEvents, monthDaysMax);
 
-    console.log(importantMap)
-    // const importantMap = new Map<number, EventDef>();
-
-    // for (const imp of ImportantEvents){
-    //     const checker = imp.date.match(/[A-z][a-z]/) //Only monday service would be constant. The rest would be a date
-
-    //     if (checker) {
-    //         let temp_month = current.getMonth()
-    //         for (let i = 0; i < 3; i ++){
-    //             const firstMonday = getFirstMonday(current.getFullYear(), temp_month);
-    //             const temp_obj =  {...imp, date: `${temp_month < 10 ? `0${temp_month}`: temp_month }-0${firstMonday}-26`}
-    //             importantMap.set(monthDaysMax[temp_month], temp_obj);
-    //             temp_month ++;
-    //         }
-    //     }
-
-    // }
-
 
     function changeCalendarMonth(increase=false){
         setTracker((element)=> increase ? element + 1: element -1);
@@ -258,9 +240,9 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                 "bg-blue-300 font-bold": current.getMonth() == calendarTracker && (iterateDay) === current_day,
                                 })}>
                                 <>
-
-                                </>
-                                {importEvent != undefined ?
+                                    {iterateDay > 0 && iterateDay <= maxDays &&
+                                    <>
+                                    {importEvent != undefined ?
                                     <div className="w-full h-full justify-center flex items-center">
                                         <div className="w-full" key={importEvent.title}>
                                             <div onClick={importEvent?.summary ? ()=> eventClickHandler(importEvent): undefined} className={clsx("text-center w-full", 
@@ -276,9 +258,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                             </div>
                                         </div>
                                     </div>
-                                :
-                                <>
-                                    {iterateDay > 0 && iterateDay <= maxDays &&
+                                    :
                                     <>
                                         <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2">
                                             <div className="text-[10px] md:text-base">
@@ -309,9 +289,11 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                         </div>
                                     </>
                                     }
-                                </>}
-                                <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
-                                <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
+                                        <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
+                                        <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
+                                    </>
+                                    }
+                                </>
                             </div>
                         </div>
                         })}
