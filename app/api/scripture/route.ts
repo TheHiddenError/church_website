@@ -11,10 +11,10 @@ export async function GET(){
     const local = new Date( today.toLocaleString("en-US", { timeZone: "America/Chicago" }) );
 
 
-    const isMidnight = local.getHours() === 0 && local.getMinutes() === 0;
+    const isTwelve = local.getHours() === 0;
 
-    if (!isMidnight)
-        return Response.json({ status: "Not local midnight" });
+    if (!isTwelve)
+        return Response.json({message: "Not local twelve"}, {status: 200 });
     const translations = ["nkjv", "rvr1960"]
 
     const bookName = /(\d* )*[A-Z][a-z]*/
@@ -302,5 +302,5 @@ const bibleBookMap = new Map([
             verse_link_es: verse_es
         })
 
-    return Response.json({status: error ? error: "Data added correctly"});
+    return Response.json({message:error ? error: "Data added correctly" }, {status: error ? 400 : 200 });
 }
