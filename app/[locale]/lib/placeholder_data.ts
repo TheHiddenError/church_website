@@ -3,6 +3,8 @@ export type ConstantEventType = {
     title: string,
     title_es: string, 
     date_index: number,
+    for?: string,
+    type?: string,
     time: string,
     summary: string,
     summary_es: string
@@ -16,11 +18,6 @@ const constantEvents: ConstantEventType [] =
     {title: "Disciple Service", title_es: "Servicio de Discípulos", date_index: 3, time: "7:00 PM", summary: "Bible Study to Grow in the Word", summary_es: "Estudio bíblico para crecer en la Palabra"}
 ]
 
-// const ImportantEvents: EventDef [] =
-// [
-//     {title: "Prayer and Worship Night", title_es: "Noche de Oración y Adoración" , date: "Every First Monday", for: "Church", type: "Fellowship", time: "7:00 PM", summary: "A service of prayer and petitions", summary_es: "Un servicio de oración y peticiones"},
-
-// ]
 
 
 export { constantEvents};

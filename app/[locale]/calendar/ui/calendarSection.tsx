@@ -1,7 +1,7 @@
 "use client"
 
 import clsx from "clsx";
-import {getFirstWeekday, getGridRows, getMaxDays, getFirstMonday, change24to12Format } from "../../../helperFunctions/dates_functions"
+import {getFirstWeekday, getGridRows, getMaxDays, getFirstMonday, change24to12Format, calenderMaps } from "../../../helperFunctions/dates_functions"
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import Image from "next/image";
@@ -57,7 +57,7 @@ const eventFor = {
 }
 
 
-export default function CalendarSec({eventData}: {eventData: EventDef []}){
+export default function CalendarSec({eventData, importantEvents}: {eventData: EventDef [], importantEvents: EventDef []}){
 
     const locale = useLocale();
 
@@ -86,9 +86,11 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
     const calendarCols: number [] = Array.from({length: 7}, () => 0);
     const calendarRows: number [] = Array.from({length: gridRows}, () => 0);
 
+    const eventMap = calenderMaps(eventData, monthDaysMax);
 
-    const regexEx = /(?<month>\d+)\/(?<day>\d+)(?=\/)/
-    const eventMap = new Map<number, EventDef []>();
+    const importantMap = calenderMaps(importantEvents, monthDaysMax);
+
+    console.log(importantMap)
     // const importantMap = new Map<number, EventDef>();
 
     // for (const imp of ImportantEvents){
@@ -106,26 +108,6 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
 
     // }
 
-    for (const event of eventData){
-        const regexMatch = event.date.match(regexEx);
-        if (regexMatch == null)
-            continue;
-        const theDay = Number(regexMatch?.groups?.day);
-        const eventMonth = monthDaysMax[Number(regexMatch?.groups?.month) - 1];
-        const eventReturn = eventMap.get(theDay + eventMonth);
-        if (eventReturn != undefined){
-            eventMap.set(theDay + eventMonth, [...eventReturn, event]);
-        }
-        else {
-            if (event.location == undefined)
-                eventMap.set(theDay + eventMonth, [{...event, location: "Iglesia Nueva Esperanza"}]);
-
-            else {
-                eventMap.set(theDay + eventMonth, [event]);
-            }
-        }
-        
-    }
 
     function changeCalendarMonth(increase=false){
         setTracker((element)=> increase ? element + 1: element -1);
@@ -264,7 +246,10 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                     <div key={(upperIndex + 1) * 100} className=" grid grid-cols-7">
                         {calendarCols.map((something, index)=> {
                             const iterateDay: number = (index + 1 + (7 * upperIndex)) - firstDay;
-                            // const importEvent = importantMap.get(iterateDay + monthDaysMax[calendarTracker]);
+                            const importEventInfo = importantMap.get(iterateDay + monthDaysMax[calendarTracker]);
+                            let importEvent;
+                            if (importEventInfo)
+                                importEvent = importEventInfo[0];
                             const eventsInformation = eventMap.get(iterateDay + monthDaysMax[calendarTracker]);
                         return <div key={index + (7 * upperIndex)}>
                             <div className={clsx( "border-l-2 border-b-2 border-black w-full h-40 relative",
@@ -272,19 +257,27 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                 "border-r-2": index === 6,
                                 "bg-blue-300 font-bold": current.getMonth() == calendarTracker && (iterateDay) === current_day,
                                 })}>
-                                {/* {importEvent != undefined ?
-                                    <div className="w-full" key={importEvent.title}>
-                                        <div onClick={importEvent?.summary ? ()=> eventClickHandler(importEvent): undefined} className={clsx("text-center w-full", 
-                                            eventFor[importEvent.for as keyof typeof eventFor] ?? "bg-gray-200",
-                                            {"text-white rounded-lg cursor-pointer py-1" : importEvent?.summary,
-                                            })}>
-                                            <div className="">
-                                                {importEvent === undefined ? constantEvents[index]?.title : (locale == "en" ?  importEvent.title: importEvent.title_es)}
+                                <>
+
+                                </>
+                                {importEvent != undefined ?
+                                    <div className="w-full h-full justify-center flex items-center">
+                                        <div className="w-full" key={importEvent.title}>
+                                            <div onClick={importEvent?.summary ? ()=> eventClickHandler(importEvent): undefined} className={clsx("text-center w-full", 
+                                                eventFor[importEvent.for as keyof typeof eventFor] ?? "bg-gray-200",
+                                                {"text-white rounded-lg cursor-pointer py-1" : importEvent?.summary,
+                                                })}>
+                                                <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : importEvent.title_es.length > 20})}>
+                                                    {(locale == "en" ?  importEvent.title: importEvent.title_es)}
+                                                </div>
+                                                <div className="text-xs lg:text-base">   
+                                                    {importEvent.time}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                : */}
-                                    <>
+                                :
+                                <>
                                     {iterateDay > 0 && iterateDay <= maxDays &&
                                     <>
                                         <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2">
@@ -306,16 +299,19 @@ export default function CalendarSec({eventData}: {eventData: EventDef []}){
                                                         <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : eve.title_es.length > 20})}>
                                                             {eve === undefined ? constantEvents[index]?.title : (locale == "en" ?  eve.title: eve.title_es)}
                                                         </div>
+                                                        <div className="text-xs lg:text-base">
+                                                            {eve === undefined ? constantEvents[index]?.time : eve.time}
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 )
                                             })}
                                         </div>
-                                        <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
-                                        <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
                                     </>
                                     }
-                                </>
+                                </>}
+                                <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
+                                <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
                             </div>
                         </div>
                         })}

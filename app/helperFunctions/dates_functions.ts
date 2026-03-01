@@ -1,12 +1,16 @@
+import { EventDef } from "../[locale]/lib/types";
+
 function getFirstWeekday(year: number, month: number) {
   return new Date(year, month, 1).getDay();
 }
 
 function getFirstMonday(year: number, month: number){
-    const temp_date = new Date(year, month, 1);
+    let temp_date = new Date(year, month, 1);
     let dayMonday = 1;
-    while (temp_date.getDay() != 1)
+    while (temp_date.getDay() != 1) {
         dayMonday ++;
+        temp_date.setDate(temp_date.getDate() + 1);
+    }
     return dayMonday;
 }
 
@@ -102,4 +106,32 @@ function dbDateChange(the_date: Date){
     return `${month}-${day}-${year}`;
 }
 
-export {getFirstWeekday, getMaxDays, getGridRows, formatDate, getFirstMonday, dbDate, change24to12Format, dbDateChange};
+function calenderMaps(eventData: EventDef [], monthDaysMax: number []){
+    const regexEx = /(?<month>\d+)\/(?<day>\d+)(?=\/)/
+    const eventMap = new Map<number, EventDef []>();
+    for (const event of eventData){
+        const regexMatch = event.date.match(regexEx);
+        if (regexMatch == null)
+            continue;
+        const theDay = Number(regexMatch?.groups?.day);
+        const eventMonth = monthDaysMax[Number(regexMatch?.groups?.month) - 1];
+        const eventReturn = eventMap.get(theDay + eventMonth);
+        if (eventReturn != undefined){
+            eventMap.set(theDay + eventMonth, [...eventReturn, event]);
+        }
+        else {
+            if (event.location == undefined)
+                eventMap.set(theDay + eventMonth, [{...event, location: "Iglesia Nueva Esperanza"}]);
+
+            else {
+                eventMap.set(theDay + eventMonth, [event]);
+            }
+        }
+        
+    }
+    return eventMap;
+}
+
+export {getFirstWeekday, getMaxDays, getGridRows, formatDate, getFirstMonday, dbDate, change24to12Format, dbDateChange,
+    calenderMaps
+};

@@ -179,7 +179,7 @@ function ChurchFellowship(locale: string){
 }
 
 function NursingHome(locale: string) {
-    const imagePath = `/flyers/nursing_home_visit/${locale}.png`
+    const imagePath = `/flyers/en.png`
 
     return <>
         <Image src ={imagePath}
@@ -206,7 +206,7 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), MenFellowship(sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
+        PrayerService(fullSize, sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
