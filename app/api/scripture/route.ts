@@ -61,7 +61,7 @@ const bibleBookMap = new Map([
     ["Nehemiah", "Nehemías"],
     ["Esther", "Ester"],
     ["Job", "Job"],
-    ["Psalms", "Salmos"],
+    ["Psalm", "Salmos"],
     ["Proverbs", "Proverbios"],
     ["Ecclesiastes", "Eclesiastés"],
     ["Song of Solomon", "Cantares"],
@@ -141,7 +141,7 @@ const bibleBookMap = new Map([
         "Revelation"
     ]);
 
-    const twoLetters = "Psalms"
+    const twoLetters = "Psalm"
 
     const fiveLetters = new Set([
         "Jonah",

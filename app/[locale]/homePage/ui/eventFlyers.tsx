@@ -1,5 +1,6 @@
 "use client"
 
+import { Anton } from "next/font/google"
 import Image from "next/image"
 import { useState, useEffect, useRef } from "react"
 import clsx from "clsx"
@@ -9,6 +10,8 @@ import es from "@/messages/es.json";
 
 const flyers_en = en.HomePage.flyers;
 const flyers_es = es.HomePage.flyers;
+
+const anton = Anton({weight: "400", subsets: ['latin'] })
 
 
 const isLaptop = typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -199,6 +202,8 @@ function MenFellowship(locale: string){
 
 
 
+
+
 export default function EventFlyerSection(){
     const locale = useLocale();
     const [fullSize, setFullSize] = useState(false);
@@ -210,10 +215,14 @@ export default function EventFlyerSection(){
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
-
+    const target = new Date().setHours(22,0,0,0);
+    const [remaining, setRemaining] = useState(target - Date.now());
     const [cooldown, setCooldown] = useState(false);
-
+    const temp_date = new Date();
+    const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 0;
     const sectionRef = useRef<HTMLDivElement>(null); 
+    const timerInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+
 
     function changePhoto(increase= false){
         if (increase)
@@ -222,7 +231,26 @@ export default function EventFlyerSection(){
             setIndex((i) => i - 1 < 0 ? arrayFlyers.length - 1 : i -1)
 
     }
+    useEffect(()=> {
+        if (!isSunday || !fullSize) {
+            return;
+        }
+        if (remaining <= 0){
+            if (timerInterval.current)
+                clearInterval(timerInterval.current)
+            return;
+        }   
+        timerInterval.current = setInterval(() => { 
+            setRemaining(target - Date.now()); 
+        }, 1000); 
+        return () => { 
+            if (timerInterval.current) 
+                clearInterval(timerInterval.current); 
+        };
+    }, [fullSize]);
 
+    const seconds = Math.floor(remaining / 1000) % 60; 
+    const minutes = Math.floor(remaining / 1000 / 60) % 60; 
     useEffect(() => {
         function handleFullscreenChange() {
             if (!document.fullscreenElement) {
@@ -293,6 +321,19 @@ export default function EventFlyerSection(){
     return(
         <> 
             <div ref={sectionRef} className={clsx("w-full h-full", {" overflow-hidden": fullSize})}>
+                {remaining <= 120000 && fullSize ?
+                    <div className="w-full h-full bg-gray-200 flex flex-col justify-center items-center gap-3 relative">
+                        <Image className="object-cover" src = "/timer_page.png" fill alt = "timer background" />
+                        <div className="z-5 text-white text-center">
+                            <div className={`text-7xl mt-30 ${anton.className}`}>
+                                Iglesia Comienza En:
+                            </div>
+                            <div className="text-9xl mt-5">
+                                {minutes}:{seconds < 10 ? `0${seconds}`: seconds}
+                            </div>
+                        </div>
+                    </div>
+                :
                 <div onClick={isLaptop ? fullScreenHandler: undefined} onTransitionEnd={()=> {
                     if (index === arrayFlyers.length){
                         if (fullSize)
@@ -310,6 +351,7 @@ export default function EventFlyerSection(){
                         {arrayFlyers[0]}
                     </div>
                 </div> 
+                }
             </div>   
             <div className="absolute right-0 bottom-0">
                 <div className="flex pr-3 pb-2">

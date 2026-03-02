@@ -132,6 +132,10 @@ function calenderMaps(eventData: EventDef [], monthDaysMax: number []){
     return eventMap;
 }
 
+function milisecondsConvert(hours: number, minutes: number){
+    return hours * 3600000 + minutes * 60000;
+}
+
 export {getFirstWeekday, getMaxDays, getGridRows, formatDate, getFirstMonday, dbDate, change24to12Format, dbDateChange,
-    calenderMaps
+    calenderMaps, milisecondsConvert
 };

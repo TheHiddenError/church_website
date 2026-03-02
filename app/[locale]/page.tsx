@@ -7,6 +7,7 @@ import HomeCardSection from "./homePage/ui/card_section";
 import { ConstantEventType, constantEvents } from "./lib/placeholder_data";
 import { getTopThree, getThreeMonthsImportant } from "../actions/events";
 import { getTranslations } from "next-intl/server";
+import { milisecondsConvert } from "../helperFunctions/dates_functions";
 
 
 type Event = {
@@ -18,9 +19,11 @@ type Event = {
   date: Date
 }
 
-
-const current_date: Date = new Date(); 
-
+// const utcDate = new Date();
+// console.log(utcDate)
+// const current_date: Date = new Date(utcDate.toLocaleDateString("en-US", {timeZone: "America/Chicago"})); 
+// console.log("The current before temp ", current_date)
+const current_date = new Date();
 const staticEvents = new Map<number, ConstantEventType>();
 
 for (const constant of constantEvents){ //array that holds sunday, monday and wednesday services
@@ -53,9 +56,14 @@ export default async function Start_Page(){
     }
     else {
       let checkMap = staticEvents.get(temp_date.getDay())
-      if (checkMap != undefined) {
-        const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
-        topThree.push({...checkMap, date: staticDate})
+      if (checkMap != undefined){
+        if (temp_date.getDate() === current_date.getDate() && (milisecondsConvert(current_date.getHours(), current_date.getMinutes()) > checkMap.miliseconds) ){
+          continue;
+        }
+        else {
+          const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
+          topThree.push({...checkMap, date: staticDate})
+        }
       }
     }
     temp_date.setDate(temp_date.getDate() + 1); //going to next date until we either reach end of week or we already got the three closest events

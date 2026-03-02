@@ -57,7 +57,9 @@ type Props ={
 */
 
 export default function ScriptureSec({text, verse, translation, link}: {text: string, verse: string, translation: string, link: string}){
-    const temp = new Date();
+    const utcDate = new Date();
+    const temp = new Date(utcDate.toLocaleDateString("en-US", {timeZone: "America/Chicago"}));
+
     const todays_date = `${temp.getMonth() + 1 }/${temp.getDate()}`
     const t = useTranslations("Calendar");
     let successful = false;
