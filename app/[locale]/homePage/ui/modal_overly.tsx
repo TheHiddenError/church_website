@@ -19,7 +19,7 @@ export default function ModalOverlay({info}: ModalInfoProps){
 
     const handlePetition = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>)=> {
         e.preventDefault();
-        const res = await fetch(`${locale}/api/petition`, {
+        const res = await fetch(`/api/messaging`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

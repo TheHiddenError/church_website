@@ -8,6 +8,7 @@ import { ConstantEventType, constantEvents } from "./lib/placeholder_data";
 import { getTopThree, getThreeMonthsImportant } from "../actions/events";
 import { getTranslations } from "next-intl/server";
 import { milisecondsConvert } from "../helperFunctions/dates_functions";
+import { toZonedTime } from "date-fns-tz";
 
 
 type Event = {
@@ -19,11 +20,11 @@ type Event = {
   date: Date
 }
 
-// const utcDate = new Date();
-// console.log(utcDate)
-// const current_date: Date = new Date(utcDate.toLocaleDateString("en-US", {timeZone: "America/Chicago"})); 
+
 // console.log("The current before temp ", current_date)
-const current_date = new Date();
+const current_date = toZonedTime(new Date(), "America/Chicago");
+console.log(current_date);
+console.log(current_date.getHours())
 const staticEvents = new Map<number, ConstantEventType>();
 
 for (const constant of constantEvents){ //array that holds sunday, monday and wednesday services
@@ -80,18 +81,18 @@ export default async function Start_Page(){
         <div className="text-4xl lg:text-5xl font-extrabold">
           {t("upcoming_events")}
         </div>
-        {/* <div className="flex w-full justify-center">
+        <div className="flex w-full justify-center">
           <div className="text-4xl italic mt-5">
             Under Maintenance
           </div>
-        </div> */}
-        <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
+        </div>
+        {/* <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
           {topThree.map((element, index) => {
             return(
               <UpcomingSec key= {`${index}${element.title}`} temp = {element} />
             )
           })}
-        </div>
+        </div> */}
       </div>
       <HomeCardSection />
     </div> 

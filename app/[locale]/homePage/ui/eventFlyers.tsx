@@ -192,7 +192,7 @@ function NursingHome(locale: string) {
 }
 
 function MenFellowship(locale: string){
-    const imagePath = `/flyers/men_fellowship/${locale}.png`
+    const imagePath = `/flyers/men_fellowship/en.png`
     return <>
         <Image src ={imagePath}
         fill 
@@ -211,17 +211,35 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
+        PrayerService(fullSize, sliderLocale), MenFellowship(sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
-    const target = new Date().setHours(22,0,0,0);
+    const target = new Date().setHours(10,30,0,0);
     const [remaining, setRemaining] = useState(target - Date.now());
+    const [fiveTimer, setFiveTimer] = useState(false);
     const [cooldown, setCooldown] = useState(false);
+    const [isRunning, setIsRunning] = useState(true);
+    const [fade, setFade] = useState(false);
     const temp_date = new Date();
     const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 0;
     const sectionRef = useRef<HTMLDivElement>(null); 
     const timerInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+    const fiveInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+    
+    if (remaining <=120 && timerInterval.current) {
+        clearInterval(timerInterval.current);
+        timerInterval.current = null;
+        fiveInterval.current = setInterval(() => {
+            setFiveTimer(true);
+            console.log("15 seconds pass")
+        }, 15000);
+    }
+
+    if (fiveInterval.current && fiveTimer){
+        clearInterval(fiveInterval.current);
+        fiveInterval.current = null;
+    }
 
 
     function changePhoto(increase= false){
@@ -232,14 +250,9 @@ export default function EventFlyerSection(){
 
     }
     useEffect(()=> {
-        if (!isSunday || !fullSize) {
+        if (!isSunday || !fullSize || remaining <=120) {
             return;
         }
-        if (remaining <= 0){
-            if (timerInterval.current)
-                clearInterval(timerInterval.current)
-            return;
-        }   
         timerInterval.current = setInterval(() => { 
             setRemaining(target - Date.now()); 
         }, 1000); 
@@ -269,15 +282,23 @@ export default function EventFlyerSection(){
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     useEffect(() => {  
-    intervalRef.current = setInterval(() => { 
-        changePhoto(true);
-        setIsAnimating(true);
-     }, 10000); 
+        if (isRunning){
+            intervalRef.current = setInterval(() => { 
+                changePhoto(true);
+                setIsAnimating(true);
+            }, 10000); 
+        }
+        else {
+            if (intervalRef.current){
+                clearInterval(intervalRef.current)
+                intervalRef.current = null;
+            }
+        }
     return () => {
      if (intervalRef.current)
         clearInterval(intervalRef.current)   
     }; 
-}   , []);
+}   , [isRunning]);
 
 
     useEffect(() => {
@@ -289,16 +310,18 @@ export default function EventFlyerSection(){
                 changePhoto(true);
                 setCooldown(true);
                 setIsAnimating(true);
-                if (intervalRef.current)
-                    clearInterval(intervalRef.current)
             }
             else if (e.key === "ArrowLeft") {
                 changePhoto();
                 setCooldown(true);
                 setIsAnimating(true);
-                if (intervalRef.current)
-                    clearInterval(intervalRef.current)
             }
+            else if (e.key == " "){
+                setIsRunning(i => !i);
+                console.log("Space ran")
+            }
+
+
             setTimeout(() => setCooldown(false), 500); // 300ms cooldown
 
         }
@@ -317,11 +340,11 @@ export default function EventFlyerSection(){
         setFullSize((current) => !current);
     } 
 
-
     return(
         <> 
             <div ref={sectionRef} className={clsx("w-full h-full", {" overflow-hidden": fullSize})}>
-                {remaining <= 120000 && fullSize ?
+                {isSunday && remaining <= 120000 && fullSize && !fiveTimer ?
+                (remaining > 0 ?
                     <div className="w-full h-full bg-gray-200 flex flex-col justify-center items-center gap-3 relative">
                         <Image className="object-cover" src = "/timer_page.png" fill alt = "timer background" />
                         <div className="z-5 text-white text-center">
@@ -333,6 +356,9 @@ export default function EventFlyerSection(){
                             </div>
                         </div>
                     </div>
+                    :
+                    <div className="w-full h-full bg-black"/>
+                )
                 :
                 <div onClick={isLaptop ? fullScreenHandler: undefined} onTransitionEnd={()=> {
                     if (index === arrayFlyers.length){
@@ -341,9 +367,9 @@ export default function EventFlyerSection(){
                         setIsAnimating(false);
                         setIndex(0);
                     }}
-                } className={clsx("flex w-full h-full", {"transition-all duration-700 ease-out": isAnimating, "cursor-pointer": !fullSize})} style={{ transform: `translateX(-${index * 100}%)` }}>
+                } className={clsx("flex w-full h-full", {"transition-all ease-out duration-1000" : isAnimating, "cursor-pointer": !fullSize})} style={{ transform: `translateX(-${index * 100}%)` }} >
                     {arrayFlyers.map((element, mapindex) => (
-                        <div key={(mapindex + 1) * 7} className="w-full h-full flex-shrink-0 relative">
+                        <div key={(mapindex + 1) * 7} className="w-full h-full flex-shrink-0 relative ">
                             {element}
                         </div>
                     ))}

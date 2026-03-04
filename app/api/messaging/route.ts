@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import 'dotenv/config';
 
-// import * as twilio from twilio
+import twilio from "twilio"
 
 export async function POST(data: Request){
   try {
@@ -11,14 +11,14 @@ export async function POST(data: Request){
     const authToken = process.env.TWILIO_AUTH_TOKEN!;
     const number = process.env.PERSONAL_NUMBER!;
 
-    // const client = twilio(accountSid, authToken);
-    // client.messages
-    //     .create({
-    //         body: info + name != "" ?  `From: ${name}` : "",
-    //         messagingServiceSid: 'MGfc50027763d32f168f8b23673322a497',
-    //         to: number
-    //     })
-    //     .then(message => console.log(message.sid));
+    const client = twilio(accountSid, authToken);
+    client.messages
+        .create({
+            body: info + (name != "" ?  `From: ${name}` : ""),
+            messagingServiceSid: 'MGfc50027763d32f168f8b23673322a497',
+            to: number
+        })
+        .then(message => console.log("Sent message"));
 
     return NextResponse.json({ message: "Success" }, { status: 200 });
   } catch (error) {
