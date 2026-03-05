@@ -215,7 +215,7 @@ export default function EventFlyerSection(){
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
-    const target = new Date().setHours(14,35,0,0);
+    const target = new Date().setHours(15,15,0,0);
     const [remaining, setRemaining] = useState(target - Date.now());
     const [fiveTimer, setFiveTimer] = useState(false);
     const [cooldown, setCooldown] = useState(false);
@@ -345,7 +345,7 @@ export default function EventFlyerSection(){
             <div ref={sectionRef} className={clsx("w-full h-full", {" overflow-hidden": fullSize})}>
                 {isSunday && remaining <= 120000 && fullSize && !fiveTimer ?
                 (remaining > 0 ?
-                    <div className="w-full h-full bg-gray-200 flex flex-col justify-center items-center gap-3 relative">
+                    <div className="w-full h-full flex flex-col justify-center items-center gap-3 relative">
                         <Image className="object-cover" src = "/timer_page.png" fill alt = "timer background" />
                         <div className="z-5 text-white text-center">
                             <div className={`text-7xl mt-30 ${anton.className}`}>

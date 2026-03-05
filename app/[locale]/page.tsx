@@ -29,12 +29,11 @@ for (const constant of constantEvents){ //array that holds sunday, monday and we
   staticEvents.set(constant.date_index, constant);
 }
 
-let topThree: Event [] = []; //This is not the top three from db but comparisions between the static and db values
-
+let topThree: Event [] = []; //This is not the top three from db but comparisions between the static and db value
 
 export default async function Start_Page(){
   const theData = await getTopThree();
-  let temp_date = current_date;
+  let temp_date = new Date(current_date.getTime());
   let tracker = 0; //used to check the events in the db call if aplicable
   for (let i = 0; i < 7; i++){ //work on cases where on same day
     if (topThree.length == 3)
@@ -57,7 +56,6 @@ export default async function Start_Page(){
       let checkMap = staticEvents.get(temp_date.getDay())
       if (checkMap != undefined){
         if (temp_date.getDate() === current_date.getDate() && (milisecondsConvert(current_date.getHours(), current_date.getMinutes()) > checkMap.miliseconds) ){
-          continue;
         }
         else {
           const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
@@ -65,6 +63,7 @@ export default async function Start_Page(){
         }
       }
     }
+
     temp_date.setDate(temp_date.getDate() + 1); //going to next date until we either reach end of week or we already got the three closest events
   }
   const t = await getTranslations("HomePage");
@@ -84,16 +83,16 @@ export default async function Start_Page(){
             Under Maintenance
           </div>
           <div>
-            {current_date.getHours()}
+            {current_date.getHours()}:{new Date().getHours()}
           </div>
         </div>
-        {/* <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
+        <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">
           {topThree.map((element, index) => {
             return(
               <UpcomingSec key= {`${index}${element.title}`} temp = {element} />
             )
           })}
-        </div> */}
+        </div>
       </div>
       <HomeCardSection />
     </div> 
