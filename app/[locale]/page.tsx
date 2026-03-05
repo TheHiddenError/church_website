@@ -23,8 +23,6 @@ type Event = {
 
 // console.log("The current before temp ", current_date)
 const current_date = toZonedTime(new Date(), "America/Chicago");
-console.log(current_date);
-console.log(current_date.getHours())
 const staticEvents = new Map<number, ConstantEventType>();
 
 for (const constant of constantEvents){ //array that holds sunday, monday and wednesday services
@@ -84,6 +82,9 @@ export default async function Start_Page(){
         <div className="flex w-full justify-center">
           <div className="text-4xl italic mt-5">
             Under Maintenance
+          </div>
+          <div>
+            {current_date.getHours()}
           </div>
         </div>
         {/* <div className="grid grid-cols-3 mt-20 divide-x-3 divide-solid divide-black/80">

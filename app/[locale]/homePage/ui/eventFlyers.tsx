@@ -182,7 +182,7 @@ function ChurchFellowship(locale: string){
 }
 
 function NursingHome(locale: string) {
-    const imagePath = `/flyers/en.png`
+    const imagePath = locale === "en" ? "/flyers/nursing_home_visit/en.png" : "/flyers/nursing_home_visit/es.png"
 
     return <>
         <Image src ={imagePath}
@@ -211,18 +211,18 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), MenFellowship(sliderLocale), NursingHome(sliderLocale), ZooFlyer(sliderLocale) ];
+        PrayerService(fullSize, sliderLocale), ZooFlyer(sliderLocale), NursingHome(sliderLocale) ];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
-    const target = new Date().setHours(10,30,0,0);
+    const target = new Date().setHours(14,15,0,0);
     const [remaining, setRemaining] = useState(target - Date.now());
     const [fiveTimer, setFiveTimer] = useState(false);
     const [cooldown, setCooldown] = useState(false);
     const [isRunning, setIsRunning] = useState(true);
     const [fade, setFade] = useState(false);
     const temp_date = new Date();
-    const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 0;
+    const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 4;
     const sectionRef = useRef<HTMLDivElement>(null); 
     const timerInterval = useRef<ReturnType<typeof setInterval> | null>(null);
     const fiveInterval = useRef<ReturnType<typeof setInterval> | null>(null);
