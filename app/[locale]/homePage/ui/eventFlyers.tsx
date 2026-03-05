@@ -215,7 +215,7 @@ export default function EventFlyerSection(){
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
-    const target = new Date().setHours(14,15,0,0);
+    const target = new Date().setHours(14,35,0,0);
     const [remaining, setRemaining] = useState(target - Date.now());
     const [fiveTimer, setFiveTimer] = useState(false);
     const [cooldown, setCooldown] = useState(false);
