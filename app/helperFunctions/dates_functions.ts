@@ -1,4 +1,5 @@
 import { EventDef } from "../[locale]/lib/types";
+import { eventsTable } from "../db/schema";
 
 function getFirstWeekday(year: number, month: number) {
   return new Date(year, month, 1).getDay();

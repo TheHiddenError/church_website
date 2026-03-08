@@ -220,9 +220,9 @@ export default function EventFlyerSection(){
     const [fiveTimer, setFiveTimer] = useState(false);
     const [cooldown, setCooldown] = useState(false);
     const [isRunning, setIsRunning] = useState(true);
-    const [fade, setFade] = useState(false);
+    // const [fade, setFade] = useState(false);
     const temp_date = new Date();
-    const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 4;
+    const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 4; //will change later
     const sectionRef = useRef<HTMLDivElement>(null); 
     const timerInterval = useRef<ReturnType<typeof setInterval> | null>(null);
     const fiveInterval = useRef<ReturnType<typeof setInterval> | null>(null);

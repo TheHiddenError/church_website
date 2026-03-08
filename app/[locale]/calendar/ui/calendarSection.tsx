@@ -65,8 +65,10 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
 
     const daysOfWeek = Object.values(t.raw("days") as Record<string, string>);
 
-
+    // const [cacheCalendar, setCacheCalendar] = useState([eventData]);
+    // const [cacheImportant, setImportant] = useState([importantEvents]);
     const [calendarTracker, setTracker] = useState(the_month);
+    // const [dbTracker, setDBTracker] = useState(0);
     const [eventClick, setEventClick] = useState(false);
     const [eventInfo, setEventInfo] = useState <EventDef | undefined>(undefined);
 
@@ -91,8 +93,31 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
     const importantMap = calenderMaps(importantEvents, monthDaysMax);
 
 
-    function changeCalendarMonth(increase=false){
+    async function changeCalendarMonth(increase=false){
+        // if (!cacheCalendar[dbTracker+1]){
+        //     const data = await fetch(`/api/month?adv=${dbTracker + 1}`).then(res=> res.json());
+        //     const valid_data: EventDef[] = [];
+        //     const valid_important: EventDef[] = [];
+        //     for (const row of data.important) {
+        //         valid_important.push({
+        //             ...row,
+        //             date: row.date.toLocaleDateString(),
+        //             time: change24to12Format(row.date)
+        //         })
+        //     }
+
+        //     for (const row of data.regular){
+        //         valid_data.push({
+        //             ...row,
+        //             date: row.date.toLocaleDateString(),
+        //             time: change24to12Format(row.date)
+        //         })
+        //     } 
+        //     setCacheCalendar(element => [...element, valid_data])
+        //     setImportant(element => [...element, valid_important]);
+        // }
         setTracker((element)=> increase ? element + 1: element -1);
+        // setDBTracker((element)=> increase ? element + 1: element - 1);
     }
 
 

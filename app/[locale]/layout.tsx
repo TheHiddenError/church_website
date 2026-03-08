@@ -46,11 +46,11 @@ export default async function RootLayout({
           className={`antialiased overflow-x-hidden`}
         >
           <NextIntlClientProvider>
-            <div className="min-h-screen flex flex-col">
-              <NavBar />
-              <div className="mt-10 h-[40vh] overflow-auto-y flex-1">{children}</div>
-              <Footer />
-            </div>
+              <div className="min-h-screen flex flex-col">
+                <NavBar />
+                <div className="mt-10 h-[40vh] overflow-auto-y flex-1">{children}</div>
+                <Footer />
+              </div>
           </NextIntlClientProvider>
         </body>
       </html>

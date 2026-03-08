@@ -2,7 +2,7 @@ import ScriptureSec from "./ui/scriptureSection"
 import CalendarSec from "./ui/calendarSection";
 import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
-import {getDailyReadings, getThreeMonthsEvents, getThreeMonthsImportant } from "@/app/actions/events";
+import {getDailyReadings, getImportantMonthEvents, getMonthEvents, getThreeMonthsEvents, getThreeMonthsImportant } from "@/app/actions/events";
 import { EventDef } from "../lib/types";
 import { change24to12Format } from "../../helperFunctions/dates_functions";
 
@@ -40,6 +40,7 @@ export default async function Calendar(){
     const raw_data = await getThreeMonthsEvents();
     const valid_data: EventDef[] = [];
     const valid_important: EventDef[] = [];
+
 
     for (const row of raw_important) {
         valid_important.push({

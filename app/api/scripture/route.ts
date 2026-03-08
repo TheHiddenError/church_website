@@ -21,7 +21,7 @@ export async function GET(){
 
     const chapterAlone = /\d*(?=:)/
 
-    const verseAlone = /(?<=:)(\d*(-\d*)?,)*\d*(-\d*)?/
+    const verseAlone = /(?<=: *)(\d*(-\d*)?, *)*\d+(- *\d*)?/
 
     const gettingChapter = /(\d* )*[A-Z][a-z]* \d*/
     let verse_en = "";
@@ -29,7 +29,7 @@ export async function GET(){
     const votd_url = `https://www.biblegateway.com/votd/get/?format=json&version=nkjv`
     let clean_text_en = ""
     let clean_text_es = ""
-    let scripture_verse = "Matthew 5:43-45"
+    let scripture_verse = "Matthew 5:10, 42- 43"
     let scripture_verse_es = "";
     let link_verse = "https://www.biblegateway.com/passage/?search="
 
@@ -170,6 +170,7 @@ const bibleBookMap = new Map([
         const bibleName = scripture_verse.match(bookName);
         const chapterNumber = scripture_verse.match(chapterAlone);
         const verseNumbers = scripture_verse.match(verseAlone);
+        console.log(verseNumbers);
         let classId;
         if (bibleName){
             let temp_chap: string | undefined = bibleName[0];
@@ -193,7 +194,8 @@ const bibleBookMap = new Map([
             }
         }
         if (classId && chapterNumber && verseNumbers){
-            let temporaryVerses = verseNumbers[0];
+            let temporaryVerses = verseNumbers[0].replace(/ /g, "");
+            console.log(temporaryVerses)
             let arrayVerses;
             if (temporaryVerses.includes(",")) {
                 arrayVerses = temporaryVerses.split(",");

@@ -92,6 +92,57 @@ export async function getThreeMonthsImportant(){
     return sortedImportant;
 }
 
+export async function getMonthEvents(adv: number){
+
+    const monthInterval = adv == 1 ? sql`INTERVAL '1 months'` : sql`INTERVAL '2 months'`
+    const sqlQuery =
+    adv > 0
+        ? and(
+            gte(eventsTable.date, timezoneChange),
+            lte(
+                eventsTable.date,
+                sql`${timezoneChange} + ${monthInterval}`
+            )
+        )
+        : sql`EXTRACT(MONTH FROM (NOW() AT TIME ZONE 'AMERICA/CHICAGO'))
+            = EXTRACT(MONTH FROM ${eventsTable.date})`;
+    const info = await db.select()
+    .from(eventsTable)
+      .where(
+        and(
+            sqlQuery
+            , eq(eventsTable.importance, false)
+        )
+        )
+    .orderBy(asc(eventsTable.date))
+    return info;
+}
+
+export async function getImportantMonthEvents(adv: number){
+    const monthInterval = adv == 1 ? sql`INTERVAL '1 months'` : sql`INTERVAL '2 months'`
+    const sqlQuery =
+    adv > 0
+        ? and(
+            gte(eventsTable.date, timezoneChange),
+            lte(
+                eventsTable.date,
+                sql`${timezoneChange} + ${monthInterval}`
+            )
+        )
+        : sql`EXTRACT(MONTH FROM (NOW() AT TIME ZONE 'AMERICA/CHICAGO'))
+            = EXTRACT(MONTH FROM ${eventsTable.date})`;
+    const info = await db.select()
+    .from(eventsTable)
+      .where(
+        and(
+            sqlQuery
+            , eq(eventsTable.importance, true)
+        )
+        )
+    .orderBy(asc(eventsTable.date))
+    return info;
+}
+
 export async function getDailyReadings(locale: string){
     try {
         const db_info = await db.select({
