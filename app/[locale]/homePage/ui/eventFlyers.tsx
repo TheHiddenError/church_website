@@ -182,7 +182,7 @@ function ChurchFellowship(locale: string){
 }
 
 function NursingHome(locale: string) {
-    const imagePath = locale === "en" ? "/flyers/nursing_home_visit/en.png" : "/flyers/nursing_home_visit/es.png"
+    const imagePath = "/flyers/nursing_home_visit/en.png"
 
     return <>
         <Image src ={imagePath}
