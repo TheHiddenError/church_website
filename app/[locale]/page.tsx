@@ -35,7 +35,7 @@ export default async function Start_Page(){
   const theData = await getTopThree();
   let temp_date = new Date(current_date.getTime());
   let tracker = 0; //used to check the events in the db call if aplicable
-  for (let i = 0; i < 7; i++){ //work on cases where on same day
+  for (let i = 0; i <= 7; i++){ //work on cases where on same day
     if (topThree.length == 3)
       break;
     let temp_day = temp_date.getDay();
@@ -55,7 +55,7 @@ export default async function Start_Page(){
     else {
       let checkMap = staticEvents.get(temp_date.getDay())
       if (checkMap != undefined){
-        if (temp_date.getDate() === current_date.getDate() && (milisecondsConvert(current_date.getHours(), current_date.getMinutes()) > checkMap.miliseconds) ){
+        if (temp_date.getDate() === current_date.getDate() && (milisecondsConvert(current_date.getHours(), current_date.getMinutes()) > checkMap.miliseconds)){
         }
         else {
           const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
@@ -95,7 +95,7 @@ export default async function Start_Page(){
         </div>
       </div>
       <HomeCardSection />
-    </div> 
+    </div>
   </>
   );
 }

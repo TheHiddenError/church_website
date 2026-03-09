@@ -14,7 +14,6 @@ type ModalInfoProps = {
 
 export default function ModalOverlay({info}: ModalInfoProps){
     const [petition, setPetition] = useState({name: "", info: ""});
-    const locale = useLocale();
 
 
     const handlePetition = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>)=> {

@@ -1,4 +1,4 @@
-import { serial, pgTable, text, timestamp, date, boolean } from "drizzle-orm/pg-core";
+import { serial, pgTable, text, timestamp, date, boolean, } from "drizzle-orm/pg-core";
 
 export const eventsTable = pgTable("events", {
   id: serial("id").primaryKey(),
@@ -21,4 +21,10 @@ export const votdTable = pgTable("votd", {
     verse_name_es: text("verse_name_es").notNull(),
     verse_link_en: text("verse_link_en").notNull(),
     verse_link_es: text("verse_link_es").notNull()
+})
+
+export const supportTable = pgTable("support", {
+  id: serial('id').primaryKey(),
+  reason: text('reason'),
+  description: text('description')
 })

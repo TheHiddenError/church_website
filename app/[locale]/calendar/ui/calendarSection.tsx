@@ -1,7 +1,7 @@
 "use client"
 
 import clsx from "clsx";
-import {getFirstWeekday, getGridRows, getMaxDays, getFirstMonday, change24to12Format, calenderMaps } from "../../../helperFunctions/dates_functions"
+import {getFirstWeekday, getGridRows, getMaxDays, calenderMaps } from "../../../helperFunctions/dates_functions"
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import Image from "next/image";
@@ -64,11 +64,12 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
     const t = useTranslations("Calendar");
 
     const daysOfWeek = Object.values(t.raw("days") as Record<string, string>);
+    const [loading, setLoading] = useState<Boolean>(false)
 
-    // const [cacheCalendar, setCacheCalendar] = useState([eventData]);
-    // const [cacheImportant, setImportant] = useState([importantEvents]);
+    const [eventMap, setEventMap] = useState<Map<Number, EventDef[]>>(calenderMaps(eventData, monthDaysMax));
+    const [importantMap, setImportantMap] = useState<Map<Number, EventDef[]>>(calenderMaps(importantEvents, monthDaysMax));
     const [calendarTracker, setTracker] = useState(the_month);
-    // const [dbTracker, setDBTracker] = useState(0);
+    const [dbTracker, setDBTracker] = useState(1);
     const [eventClick, setEventClick] = useState(false);
     const [eventInfo, setEventInfo] = useState <EventDef | undefined>(undefined);
 
@@ -88,40 +89,35 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
     const calendarCols: number [] = Array.from({length: 7}, () => 0);
     const calendarRows: number [] = Array.from({length: gridRows}, () => 0);
 
-    const eventMap = calenderMaps(eventData, monthDaysMax);
-
-    const importantMap = calenderMaps(importantEvents, monthDaysMax);
 
 
     async function changeCalendarMonth(increase=false){
-        // if (!cacheCalendar[dbTracker+1]){
-        //     const data = await fetch(`/api/month?adv=${dbTracker + 1}`).then(res=> res.json());
-        //     const valid_data: EventDef[] = [];
-        //     const valid_important: EventDef[] = [];
-        //     for (const row of data.important) {
-        //         valid_important.push({
-        //             ...row,
-        //             date: row.date.toLocaleDateString(),
-        //             time: change24to12Format(row.date)
-        //         })
-        //     }
-
-        //     for (const row of data.regular){
-        //         valid_data.push({
-        //             ...row,
-        //             date: row.date.toLocaleDateString(),
-        //             time: change24to12Format(row.date)
-        //         })
-        //     } 
-        //     setCacheCalendar(element => [...element, valid_data])
-        //     setImportant(element => [...element, valid_important]);
-        // }
         setTracker((element)=> increase ? element + 1: element -1);
-        // setDBTracker((element)=> increase ? element + 1: element - 1);
+        if (increase && dbTracker < 3 && (calendarTracker-the_month+ 1) == dbTracker ){
+            setLoading(true);
+            try {
+                const data = await fetch(`/api/month?adv=${dbTracker}`).then(res=> res.json());
+                console.log(data)
+                if (data){
+                    setEventMap(element => new Map([
+                        ...element, 
+                        ...calenderMaps(data.regular, monthDaysMax)
+                    ]))
+                    setImportantMap(element=> new Map([
+                        ...element,
+                        ...calenderMaps(data.important, monthDaysMax)
+                    ]))
+                }
+            }catch(error){
+                console.log(error)
+
+            }finally {
+                setDBTracker(element=> element + 1);
+                setLoading(false);
+            }
+        }
     }
-
-
-
+    
     function eventClickHandler(eInfo: EventDef | undefined = undefined){
         setEventClick((event) => !event);
         setEventInfo(eInfo);
@@ -175,7 +171,6 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
         </>
         )
     }
-
 
     return(
     <>
@@ -238,6 +233,34 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                     </div>
                 </div>
             </div>
+            {loading === true ?
+            <div className="w-full flex flex-col items-center">
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold my-5">
+                    {t("loading_events")}
+                </div>
+                <svg className="motion-rotate-loop-[1turn]/reset motion-ease-linear motion-duration-800" width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <circle
+                        cx="60"
+                        cy="60"
+                        r="50"
+                        fill="none"
+                        stroke="#e0e0e0"
+                        strokeWidth="10"
+                    />
+                    <circle 
+                        cx="60"
+                        cy="60"
+                        r="50"
+                        fill="none"
+                        stroke="#3f6ef1"
+                        strokeWidth="10"
+                        strokeLinecap="round"
+                        strokeDasharray="78.5 314" 
+    
+                    />
+                </svg>
+            </div>
+            :
             <div className="grid grid-rows w-full lg:w-4/5 ">
                 <div className="grid grid-cols-7">
                     {daysOfWeek.map((elementName) => {
@@ -326,6 +349,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                     )
                 })}
             </div>
+            }
         </div>
         <div className={clsx("fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen", {"hidden": !eventClick})}>
             <div className="w-full h-full flex justify-center items-center">

@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import NavBar from "./root_components/navbar/navbar";
 import Footer from "./root_components/navbar/footer";
+import Support from "./root_components/support";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -49,6 +50,7 @@ export default async function RootLayout({
               <div className="min-h-screen flex flex-col">
                 <NavBar />
                 <div className="mt-10 h-[40vh] overflow-auto-y flex-1">{children}</div>
+                <Support />
                 <Footer />
               </div>
           </NextIntlClientProvider>

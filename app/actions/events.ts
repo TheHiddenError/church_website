@@ -1,7 +1,9 @@
 import { and, asc, gt, sql, lt, gte, lte, eq, or } from "drizzle-orm"
 import { db } from ".."
 import { eventsTable, votdTable } from "../db/schema"
-import { getFirstMonday } from "../helperFunctions/dates_functions"
+import { getFirstMonday, change24to12Format } from "../helperFunctions/dates_functions"
+import { EventDef } from "../[locale]/lib/types"
+import { toZonedTime } from "date-fns-tz"
 
 const timezoneChange = sql`NOW() AT TIME ZONE 'America/Chicago'` 
 
@@ -38,7 +40,7 @@ export async function getThreeMonthsEvents(){
 }
 
 export async function getThreeMonthsImportant(){
-    const current_date = new Date();
+    const current_date = toZonedTime(new Date(), "America/Chicago");
     let changing_month = current_date.getMonth();
     let changing_year = current_date.getFullYear();
     let mondayServices = [];
@@ -93,17 +95,11 @@ export async function getThreeMonthsImportant(){
 }
 
 export async function getMonthEvents(adv: number){
-
-    const monthInterval = adv == 1 ? sql`INTERVAL '1 months'` : sql`INTERVAL '2 months'`
+    const valid_data: EventDef[] = [];
     const sqlQuery =
-    adv > 0
-        ? and(
-            gte(eventsTable.date, timezoneChange),
-            lte(
-                eventsTable.date,
-                sql`${timezoneChange} + ${monthInterval}`
-            )
-        )
+    adv > 0 ? 
+        sql`EXTRACT(MONTH FROM (NOW() AT TIME ZONE 'AMERICA/CHICAGO')) + ${adv}
+            = EXTRACT(MONTH FROM ${eventsTable.date})`
         : sql`EXTRACT(MONTH FROM (NOW() AT TIME ZONE 'AMERICA/CHICAGO'))
             = EXTRACT(MONTH FROM ${eventsTable.date})`;
     const info = await db.select()
@@ -115,20 +111,47 @@ export async function getMonthEvents(adv: number){
         )
         )
     .orderBy(asc(eventsTable.date))
-    return info;
+    
+    for (const row of info ){
+        valid_data.push({
+            ...row,
+            date: row.date.toLocaleDateString(),
+            time: change24to12Format(row.date)
+        })
+    }
+    
+    return valid_data;
 }
 
 export async function getImportantMonthEvents(adv: number){
-    const monthInterval = adv == 1 ? sql`INTERVAL '1 months'` : sql`INTERVAL '2 months'`
+    let sortedImportant;
+    const staticImportant = {
+        title: "Prayer and Worship Night", 
+        title_es: "Noche de Oración y Adoración" , 
+        for: "Church", 
+        type: "Fellowship", 
+        summary: "A service of prayer and petitions", 
+        summary_es: "Un servicio de oración y peticiones",
+        location: "Iglesia Nueva Esperanza"
+    };
+    const current_date = toZonedTime(new Date(), "America/Chicago");
+    let changing_month = (current_date.getMonth() + adv) % 12;
+    let changing_year = current_date.getFullYear();
+    if  (changing_month >= 0 && current_date.getMonth() == 11){ //means the current month is still last year, but adding months makes it to the following year
+        changing_year ++
+    }
+    let mondayService;
+    let firstMonday = getFirstMonday(changing_year, changing_month);
+    let temp_month = changing_month + 1;
+    let formatMonth = temp_month < 10 ? `0${temp_month}` : temp_month.toString() 
+    let formatDay = `0${firstMonday}`
+    mondayService = {...staticImportant, date: new Date(`${changing_year}-${formatMonth}-${formatDay}T19:00:00Z`)}
+
+    const valid_important: EventDef[] = [];
     const sqlQuery =
-    adv > 0
-        ? and(
-            gte(eventsTable.date, timezoneChange),
-            lte(
-                eventsTable.date,
-                sql`${timezoneChange} + ${monthInterval}`
-            )
-        )
+    adv > 0 ?
+        sql`EXTRACT(MONTH FROM (NOW() AT TIME ZONE 'AMERICA/CHICAGO')) + ${adv}
+            = EXTRACT(MONTH FROM ${eventsTable.date})`
         : sql`EXTRACT(MONTH FROM (NOW() AT TIME ZONE 'AMERICA/CHICAGO'))
             = EXTRACT(MONTH FROM ${eventsTable.date})`;
     const info = await db.select()
@@ -140,7 +163,18 @@ export async function getImportantMonthEvents(adv: number){
         )
         )
     .orderBy(asc(eventsTable.date))
-    return info;
+
+    sortedImportant = [mondayService, ...info];
+    sortedImportant = sortedImportant.sort((a,b) => a.date.getTime() - b.date.getTime())
+
+    for (const row of sortedImportant) {
+        valid_important.push({
+            ...row,
+            date: row.date.toLocaleDateString(),
+            time: change24to12Format(row.date)
+        })
+    }
+    return valid_important;
 }
 
 export async function getDailyReadings(locale: string){

@@ -69,6 +69,7 @@
         "verse_day": "Versículo del Día",
         "full_chapter": "Leer Capítulo Completo",
         "error_message": "Las Escrituras no están disponibles en este momento. Vuelva más tarde.",
+        "loading_events": "Obteniendo eventos",
         "months": {
             "jan": "Enero",
             "feb": "Febrero",

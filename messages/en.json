@@ -66,6 +66,7 @@
         "verse_day": "Verse of the Day",
         "full_chapter": "Read Full Chapter",
         "error_message": "Scripture is unavailable at the moment. Check back later.",
+        "loading_events": "Getting events",
         "months": {
             "jan": "January",
             "feb": "February",
