@@ -1,21 +1,45 @@
 {
     "Header": {
-        "home": "Incio",
+        "home": "Inicio",
         "about": "Sobre Nosotros",
         "calendar": "Calendario",
         "donate": "Donar",
         "translator": "Speak English? Click Here"
     },
-
     "Footer": {
         "address": "Dirección",
         "phone": "Contacta"
     },
-
+    "UnderConstruction": {
+        "title": "BAJO CONSTRUCCIÓN",
+        "info": "Estamos trabajando en esta página. Estará disponible pronto",
+        "button": "Volver Inicio"
+    },
+    "NotFound": {
+        "text": "Página no encontrada",
+        "button": "Volver Inicio"
+    },
+    "Support": {
+        "title": "Mensajería de Soporte",
+        "loading": "Enviando respuesta",
+        "success": "Respuesta recibida. Puedes cerrar esta sección ahora.",
+        "question": "¿Cuál es el problema?",
+        "option1": "Errores/Fallas",
+        "option2": "Problema de diseño",
+        "option3": "Sugerencias",
+        "textResponse": "Ingresa una descripción del problema abajo",
+        "textResponse2": "Ingresa una sugerencia abajo",
+        "supportText": "Incluye el aparato utilizado.",
+        "ex": "Ejemplo",
+        "textBox": "Escribe aquí",
+        "overlay": "Problemas"
+    },
     "HomePage":{
         "about": "Sobre Nuestra Iglesia",
+        "about_text": "Aprenda más sobre las creencias de nuestra iglesia, los fundamentos bíblicos que las sustentan y lo que hacemos para el avance del reino de Dios. Haga clic a continuación para más información.",
         "about_button": "Aprende Más",
         "prayer": "Solicitud de Oración",
+        "prayer_text": "La oración es importante y creemos que si muchas personas oran por ti, te beneficiarás enormemente. Haz clic abajo para enviar una petición de oración.",
         "prayer_button": "Hace un Oracion",
         "prayer_description": "Nos encantaría orar por ti. Por favor, comparte tu petición y oraremos por ti. Si lo deseas, puedes hacerlo de forma anónima.",
         "prayer_p1": "Nombre (opcional)",

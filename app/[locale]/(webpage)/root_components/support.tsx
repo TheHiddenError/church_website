@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import clsx from "clsx";
-import { stringify } from "querystring";
+import { useTranslations } from "next-intl";
 export default function Support(){
     const [clicked, setClicked] = useState(false);
     const [reason, setReason] = useState("issues");
@@ -23,14 +23,15 @@ export default function Support(){
         setStatusCode(response.status);
         setLoading(false);
     }
+    const t = useTranslations("Support");
     return (
     <>
-        <div className={clsx("fixed z-50 shadow-lg items-center", {"w-screen md:w-[50vw] lg:w-[25vw] h-[60vh] motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md bottom-0 right-0" : clicked, "bottom-4 right-4": !clicked})}>
+        <div className={clsx("fixed z-50 shadow-lg items-center", {"w-screen h-[60vh] md:w-[40vw] md:h-[40vh] lg:w-[25vw] lg:h-[60vh] motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md bottom-0 right-0" : clicked, "bottom-4 right-4": !clicked})}>
             {clicked ?
             <div className="w-full h-full">
                 <div className="bg-blue-600 h-1/5 flex flex-grid w-full items-center">
                     <div className="ml-5 text-gray-100 text-xl font-semibold">   
-                        Support Messaging
+                        {t("title")}
                     </div>
                     {loading == false && <svg onClick={()=>setClicked(false)} className="ml-auto mr-2 cursor-pointer"
                         xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +52,7 @@ export default function Support(){
                 {loading == true ?
                     <div className="w-full h-full flex flex-col justify-center items-center">
                         <div className="text-2xl font-bold">
-                            Submiting Response
+                            {t("loading")}
                         </div>
                         <svg className="motion-rotate-loop-[1turn]/reset motion-ease-linear motion-duration-800" width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
                             <circle
@@ -79,30 +80,31 @@ export default function Support(){
                     statusCode == 200 ?
                     <div className="w-full h-full flex flex-col justify-center items-center p-2">
                         <div className="font-bold text-lg text-center mb-5">
-                            Response received. You can close this section now.
+                            {t("success")}
                         </div>
                         <div className="w-1/4 h-1/4 relative">
                             <Image className="object-contain" src= "/checkmark.png" alt = "Checkmark" fill />
                         </div>
                     </div>
                     :
-                    <form className=" ml-2 w-full h-full p-2">
-                        <label className="text-lg">What is the problem?</label>
+                    <form className=" ml-2 w-full h-9/20 p-2">
+                        <label className="text-lg">{t("question")}</label>
                         <select onChange={(e)=> setReason(e.target.value)} className="border-black border-1 p-2 block">
-                            <option value="issues">Bugs/Design</option>
-                            <option value="suggestions">Suggestions</option>
+                            <option value="issues">{t("option1")}</option>
+                            <option value = "design">{t("option2")}</option>
+                            <option value="suggestions">{t("option3")}</option>
                         </select>
                         <div className="text-gray-600 my-2">
-                            <div className="text-lg font-bold">{reason == "issues" ? "Enter a description of the issue below": "Enter a suggestion below"}.</div>
-                            {reason == "issues" && 
+                            <div className="text-lg font-bold">{reason != "suggestions" ? t("textResponse"): t("textResponse2")}.</div>
+                            {reason != "suggestions" && 
                             <>
-                                <div className="text-base my-1">Include device used.</div>
-                                <div className="text-sm">Example: iPhone 17, HP Laptop</div>
+                                <div className="text-base my-1">{t("supportText")}</div>
+                                <div className="text-sm">{t("ex")}: iPhone 17, HP Laptop</div>
                             </>
                             }
                         </div>
-                        <div className="w-9/10 h-1/2 relative">
-                            <textarea onChange={(e)=>setTextBox(e.target.value)} required className="text-black border-1 p-2 w-full h-full" placeholder="Type here">
+                        <div className="w-9/10 h-4/5 relative">
+                            <textarea onChange={(e)=>setTextBox(e.target.value)} required className="text-black border-1 p-2 w-full h-full" placeholder= {t("textBox")}>
                             </textarea>
                             {textBox.trim().length != 0 && 
                                 <div onClick={()=> submitForm()} className="absolute bottom-1 right-1">
@@ -123,7 +125,7 @@ export default function Support(){
                     <Image src ="/wrench2.png" alt= "wrench" fill />
                 </div>
                 <div className="text-white font-semibold">
-                    Issues
+                    {t("overlay")}
                 </div>
             </div>
             }

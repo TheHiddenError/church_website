@@ -17,8 +17,7 @@ export default function HomeCardSection(){
     const aboutCard: CardBaseProps = {
         imageSrc:"/church_image.jpg",
         title: t("about"),
-        description:`I'm a paragraph. Click here to add  your own text and edit me. 
-                I'm a great place for you to tell a story and let your users know a little more about you.`, 
+        description: t("about_text"), 
         button_name: t("about_button"),
         button_action: ()=> router.push("/about_us")
     }
@@ -35,8 +34,7 @@ export default function HomeCardSection(){
     const prayerCard: CardBaseProps = {
         imageSrc: "/prayer_hands.jpg",
         title: t("prayer"),
-        description: `I'm a paragraph. Click here to add  your own text and edit me. 
-                I'm a great place for you to tell a story and let your users know a little more about you.`,
+        description: t("prayer_text"),
         button_name: t("prayer_button"),
         button_action: ()=> setClicked((element) => !element)
     }
@@ -44,7 +42,7 @@ export default function HomeCardSection(){
 
     return (
         <>
-            <div className="mt-20 lg:grid lg:grid-cols-2">
+            <div className="mt-20 lg:grid lg:grid-cols-2 justify-center">
                 <Card card_info={aboutCard}
                 />
                 <Card card_info={prayerCard} />   

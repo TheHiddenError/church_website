@@ -10,6 +10,7 @@ export async function GET(req: Request) {
     important : {},
     regular: {},
   }
+  
   data.important = await getImportantMonthEvents(adv);
   data.regular = await getMonthEvents(adv);
 

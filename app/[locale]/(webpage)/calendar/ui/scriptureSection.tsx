@@ -81,8 +81,8 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
                     <div className="text-center font-bold text-2xl">
                         - {verse} ({translation})
                     </div>
-                    <div className="text-center text-lg underline text-blue-600 hover:text-blue-400 my-2">
-                        <a className="" href={link} target="_blank" rel="noopener noreferrer">
+                    <div className="text-center text-lg underline text-blue-600 my-2">
+                        <a className="hover:text-blue-400" href={link} target="_blank" rel="noopener noreferrer">
                             {t("full_chapter")}
                         </a>
                     </div>

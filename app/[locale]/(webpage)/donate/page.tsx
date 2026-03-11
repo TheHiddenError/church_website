@@ -1,9 +1,13 @@
 import Image from "next/image"
 import { useTranslations } from "next-intl"
+import { useLocale } from "next-intl"
+import { redirect } from "@/i18n/navigation"
 
 const donation_values: number [] = [5,10,25,50,100, 0]
 
 export default function Donate(){
+    const locale = useLocale()
+    redirect({href: '/under_construction', locale: locale});
 
     const t = useTranslations("Donate");
 

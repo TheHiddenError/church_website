@@ -302,23 +302,29 @@ export default function EventFlyerSection(){
 
 
     useEffect(() => {
-        console.log(fullSize)
-        if (!fullSize) return;
         function handleKey(e: KeyboardEvent) {
             if (cooldown) return;
-            if (e.key === "ArrowRight") {
-                changePhoto(true);
-                setCooldown(true);
-                setIsAnimating(true);
+            if (fullSize){
+                if (e.key === "ArrowRight") {
+                    changePhoto(true);
+                    setCooldown(true);
+                    setIsAnimating(true);
+                }
+                else if (e.key === "ArrowLeft") {
+                    changePhoto();
+                    setCooldown(true);
+                    setIsAnimating(true);
+                }
+                else if (e.key == " "){
+                    setIsRunning(i => !i);
+                    console.log("Space ran")
+                }
             }
-            else if (e.key === "ArrowLeft") {
-                changePhoto();
-                setCooldown(true);
-                setIsAnimating(true);
+            else{
+                if (e.altKey && e.key === "p"){
+                    console.log("ran")
+                    fullScreenHandler()
             }
-            else if (e.key == " "){
-                setIsRunning(i => !i);
-                console.log("Space ran")
             }
 
 
@@ -360,14 +366,14 @@ export default function EventFlyerSection(){
                     <div className="w-full h-full bg-black"/>
                 )
                 :
-                <div onClick={isLaptop ? fullScreenHandler: undefined} onTransitionEnd={()=> {
+                <div onTransitionEnd={()=> {
                     if (index === arrayFlyers.length){
                         if (fullSize)
                             setSliderLocale(loc => loc == "en" ? "es": "en");
                         setIsAnimating(false);
                         setIndex(0);
                     }}
-                } className={clsx("flex w-full h-full", {"transition-all ease-out duration-1000" : isAnimating, "cursor-pointer": !fullSize})} style={{ transform: `translateX(-${index * 100}%)` }} >
+                } className={clsx("flex w-full h-full", {"transition-all ease-out duration-1000" : isAnimating})} style={{ transform: `translateX(-${index * 100}%)` }} >
                     {arrayFlyers.map((element, mapindex) => (
                         <div key={(mapindex + 1) * 7} className="w-full h-full flex-shrink-0 relative ">
                             {element}

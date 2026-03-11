@@ -1,13 +1,13 @@
 
 import styles from "./homePage/ui/homePage.module.css"
 import UpcomingSec from "./homePage/ui/upcomingSection";
-import { change24to12Format } from "../helperFunctions/dates_functions";
+import { change24to12Format } from "../../helperFunctions/dates_functions";
 import EventFlyerSection from "./homePage/ui/eventFlyers";
 import HomeCardSection from "./homePage/ui/card_section";
-import { ConstantEventType, constantEvents } from "./lib/placeholder_data";
-import { getTopThree, getThreeMonthsImportant } from "../actions/events";
+import { ConstantEventType, constantEvents } from "../lib/placeholder_data";
+import { getTopThree } from "../../actions/events";
 import { getTranslations } from "next-intl/server";
-import { milisecondsConvert } from "../helperFunctions/dates_functions";
+import { milisecondsConvert } from "../../helperFunctions/dates_functions";
 import { toZonedTime } from "date-fns-tz";
 
 

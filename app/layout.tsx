@@ -2,11 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import NavBar from "./root_components/navbar/navbar";
-import Footer from "./root_components/navbar/footer";
-import Support from "./root_components/support";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -34,9 +30,6 @@ export default async function RootLayout({
   params: Promise<unknown>
 }) {
   const {locale} = await params as {locale:string };
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
 
   return (
       <html lang={locale} className={`${lato.className}`}>
@@ -47,12 +40,7 @@ export default async function RootLayout({
           className={`antialiased overflow-x-hidden`}
         >
           <NextIntlClientProvider>
-              <div className="min-h-screen flex flex-col">
-                <NavBar />
-                <div className="mt-10 h-[40vh] overflow-auto-y flex-1">{children}</div>
-                <Support />
-                <Footer />
-              </div>
+            {children}
           </NextIntlClientProvider>
         </body>
       </html>

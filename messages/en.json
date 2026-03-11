@@ -10,10 +10,36 @@
         "address": "Address",
         "phone": "Contact Us"
     },
+    "UnderConstruction": {
+        "title": "UNDER CONSTRUCTION",
+        "info": "This page is being worked on at the moment. Will be out soon",
+        "button": "Go back Home"
+    },
+    "NotFound": {
+        "text": "Page Not Found",
+        "button": "Go Back Home"
+    },
+    "Support": {
+        "title": "Support Messaging",
+        "loading": "Submiting Response",
+        "success": "Response received. You can close this section now.",
+        "question": "What is the problem?",
+        "option1": "Bugs/Errors",
+        "option2": "Design Issue",
+        "option3": "Suggestions",
+        "textResponse": "Enter a description of the issue below",
+        "textResponse2": "Enter a suggestion below",
+        "supportText": "Include device used.",
+        "ex": "Example",
+        "textBox": "Type here",
+        "overlay": "Issues"
+    },
     "HomePage":{
         "about": "About Our Church",
         "about_button": "Learn More",
+        "about_text": "Learn more about what our church believes in, the biblical foundations of why we believe it, and what we are doing to advance God's kingdom. Click below for more information.",
         "prayer": "Prayer Request",
+        "prayer_text": "Prayer is important and we believe that having many pray for you would help you in so many ways. Click below to send a petition to pray for.",
         "prayer_button": "Make a Prayer",
         "prayer_description": "We would love to pray for you. Please put your petition before and we will pray for you. You can choose to make it anonymous if you like as well.",
         "prayer_p1": "Name (optional)",

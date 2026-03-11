@@ -1,12 +1,12 @@
 "use client"
 
 import clsx from "clsx";
-import {getFirstWeekday, getGridRows, getMaxDays, calenderMaps } from "../../../helperFunctions/dates_functions"
+import {getFirstWeekday, getGridRows, getMaxDays, calenderMaps } from "../../../../helperFunctions/dates_functions"
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { EventDef } from "../../lib/types";
+import { EventDef } from "../../../lib/types";
 
 
 type Event = {
@@ -128,10 +128,10 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
         const properTitle = t("pop_up." + title);
         return (
         <div>
-            <div className="font-bold text-lg lg:text-xl inline-block">
+            <div className="font-bold text-lg md:text-xl lg:text-2xl xl:text-2xl inline-block">
                 {properTitle}:
             </div>
-            <span className="text-sm lg:text-base pl-2">
+            <span className="text-sm md:text-xl lg:text-xl xl:text-lg pl-2">
                 {info}
             </span>
         </div>
@@ -156,19 +156,62 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                     />
                     );
                 })}
-                <div className="flex w-full justify-center">
+                {/* <div className="flex w-full justify-center">
                     <div className="w-3/4 lg:w-1/2 rounded-lg bg-red-400 text-center text-white text-lg cursor-pointer">
                         {t("pop_up.reminder")}
                     </div>
-                </div>
+                </div> */}
             </div>
-            <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/10 h-1/20 lg:w-1/10 lg:h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer">
+            {/* <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/10 h-1/20 lg:w-1/10 lg:h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer">
                 <Image className="object-cover" src ="/x_icon.jpg"
                 fill 
                 alt = "x icon" 
                 />
-            </div>
+            </div> */}
         </>
+        )
+    }
+
+    function PopUp(){
+        return (
+        <div className={clsx("fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen motion-preset-fade", {"hidden": !eventClick})}>
+            <div className="w-full h-full flex justify-center items-center">
+                <div className="w-4/5 h-7/10 md:w-3/5 md:h-3/5 lg:h-2/5 lg:w-3/5 xl:w-1/2 xl:h-3/5 bg-white p-5 relative rounded-lg">
+                    <div className="h-3/10">
+                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold h-1/2 lg:h-2/5 w-full flex">
+                            <div>
+                                {eventInfo ? (locale == "en" ? eventInfo.title : eventInfo.title_es) : ""}
+                            </div>  
+                            <div onClick={()=> eventClickHandler()} className="ml-auto mr-1 cursor-pointer">
+                                    <svg className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 "
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="black"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    >
+                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                            </div>                      
+                        </div>
+                        <div className="h-1/2 lg:h-3/5 w-full border-b-1 border-gray-300 pb-2">
+                            <div className="h-full w-1/4 lg:w-1/8 relative">
+                                <Image className="object-contain"
+                                    src={eventInfo ? `/eventIcon/${eventInfo.type.toLowerCase()}.png`: "/missingImage.png"}
+                                    alt ={"Descriptive Icon"}
+                                    fill
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <PopupInfoSection/>
+                </div>
+                
+            </div>
+        </div>
         )
     }
 
@@ -351,27 +394,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
             </div>
             }
         </div>
-        <div className={clsx("fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen", {"hidden": !eventClick})}>
-            <div className="w-full h-full flex justify-center items-center">
-                <div className="w-4/5 lg:w-1/2 h-3/5 lg:h-3/5 bg-white p-5 relative rounded-lg">
-                    <div className="h-3/10">
-                        <div className="text-2xl lg:text-3xl font-bold h-2/5 w-9/10">
-                            {eventInfo ? (locale == "en" ? eventInfo.title : eventInfo.title_es) : ""}
-                        </div>
-                        <div className="h-3/5 w-full border-b-1 border-gray-300 pb-2">
-                            <div className="h-full w-1/4 lg:w-1/8 relative">
-                                <Image className="object-contain"
-                                    src={eventInfo ? `/eventIcon/${eventInfo.type.toLowerCase()}.png`: "/missingImage.png"}
-                                    alt ={"Descriptive Icon"}
-                                    fill
-                                />
-                            </div>
-                        </div>
-                    </div>
-                        <PopupInfoSection/>
-                </div>
-            </div>
-        </div>
+        <PopUp />
     </>
     )
 }
