@@ -215,14 +215,14 @@ export default function EventFlyerSection(){
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
-    const target = new Date().setHours(15,30,0,0);
+    const target = new Date().setHours(8,30,0,0);
     const [remaining, setRemaining] = useState(target - Date.now());
     const [fiveTimer, setFiveTimer] = useState(false);
     const [cooldown, setCooldown] = useState(false);
     const [isRunning, setIsRunning] = useState(true);
     // const [fade, setFade] = useState(false);
     const temp_date = new Date();
-    const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 4; //will change later
+    const isSunday = new Date(temp_date.toLocaleDateString("en-US", {timeZone: "America/Chicago"})).getDay() === 0; //will change later
     const sectionRef = useRef<HTMLDivElement>(null); 
     const timerInterval = useRef<ReturnType<typeof setInterval> | null>(null);
     const fiveInterval = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -351,7 +351,7 @@ export default function EventFlyerSection(){
             <div ref={sectionRef} className={clsx("w-full h-full", {" overflow-hidden": fullSize})}>
                 {isSunday && remaining <= 120000 && fullSize && !fiveTimer ?
                 (remaining > 0 ?
-                    <div className="w-full h-full flex flex-col justify-center items-center gap-3 relative">
+                    <div className="w-full h-full flex flex-col justify-center items-center gap-3 relative motion-preset-fade motion-delay-200">
                         <Image className="object-cover" src = "/timer_page.png" fill alt = "timer background" />
                         <div className="z-5 text-white text-center">
                             <div className={`text-7xl mt-30 ${anton.className}`}>
@@ -363,7 +363,7 @@ export default function EventFlyerSection(){
                         </div>
                     </div>
                     :
-                    <div className="w-full h-full bg-black"/>
+                    <div className="w-full h-full bg-black motion-preset-fade"/>
                 )
                 :
                 <div onTransitionEnd={()=> {

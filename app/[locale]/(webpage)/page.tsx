@@ -32,40 +32,40 @@ for (const constant of constantEvents){ //array that holds sunday, monday and we
 let topThree: Event [] = []; //This is not the top three from db but comparisions between the static and db value
 
 export default async function Start_Page(){
-  const theData = await getTopThree();
-  let temp_date = new Date(current_date.getTime());
-  let tracker = 0; //used to check the events in the db call if aplicable
-  for (let i = 0; i <= 7; i++){ //work on cases where on same day
-    if (topThree.length == 3)
-      break;
-    let temp_day = temp_date.getDay();
-    const eventDate = theData.length == 0 || tracker == theData.length ? undefined :theData[tracker].date //either means that nothing was returned in db or we reached all the events in the db for the week
-    if (eventDate && eventDate.getDay() == temp_day){
-      const eventObj: Event = {
-        title: theData[tracker].title,
-        title_es: theData[tracker].title_es,
-        summary: theData[tracker].summary,
-        summary_es: theData[tracker].summary_es,
-        date: theData[tracker].date,
-        time: change24to12Format(theData[tracker].date),
-      }
-      topThree.push(eventObj);
-      tracker ++; 
-    }
-    else {
-      let checkMap = staticEvents.get(temp_date.getDay())
-      if (checkMap != undefined){
-        if (temp_date.getDate() === current_date.getDate() && (milisecondsConvert(current_date.getHours(), current_date.getMinutes()) > checkMap.miliseconds)){
+    const theData = await getTopThree();
+    let temp_date = new Date(current_date.getTime());
+    let tracker = 0; //used to check the events in the db call if applicable
+    for (let i = 0; i <= 7; i++){ //work on cases where on same day
+      if (topThree.length == 3)
+        break;
+      let temp_day = temp_date.getDay();
+      const eventDate = theData.length == 0 || tracker == theData.length ? undefined :theData[tracker].date //either means that nothing was returned in db or we reached all the events in the db for the week
+      if (eventDate && eventDate.getDay() == temp_day){
+        const eventObj: Event = {
+          title: theData[tracker].title,
+          title_es: theData[tracker].title_es,
+          summary: theData[tracker].summary,
+          summary_es: theData[tracker].summary_es,
+          date: theData[tracker].date,
+          time: change24to12Format(theData[tracker].date),
         }
-        else {
-          const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
-          topThree.push({...checkMap, date: staticDate})
+        topThree.push(eventObj);
+        tracker ++; 
+      }
+      else {
+        let checkMap = staticEvents.get(temp_date.getDay())
+        if (checkMap != undefined){
+          if (temp_date.getDate() === current_date.getDate() && (milisecondsConvert(current_date.getHours(), current_date.getMinutes()) > checkMap.miliseconds)){
+          }
+          else {
+            const staticDate = new Date(`${(temp_date.getFullYear())}-${(temp_date.getMonth() + 1) < 10 ? temp_date.getMonth() + 1 : "0" + (temp_date.getMonth() + 1).toString()}-${temp_date.getDate() > 10 ? temp_date.getDate() : "0" + temp_date.getDate().toString() }`)
+            topThree.push({...checkMap, date: staticDate})
+          }
         }
       }
-    }
 
-    temp_date.setDate(temp_date.getDate() + 1); //going to next date until we either reach end of week or we already got the three closest events
-  }
+      temp_date.setDate(temp_date.getDate() + 1); //going to next date until we either reach end of week or we already got the three closest events
+    }
   const t = await getTranslations("HomePage");
 
   return (
