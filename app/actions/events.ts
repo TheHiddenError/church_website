@@ -114,7 +114,6 @@ export async function getMonthEvents(adv: number){
     let current_year = currentTime.getFullYear() 
     if (current_month < currentTime.getMonth()) //means adding to current moves us to next year
         current_year ++;
-    console.log(current_month)
 
     const max = getGridRows(current_year, current_month);
 
@@ -132,7 +131,7 @@ export async function getMonthEvents(adv: number){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
                 constantEvents.push({id: 1000, title: "Sunday Service", title_es: "Servicio Dominical", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
-                    date: toZonedTime(`${current_year}-${date_month_string}-${date_day_string}T10:30:00.000Z`, "America/Chicago")})
+                    date: toZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T10:30:00.000Z`), "America/Chicago")})
                 temp_tracker ++;
                 startDay ++;
             }
@@ -140,7 +139,7 @@ export async function getMonthEvents(adv: number){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
                 constantEvents.push({id: 2000, title: "Prayer Service", title_es: "Servicio de Oración", type: "", summary: null, summary_es: null, location: null, importance: null, for: null, 
-                    date: toZonedTime(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`, "America/Chicago")})
+                    date: toZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`), "America/Chicago")})
                 temp_tracker += 2; //skipping tuesday  
                 startDay += 2;
             }
@@ -148,7 +147,7 @@ export async function getMonthEvents(adv: number){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
                 constantEvents.push({id: 3000, title: "Disciple Service", title_es: "Servicio de Discipulado", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
-                    date: toZonedTime(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`, "America/Chicago")})
+                    date: toZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`), "America/Chicago")})
                 temp_tracker ++; 
                 startDay ++; 
             }
