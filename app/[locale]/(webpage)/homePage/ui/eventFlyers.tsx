@@ -199,6 +199,26 @@ function PalmSunday(){
     </>
 }
 
+function GoodFriday(){
+    return <Image src="/flyers/baptism.png"
+        fill
+        alt = "palm sunday image" />
+}
+
+function Resurrection(){
+    return <>
+        <Image src="/flyers/resurrection.png"
+        fill
+        alt = "resurrection sunday image" />
+    </>
+}
+
+function FoodEvent(){
+    return <Image src="/flyers/tacos.png"
+        fill
+        alt = "palm sunday image" />
+}
+
 function MenFellowship(locale: string){
     const imagePath = `/flyers/men_fellowship/en.png`
     return <>
@@ -218,6 +238,8 @@ function MenEvent(){
 
 
 
+
+
 export default function EventFlyerSection(){
     const locale = useLocale();
     const [fullSize, setFullSize] = useState(false);
@@ -225,7 +247,7 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), ZooFlyer(sliderLocale), PalmSunday(), NursingHome(sliderLocale) ];
+        PrayerService(fullSize, sliderLocale), GoodFriday(), Resurrection(), FoodEvent(), NursingHome(sliderLocale), MenEvent()];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);

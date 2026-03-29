@@ -18,6 +18,18 @@ type Event = {
     location?: string
 }
 
+
+const timeConverter = (time: string) => {
+    if (time == "0")
+        return 0;
+    let [hours, x] = time.split(":");
+    const [minutes, modifier] = x.split(" ");
+    if (modifier == "PM" && hours != "12")
+        hours += 12;
+    return (Number(hours) * 60) + minutes;
+
+}
+
 const current: Date = new Date();
 const current_year = current.getFullYear();
 
@@ -76,14 +88,8 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
     const current_month: string = t('months.'+ monthNames[calendarTracker]);
     const firstDay = getFirstWeekday(current_year, calendarTracker);
 
-    const constantEvents: Event [] = Array.from({length: 7}, () => ({}));
-
-    constantEvents[0] = {title: t("events.sun"), time: "10:30 AM"}
-    constantEvents[1] = {title: t("events.mon"), time: "7:00 PM"}
-    constantEvents[3] = {title: t("events.wed"), time: "7:00 PM"}
-
     const maxDays = getMaxDays(current_year, calendarTracker);
-    const gridRows = getGridRows(current_year,calendarTracker, firstDay);
+    const gridRows = getGridRows(current_year,calendarTracker);
 
     
     const calendarCols: number [] = Array.from({length: 7}, () => 0);
@@ -316,7 +322,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                 </div>
                 {calendarRows.map((some, upperIndex) => {
                     return (
-                    <div key={(upperIndex + 1) * 100} className=" grid grid-cols-7">
+                    <div key={(upperIndex + 1) * 100} className="grid grid-cols-7">
                         {calendarCols.map((something, index)=> {
                             const iterateDay: number = (index + 1 + (7 * upperIndex)) - firstDay;
                             const importEventInfo = importantMap.get(iterateDay + monthDaysMax[calendarTracker]);
@@ -328,6 +334,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                             <div className={clsx( "border-l-2 border-b-2 border-black w-full h-40 relative",
                                 {"border-t-2": upperIndex === 0, 
                                 "border-r-2": index === 6,
+                                
                                 "bg-blue-300 font-bold": current.getMonth() == calendarTracker && (iterateDay) === current_day,
                                 })}>
                                 <>
@@ -351,37 +358,30 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                     </div>
                                     :
                                     <>
+                                        
                                         <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2">
-                                            <div className="text-[10px] md:text-base">
-                                                <div className="">
-                                                    {constantEvents[index]?.title ?? ""}
-                                                </div>
-                                                <div>
-                                                    {constantEvents[index]?.time ?? ""}
-                                                </div>
-                                            </div>
-                                            {eventsInformation?.map((eve) => {
-                                                return (
-                                                <div className="w-full" key={eve.title}>
+                                       
+                                        {eventsInformation?.map((eve) => {
+                                            return (
+                                            <div className="w-full" key={eve.title}>
                                                     <div onClick={eve?.summary ? ()=> eventClickHandler(eve): undefined} className={clsx("text-center w-full drop-shadow-md", 
-                                                        eventFor[eve.for as keyof typeof eventFor] ?? "bg-gray-200",
+                                                        eventFor[eve.for as keyof typeof eventFor] ?? "bg-white drop-shadow-none text-[10px] md:text-base",
                                                         {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
                                                         })}>
                                                         <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : eve.title_es.length > 20})}>
-                                                            {eve === undefined ? constantEvents[index]?.title : (locale == "en" ?  eve.title: eve.title_es)}
+                                                            {locale == "en" ?  eve.title: eve.title_es}
                                                         </div>
                                                         <div className="text-xs lg:text-base">
-                                                            {eve === undefined ? constantEvents[index]?.time : eve.time}
+                                                            {eve.time}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                )
-                                            })}
+                                            )})}
                                         </div>
                                     </>
                                     }
                                         <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
-                                        <div className="absolute top-0 left-0 ml-2 mt-2"> {iterateDay}</div>
+                                        <div className="absolute top-0 left-0 pt-1 px-1"> {iterateDay}</div>
                                     </>
                                     }
                                 </>

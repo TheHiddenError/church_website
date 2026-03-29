@@ -1,9 +1,10 @@
 import { and, asc, gt, sql, lt, gte, lte, eq, or } from "drizzle-orm"
 import { db } from ".."
 import { eventsTable, votdTable } from "../db/schema"
-import { getFirstMonday, change24to12Format } from "../helperFunctions/dates_functions"
+import { getFirstMonday, change24to12Format, getMaxDays, getGridRows, getFirstWeekday } from "../helperFunctions/dates_functions"
 import { EventDef } from "../[locale]/lib/types"
 import { toZonedTime } from "date-fns-tz"
+import { getTranslations } from "next-intl/server"
 
 const timezoneChange = sql`NOW() AT TIME ZONE 'America/Chicago'` 
 
@@ -104,6 +105,63 @@ export async function getTopThree(){
 // }
 
 export async function getMonthEvents(adv: number){
+
+    const t = await getTranslations("Calendar");
+    const currentTime = toZonedTime(new Date(), "America/Chicago");
+
+    const current_month = (currentTime.getMonth() + adv) % 12;
+    const date_month_string = current_month + 1 > 9 ? (current_month + 1).toString() : `0${current_month + 1}` 
+    let current_year = currentTime.getFullYear() 
+    if (current_month < currentTime.getMonth()) //means adding to current moves us to next year
+        current_year ++;
+    console.log(current_month)
+
+    const max = getGridRows(current_year, current_month);
+
+    const maxDays = getMaxDays(current_year, current_month);
+
+    let startDay = getFirstWeekday(current_year, current_month);
+
+    let temp_tracker = 1;
+
+    const constantEvents: typeof eventsTable.$inferSelect  [] = [];
+
+    for (let i = 0; i < max; i ++){
+        while (startDay % 7 <= 3 && temp_tracker <= maxDays){
+            if (startDay % 7 == 0){
+                const date_day = temp_tracker;
+                const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
+                constantEvents.push({id: 1000, title: "Sunday Service", title_es: "Servicio Dominical", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
+                    date: toZonedTime(`${current_year}-${date_month_string}-${date_day_string}T10:30:00.000Z`, "America/Chicago")})
+                temp_tracker ++;
+                startDay ++;
+            }
+            else if (startDay % 7 == 1){
+                const date_day = temp_tracker;
+                const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
+                constantEvents.push({id: 2000, title: "Prayer Service", title_es: "Servicio de Oración", type: "", summary: null, summary_es: null, location: null, importance: null, for: null, 
+                    date: toZonedTime(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`, "America/Chicago")})
+                temp_tracker += 2; //skipping tuesday  
+                startDay += 2;
+            }
+            else if (startDay % 7 == 3){
+                const date_day = temp_tracker;
+                const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
+                constantEvents.push({id: 3000, title: "Disciple Service", title_es: "Servicio de Discipulado", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
+                    date: toZonedTime(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`, "America/Chicago")})
+                temp_tracker ++; 
+                startDay ++; 
+            }
+        }
+        if (startDay % 7 > 3 ){
+            temp_tracker += (7 - (startDay % 7)); //we can tell how many days are needed to go to next sunday based on start day
+            startDay = 0; //reset to sunday
+        }
+        if (temp_tracker > maxDays)
+            break;
+    }
+
+
     const valid_data: EventDef[] = [];
     const sqlQuery =
     adv > 0 ? 
@@ -120,8 +178,12 @@ export async function getMonthEvents(adv: number){
         )
         )
     .orderBy(asc(eventsTable.date))
+
+    let merge = [...info, ...constantEvents]
+
+    merge = merge.sort((a,b) => a.date.getTime() - b.date.getTime())
     
-    for (const row of info ){
+    for (const row of merge){
         valid_data.push({
             ...row,
             date: row.date.toLocaleDateString(),

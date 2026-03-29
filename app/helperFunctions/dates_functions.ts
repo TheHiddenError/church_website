@@ -65,7 +65,8 @@ function getMaxDays(year: number, month: number){
     return dayOfMonth;
 }
 
-function getGridRows(year: number, month: number, startDay: number){
+function getGridRows(year: number, month: number){
+    const startDay = getFirstWeekday(year, month);
     const dayOfMonth = getMaxDays(year, month);
     return Math.ceil((startDay+dayOfMonth)/7);
 }
@@ -79,9 +80,11 @@ function formatDate(theDate: string){
 function change24to12Format(the_date: Date){
     let formatHours = the_date.getUTCHours();
     let modifier = "AM";
+    if (formatHours >= 12){
+        modifier = "PM"
+    }
     if (formatHours > 12){
         formatHours -= 12;
-        modifier = "PM";
     }
 
     return `${formatHours}:${the_date.getMinutes() < 10 ? "0": ""}${the_date.getMinutes()} ${modifier}`

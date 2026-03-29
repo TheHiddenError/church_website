@@ -38,9 +38,9 @@ export default async function Start_Page(){
     for (let i = 0; i <= 7; i++){ //work on cases where on same day
       if (topThree.length == 3)
         break;
-      let temp_day = temp_date.getDay();
+      let temp_day = temp_date.getDate();
       const eventDate = theData.length == 0 || tracker == theData.length ? undefined :theData[tracker].date //either means that nothing was returned in db or we reached all the events in the db for the week
-      if (eventDate && eventDate.getDay() == temp_day){
+      if (eventDate && eventDate.getDate() == temp_day){
         const eventObj: Event = {
           title: theData[tracker].title,
           title_es: theData[tracker].title_es,
