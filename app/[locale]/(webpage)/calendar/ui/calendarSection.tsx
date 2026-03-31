@@ -99,7 +99,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
 
     async function changeCalendarMonth(increase=false){
         setTracker((element)=> increase ? element + 1: element -1);
-        if (increase && dbTracker < 3 && (calendarTracker-the_month+ 1) == dbTracker ){
+        if (increase && dbTracker < 5 && (calendarTracker-the_month+ 1) == dbTracker ){
             setLoading(true);
             try {
                 const data = await fetch(`/api/month?adv=${dbTracker}`).then(res=> res.json());
@@ -138,7 +138,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                 {properTitle}:
             </div>
             <span className="text-sm md:text-xl lg:text-xl xl:text-lg pl-2">
-                {info}
+                {info == "" ? "N/A": info}
             </span>
         </div>
         )
@@ -158,7 +158,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                     <PopupPartialSection
                         key={key}
                         title={key.replace(/_\w*/, "")}
-                        info={value == undefined || typeof value == "boolean"? "": value}
+                        info={value == undefined || typeof value == "boolean" || typeof value == "number" ? "": value}
                     />
                     );
                 })}
@@ -245,7 +245,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                 <div className="text-3xl lg:text-4xl font-extrabold place-self-center">
                     {current_month}
                 </div>
-                <div onClick={()=> changeCalendarMonth(true)} className={clsx("place-self-start cursor-pointer", {"invisible pointer-events-none": calendarTracker == monthToCompare + 2})}>
+                <div onClick={()=> changeCalendarMonth(true)} className={clsx("place-self-start cursor-pointer", {"invisible pointer-events-none": calendarTracker == monthToCompare + 4})}>
                     <svg
                     width="40"
                     height="40"
@@ -363,9 +363,9 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                        
                                         {eventsInformation?.map((eve) => {
                                             return (
-                                            <div className="w-full" key={eve.title}>
+                                            <div className="w-full" key={eve.id * 1000}>
                                                     <div onClick={eve?.summary ? ()=> eventClickHandler(eve): undefined} className={clsx("text-center w-full drop-shadow-md", 
-                                                        eventFor[eve.for as keyof typeof eventFor] ?? "bg-white drop-shadow-none text-[10px] md:text-base",
+                                                        eventFor[eve.for as keyof typeof eventFor] ?? "drop-shadow-none text-[10px] md:text-base",
                                                         {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
                                                         })}>
                                                         <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : eve.title_es.length > 20})}>

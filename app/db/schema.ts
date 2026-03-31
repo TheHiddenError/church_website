@@ -1,4 +1,5 @@
-import { serial, pgTable, text, timestamp, date, boolean, } from "drizzle-orm/pg-core";
+
+import { serial, pgTable, text, timestamp, date, boolean, integer, } from "drizzle-orm/pg-core";
 
 export const eventsTable = pgTable("events", {
   id: serial("id").primaryKey(),
@@ -11,6 +12,8 @@ export const eventsTable = pgTable("events", {
   type: text("type").notNull(),
   location: text("location").default("Iglesia Nueva Esperanza"),
   importance: boolean("importance").default(false),
+  day_span: integer("day_span").default(1),
+  no_time_events: boolean("no_time_events").default(false)
 });
 
 export const votdTable = pgTable("votd", {

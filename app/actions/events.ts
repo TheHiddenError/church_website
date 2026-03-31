@@ -3,7 +3,7 @@ import { db } from ".."
 import { eventsTable, votdTable } from "../db/schema"
 import { getFirstMonday, change24to12Format, getMaxDays, getGridRows, getFirstWeekday } from "../helperFunctions/dates_functions"
 import { EventDef } from "../[locale]/lib/types"
-import { toZonedTime } from "date-fns-tz"
+import { fromZonedTime, toZonedTime } from "date-fns-tz"
 import { getTranslations } from "next-intl/server"
 
 const timezoneChange = sql`NOW() AT TIME ZONE 'America/Chicago'` 
@@ -130,24 +130,27 @@ export async function getMonthEvents(adv: number){
             if (startDay % 7 == 0){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
+                const utcTime = fromZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T10:30:00.000`), "America/Chicago")
                 constantEvents.push({id: 1000, title: "Sunday Service", title_es: "Servicio Dominical", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
-                    date: toZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T10:30:00.000Z`), "America/Chicago")})
+                    date: toZonedTime(utcTime, "America/Chicago"), day_span: 1, no_time_events: false})
                 temp_tracker ++;
                 startDay ++;
             }
             else if (startDay % 7 == 1){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
+                const utcTime = fromZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000`), "America/Chicago")
                 constantEvents.push({id: 2000, title: "Prayer Service", title_es: "Servicio de Oración", type: "", summary: null, summary_es: null, location: null, importance: null, for: null, 
-                    date: toZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`), "America/Chicago")})
+                    date: toZonedTime(utcTime, "America/Chicago"), day_span: 1, no_time_events: false})
                 temp_tracker += 2; //skipping tuesday  
                 startDay += 2;
             }
             else if (startDay % 7 == 3){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
+                const utcTime = fromZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000`), "America/Chicago")
                 constantEvents.push({id: 3000, title: "Disciple Service", title_es: "Servicio de Discipulado", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
-                    date: toZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000Z`), "America/Chicago")})
+                    date: toZonedTime(utcTime, "America/Chicago"), day_span: 1, no_time_events: false})
                 temp_tracker ++; 
                 startDay ++; 
             }
@@ -168,17 +171,49 @@ export async function getMonthEvents(adv: number){
             = EXTRACT(MONTH FROM ${eventsTable.date})`
         : sql`EXTRACT(MONTH FROM (NOW() AT TIME ZONE 'AMERICA/CHICAGO'))
             = EXTRACT(MONTH FROM ${eventsTable.date})`;
+
     const info = await db.select()
     .from(eventsTable)
       .where(
         and(
-            sqlQuery
-            , eq(eventsTable.importance, false)
+            and(
+                sqlQuery
+                , eq(eventsTable.importance, false)
+                ),
+            eq(eventsTable.day_span, 1)
         )
         )
-    .orderBy(asc(eventsTable.date))
+    .orderBy(asc(eventsTable.date));
 
-    let merge = [...info, ...constantEvents]
+    const moreDays = await db.select()
+    .from(eventsTable)
+      .where(
+        and(
+            and(
+                sqlQuery
+                , eq(eventsTable.importance, false)
+            ),
+            gt(eventsTable.day_span, 1)
+        )        
+        )
+    .orderBy(asc(eventsTable.date));
+    const temp = [...moreDays];
+    for (const row of moreDays) {
+        const days = row.day_span;
+        const checkTime = row.no_time_events;
+        if (checkTime)
+            row.no_time_events = false;
+        if (days){
+            for (let i = 1; i < days; i ++){
+                const temp_date = new Date(row.date);
+                temp.push({...row, date: new Date(temp_date.setDate(temp_date.getDate() + i)), id: i * 10000, no_time_events: checkTime})
+            }
+        }
+    }
+
+
+
+    let merge = [...info, ...constantEvents, ...temp]
 
     merge = merge.sort((a,b) => a.date.getTime() - b.date.getTime())
     
@@ -186,7 +221,7 @@ export async function getMonthEvents(adv: number){
         valid_data.push({
             ...row,
             date: row.date.toLocaleDateString(),
-            time: change24to12Format(row.date)
+            time: row.no_time_events == true ? "": change24to12Format(row.date)
         })
     }
     
@@ -196,6 +231,7 @@ export async function getMonthEvents(adv: number){
 export async function getImportantMonthEvents(adv: number){
     let sortedImportant;
     const staticImportant = {
+        id: 100,
         title: "Prayer and Worship Night", 
         title_es: "Noche de Oración y Adoración" , 
         for: "Church", 
