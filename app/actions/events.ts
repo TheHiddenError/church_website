@@ -24,6 +24,7 @@ export async function getTopThree(){
             summary: eventsTable.summary,
             summary_es: eventsTable.summary_es,
             date: eventsTable.date,
+            importance: eventsTable.importance
             })
             .from(eventsTable)
             .where(sql`
@@ -31,6 +32,44 @@ export async function getTopThree(){
                 AND ${eventsTable.date} <= ${timezoneChange} + INTERVAL '1 week'`)
             .orderBy(asc(eventsTable.date))
             .limit(3))
+
+        const current_time = toZonedTime(new Date, "America/Chicago")
+
+        const date_month_string = current_time.getMonth() + 1 > 9 ? current_time.getMonth().toString() : `0${current_time.getMonth() + 1}`
+
+        const monday = getFirstMonday(current_time.getFullYear(), current_time.getMonth());
+        
+        const date_day_string = `0${monday}`
+
+        const tempMonday = fromZonedTime(new Date(`${current_time.getFullYear()}-${date_month_string}-${date_day_string}T07:00:00.000`), "America/Chicago")
+
+        const importantMondayDate = toZonedTime(tempMonday, "America/Chicago");
+
+
+        if (current_time.getTime() < importantMondayDate.getTime()){
+            if (info.length == 3 && info[info.length - 1].date.getTime() > importantMondayDate.getTime()) {
+            }
+            else {
+                info.push({
+                    title: "Prayer and Worship Night", 
+                    title_es: "Noche de Oración y Adoración" , 
+                    summary: "A service of prayer and petitions", 
+                    summary_es: "Un servicio de oración y peticiones",
+                    date: importantMondayDate, 
+                    importance: true
+                });
+                let index = info.length-1;
+                while (index - 1 <= 0 && info[index].date.getTime() < info[index-1].date.getTime()){
+                    [info[index-1], info[index]] = [info[index], info[index-1]];
+                    index -= 1;
+                }
+                if (info.length > 3)
+                    info.pop();
+            }
+
+        }
+        console.log(info)
+
         return info;
 } 
 

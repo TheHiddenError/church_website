@@ -35,9 +35,7 @@ export default async function Start_Page(){
     const theData = await getTopThree();
     let temp_date = new Date(current_date.getTime());
     let tracker = 0; //used to check the events in the db call if applicable
-    for (let i = 0; i <= 7; i++){ //work on cases where on same day
-      if (topThree.length == 3)
-        break;
+    while (topThree.length != 3){ //work on cases where on same day
       let temp_day = temp_date.getDate();
       const eventDate = theData.length == 0 || tracker == theData.length ? undefined :theData[tracker].date //either means that nothing was returned in db or we reached all the events in the db for the week
       if (eventDate && eventDate.getDate() == temp_day){
@@ -50,6 +48,8 @@ export default async function Start_Page(){
           time: change24to12Format(theData[tracker].date),
         }
         topThree.push(eventObj);
+        if (theData[tracker].importance == true)
+          temp_date.setDate(temp_date.getDate() + 1);
         tracker ++; 
       }
       else {
@@ -62,9 +62,8 @@ export default async function Start_Page(){
             topThree.push({...checkMap, date: staticDate})
           }
         }
+        temp_date.setDate(temp_date.getDate() + 1); //going to next date until we either reach end of week or we already got the three closest events
       }
-
-      temp_date.setDate(temp_date.getDate() + 1); //going to next date until we either reach end of week or we already got the three closest events
     }
   const t = await getTranslations("HomePage");
 

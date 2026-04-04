@@ -25,7 +25,7 @@ export default function Footer(){
     return(
         <div className="grid grid-cols-2 bg-blue-700 w-screen text-gray-200 text-center divide-x-2 divide-white divide-solid h-[30vh] md:h-[20vh] lg:h-[25vh] xl:h-[35vh]">
             <GridPart name = {t("address")} information = "3100 Billman Rd, Donna TX" />
-            <GridPart name = {t("phone")} information="(956) 123-4567" />
+            <GridPart name = {t("phone")} information="(956) 460-3600" />
         </div>
     )
 }
