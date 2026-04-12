@@ -59,7 +59,7 @@ export async function getTopThree(){
                     importance: true
                 });
                 let index = info.length-1;
-                while (index - 1 <= 0 && info[index].date.getTime() < info[index-1].date.getTime()){
+                while (index - 1 > 0 && info[index].date.getTime() < info[index-1].date.getTime()){
                     [info[index-1], info[index]] = [info[index], info[index-1]];
                     index -= 1;
                 }
