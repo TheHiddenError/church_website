@@ -247,7 +247,7 @@ export default function EventFlyerSection(){
 
     const arrayFlyers = [MissionFlyer(fullSize, sliderLocale), DiscpleFlyer(fullSize, sliderLocale), 
         PrayerWorshipNight(fullSize, sliderLocale), SundayService(fullSize, sliderLocale), 
-        PrayerService(fullSize, sliderLocale), NursingHome(sliderLocale), MenEvent()];
+        PrayerService(fullSize, sliderLocale)];
 
     const [index, setIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(true);
