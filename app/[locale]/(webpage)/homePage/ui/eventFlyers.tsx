@@ -175,7 +175,7 @@ function ZooFlyer(locale: string){
 
 function ChurchFellowship(locale: string){
     return <>
-        <Image className="" src ={`/flyers/youth_2.png`}
+        <Image className="" src ={`/flyers/youth_3.png`}
         fill 
         alt = "Church fellowship flyer"/>
     </>
