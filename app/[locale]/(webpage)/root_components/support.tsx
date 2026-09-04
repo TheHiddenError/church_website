@@ -29,7 +29,7 @@ export default function Support(){
         <div className={clsx("fixed z-50 shadow-lg items-center", {"w-screen h-[60vh] md:w-[40vw] md:h-[40vh] lg:w-[25vw] lg:h-[60vh] motion-opacity-in-0 motion-translate-y-in-100 motion-blur-in-md bottom-0 right-0" : clicked, "bottom-4 right-4": !clicked})}>
             {clicked ?
             <div className="w-full h-full">
-                <div className="bg-blue-600 h-1/5 flex flex-grid w-full items-center">
+                <div className="bg-sky-600 h-1/5 flex flex-grid w-full items-center">
                     <div className="ml-5 text-gray-100 text-xl font-semibold">   
                         {t("title")}
                     </div>
@@ -120,7 +120,7 @@ export default function Support(){
                 </div>
             </div>
             :
-            <div className="flex cursor-pointer bg-blue-600 hover:bg-blue-500 py-1 pr-4 pl-2 rounded-lg" onClick={()=> setClicked(true)}>
+            <div className="flex cursor-pointer bg-sky-600 hover:bg-blue-600 py-1 pr-4 pl-2 rounded-lg" onClick={()=> setClicked(true)}>
                 <div className="w-7 h-7 relative">
                     <Image src ="/wrench2.png" alt= "wrench" fill />
                 </div>

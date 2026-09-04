@@ -2,13 +2,20 @@
     "Header": {
         "home": "Inicio",
         "about": "Sobre Nosotros",
+        "ministry": "Ministerios",
         "calendar": "Calendario",
-        "donate": "Donar",
-        "translator": "Speak English? Click Here"
+        "events": "Eventos",
+        "donate": "Donar"
     },
     "Footer": {
-        "address": "Dirección",
-        "phone": "Contacta"
+        "services_title": "Horarios de los Servicios & Ubicación",
+        "sunday": "Servicio Dominical - Domingos a las 10:30 AM",
+        "monday": "Servicio de Oración - Lunes a las 7:00 PM",
+        "wednesday": "Estudio Bíblico - Miércoles a las 7:00 PM",
+        "prayer": "Adoración y Oración - Primer Lunes de cada mes a las 7:00 PM",
+        "contact": "Contáctanos",
+        "phone": "Número de Teléfono:",
+        "email": "Correo Electrónico"
     },
     "UnderConstruction": {
         "title": "BAJO CONSTRUCCIÓN",

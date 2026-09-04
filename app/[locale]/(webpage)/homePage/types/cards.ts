@@ -4,8 +4,9 @@ export type CardBaseProps = {
     imageSrc: string,
     title: string, 
     description: string,
-    button_name: string
-    button_action: ()=> void
+    button_name: string,
+    button_action: ()=> void,
+    reverse: boolean
 }
 
 export type CardModalProps = 

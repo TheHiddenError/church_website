@@ -156,6 +156,7 @@ export async function getMonthEvents(adv: number){
 
     const max = getGridRows(current_year, current_month);
 
+
     const maxDays = getMaxDays(current_year, current_month);
 
     let startDay = getFirstWeekday(current_year, current_month);
@@ -165,7 +166,8 @@ export async function getMonthEvents(adv: number){
     const constantEvents: typeof eventsTable.$inferSelect  [] = [];
 
     for (let i = 0; i < max; i ++){
-        while (startDay % 7 <= 3 && temp_tracker <= maxDays){
+        while (startDay % 7 <= 3 && temp_tracker <= maxDays){ //up to wednesday
+            console.log("testing");
             if (startDay % 7 == 0){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
@@ -193,6 +195,10 @@ export async function getMonthEvents(adv: number){
                 temp_tracker ++; 
                 startDay ++; 
             }
+            else { //Tuesday case
+                temp_tracker ++;
+                startDay ++;
+            }
         }
         if (startDay % 7 > 3 ){
             temp_tracker += (7 - (startDay % 7)); //we can tell how many days are needed to go to next sunday based on start day
@@ -201,6 +207,8 @@ export async function getMonthEvents(adv: number){
         if (temp_tracker > maxDays)
             break;
     }
+
+    console.log(constantEvents);
 
 
     const valid_data: EventDef[] = [];

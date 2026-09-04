@@ -2,13 +2,20 @@
     "Header": {
         "home": "Home",
         "about": "About Us",
+        "ministry": "Ministries",
         "calendar": "Calendar",
-        "donate": "Donate",
-        "translator": "Habla Espanol? Clic Aquí"
+        "events": "Events",
+        "donate": "Donate"
     },
     "Footer": {
-        "address": "Address",
-        "phone": "Contact Us"
+        "services_title": "Service Times & Location",
+        "sunday": "Sunday Service - Sundays at 10:30 AM",
+        "monday": "Prayer Service - Mondays at 7:00 PM",
+        "wednesday": "Bible Study - Wednesdays at 7:00 PM",
+        "prayer" : "Worship & Prayer - Every First Monday at 7:00 PM",
+        "contact": "Get In Touch",
+        "phone": "Phone Number:",
+        "email": "Email"
     },
     "UnderConstruction": {
         "title": "UNDER CONSTRUCTION",

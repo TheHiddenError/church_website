@@ -21,6 +21,10 @@ export default async function Calendar(){
     const valid_data = await getMonthEvents(0);
     const valid_important = await getImportantMonthEvents(0);
 
+    // console.log(valid_data);
+    // console.log('\n')
+    // console.log(valid_important)
+
     return (
         <>
             <ScriptureSec text={textV} verse={verseN} translation={translationV} link={linkV}/>
