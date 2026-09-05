@@ -27,7 +27,7 @@ export default function Footer(){
     const t = useTranslations("Footer");
 
     return(
-      <div className="h-[140vh] lg:h-[60vh] bg-blue-950 relative">
+      <div className="h-[120vh] xs:h-[100vh] lg:h-[60vh] bg-blue-950 relative">
         <div className="absolute top-1/15 left-1/10 lg:top-1/7 lg:left-1/10 text-white w-4/5 grid grid-cols-1 lg:grid-cols-3 flex place-items-center items-start py-2 gap-10">
             <div className="">
               <div className="w-full grid grid-cols-3 mb-2">
@@ -100,7 +100,7 @@ export default function Footer(){
                 3100 Billman Rd, Donna TX 78537
               </div>
             </div>
-            <div className="grid grid-rows-4 w-full lg:w-4/5 lg:items-center">
+            <div className="grid grid-cols-1 w-full lg:w-4/5 lg:items-center">
               <div className="text-2xl lg:text-xl font-bold mb-5">
                 {t("contact")}
               </div>

@@ -60,12 +60,12 @@ const monthNames: string [] = [
 ]
 
 const eventFor = {
-    Men: "bg-blue-500",
-    Women: "bg-pink-500",
-    Children: "bg-yellow-500",
-    Youth: "bg-violet-500",
-    Church: "bg-red-500",
-    Other: "bg-green-500"
+    Men: ["bg-blue-600", "border-blue-600"],
+    Women: ["bg-pink-300", "border-pink-300"],
+    Children: ["bg-yellow-500", "border-yellow-500"],
+    Youth: ["bg-violet-600", "border-violet-600"],
+    Church: ["bg-red-600", "border-red-600"],
+    Other: ["bg-green-600","border-green-600"]
 }
 
 
@@ -94,6 +94,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
     
     const calendarCols: number [] = Array.from({length: 7}, () => 0);
     const calendarRows: number [] = Array.from({length: gridRows}, () => 0);
+    
 
 
 
@@ -140,19 +141,9 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
             <span className="text-sm md:text-xl lg:text-xl xl:text-lg pl-2">
                 {info == "" ? "N/A": info}
             </span>
-        </div>
-        )
-    }
-
-    function PopupInfoSection(){
-        if (eventInfo == undefined)
-            return;
-        const valuesToShow = [locale == "en" ? "summary": "summary_es", "date", "time", "location"]
-        return (
-        <>
             <div className="h-7/10 mt-2 flex flex-col gap-5">
-                {Object.entries(eventInfo).map(([key, value]) => {
-                    if (!(valuesToShow.includes(key))) 
+                {Object.entries([]).map(([key, value]) => {
+                    if (!("".includes(key))) 
                         return null;
                     return (
                     <PopupPartialSection
@@ -162,18 +153,65 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                     />
                     );
                 })}
-                {/* <div className="flex w-full justify-center">
-                    <div className="w-3/4 lg:w-1/2 rounded-lg bg-red-400 text-center text-white text-lg cursor-pointer">
-                        {t("pop_up.reminder")}
-                    </div>
-                </div> */}
             </div>
-            {/* <div onClick={()=> eventClickHandler()} className="absolute top-0 right-0 w-1/10 h-1/20 lg:w-1/10 lg:h-1/10 bg-gray-300 mt-2 mr-2 cursor-pointer">
-                <Image className="object-cover" src ="/x_icon.jpg"
-                fill 
-                alt = "x icon" 
-                />
-            </div> */}
+        </div>
+
+        
+        )
+    }
+
+    function PopupInfoSection(){
+        if (eventInfo == undefined)
+            return;
+        const valuesToShow = [locale == "en" ? "summary": "summary_es", "date", "time", "location"]
+        return (
+        <>
+            <div className="h-3/5 w-full flex mt-5">
+                
+                <div className="w-full h-9/10 grid grid-cols-2 lg:grid-cols-5 text-gray-600 text-xs sm:text-lg items-center">
+                    <div className="text-base sm:text-xl">
+                        {locale == "en" ? "For" : "Para"}
+                    </div>
+                    <div className="lg:col-span-4">
+                        <div className={clsx("rounded-lg w-1/2 sm:w-3/4 lg:w-1/4 text-center border-1", 
+                            {
+                            "bg-blue-200 border-blue-600 text-blue-700" : eventInfo["for"] == "Men",
+                            "bg-pink-200 border-pink-600 text-pink-700": eventInfo["for"] == "Women",
+                            "bg-yellow-200 border-yellow-600 text-yellow-700": eventInfo["for"] == "Children",
+                            "bg-violet-200 border-violet-600 text-violet-700": eventInfo["for"] == "Youth",
+                            "bg-red-200 border-red-600 text-red-700": eventInfo["for"] == "Church",
+                            "bg-green-200 border-green-600 text-green-700": eventInfo["for"] == "Other",
+                            }
+                        )}>
+                            {eventInfo["for"]}
+                        </div>
+                    </div>
+                    <div className="text-base sm:text-xl">
+                        {t("pop_up.date")}
+                    </div>
+                    <div className="flex lg:col-span-4">
+                        <div className="text-gray-600 mr-2">
+                            {eventInfo["date"]}
+                        </div>
+                        <div className="text-gray-600 font-semibold">
+                            {eventInfo["time"]}
+                        </div>
+                    </div>
+                    <div className="text-base sm:text-xl">
+                        {t("pop_up.location")}
+                    </div>
+                    <div className="lg:col-span-4">
+                        {eventInfo["location"]}
+                    </div>
+                    <div className="text-base sm:text-xl self-start">
+                        {t("pop_up.summary")}
+                    </div>
+                    <div className="lg:col-span-4 text-xs  sm:text-lg">
+                        {locale == "en" ? eventInfo["summary"] : eventInfo["summary_es"]}
+                    </div>
+                </div>
+            </div>
+
         </>
         )
     }
@@ -182,9 +220,9 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
         return (
         <div className={clsx("fixed inset-0 z-50 bg-gray-600/40 w-screen h-screen motion-preset-fade", {"hidden": !eventClick})}>
             <div className="w-full h-full flex justify-center items-center">
-                <div className="w-4/5 h-7/10 md:w-3/5 md:h-3/5 lg:h-2/5 lg:w-3/5 xl:w-1/2 xl:h-3/5 bg-white p-5 relative rounded-lg">
-                    <div className="h-3/10">
-                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold h-1/2 lg:h-2/5 w-full flex">
+                <div className="w-4/5 h-1/2 md:w-3/5 md:h-3/5 lg:h-2/5 lg:w-3/5 xl:w-2/5 xl:h-3/5 bg-white p-5 relative rounded-lg">
+                    <div className="h-2/5">
+                        <div className={`${eventInfo?.title != undefined && eventInfo.title.length > 30 ?  "text-lg": "text-2xl"}  sm:text-2xl md:text-3xl lg:text-4xl font-bold h-1/2 lg:h-2/5 w-full flex`}>
                             <div>
                                 {eventInfo ? (locale == "en" ? eventInfo.title : eventInfo.title_es) : ""}
                             </div>  
@@ -203,7 +241,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                     </svg>
                             </div>                      
                         </div>
-                        <div className="h-1/2 lg:h-3/5 w-full border-b-1 border-gray-300 pb-2">
+                        <div className="h-1/2 lg:h-3/5 w-full border-b-1 border-gray-300 py-2">
                             <div className="h-full w-1/4 lg:w-1/8 relative">
                                 <Image className="object-contain"
                                     src={eventInfo ? `/eventIcon/${eventInfo.type.toLowerCase()}.png`: "/missingImage.png"}
@@ -242,7 +280,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                     />
                     </svg>
                 </div>
-                <div className="text-3xl lg:text-4xl font-extrabold place-self-center">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold place-self-center">
                     {current_month}
                 </div>
                 <div onClick={()=> changeCalendarMonth(true)} className={clsx("place-self-start cursor-pointer", {"invisible pointer-events-none": calendarTracker == monthToCompare + 4})}>
@@ -269,12 +307,12 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                         {t("legend.name")}:
                     </div>
                 </div>
-                <div className="w-9/10">
+                <div className="w-9/10 my-5">
                     <div className={`grid grid-cols-2 lg:grid-cols-6 w-4/5 my-3 ml-10 gap-2`}>
                         {Object.entries(eventFor).map(([key, value], index) => {
                             return (
                                 <div className="h-full flex items-center" key = {index.toString() + key}>
-                                    <div className={`w-1/5 inline-block h-full ${value} justify-self-end-safe`}/>   
+                                    <div className={`w-1/5 inline-block h-full ${value[0]} justify-self-end-safe`}/>   
                                     <span className="w-1/2 font-bold text-md pl-2">{t("legend."+key.toLowerCase())}</span>
                                 </div>
                             )
@@ -311,10 +349,10 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
             </div>
             :
             <div className="grid grid-rows w-full lg:w-4/5 ">
-                <div className="grid grid-cols-7">
+                <div className="grid grid-cols-7 border-1 border-gray-300 divide-x divide-gray-300">
                     {daysOfWeek.map((elementName) => {
                         return(
-                            <div key = {elementName} className="font-semibold text-md lg:text-xl text-center">
+                            <div key = {elementName} className="font-semibold text-md lg:text-xl text-center py-2">
                                 {elementName}
                             </div>
                         )
@@ -322,57 +360,71 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                 </div>
                 {calendarRows.map((some, upperIndex) => {
                     return (
-                    <div key={(upperIndex + 1) * 100} className="grid grid-cols-7">
+                    <div key={(upperIndex + 1) * 100} className="grid grid-cols-7 divide-x divide-gray-300 border-b-1 border-x-1 border-gray-300">
                         {calendarCols.map((something, index)=> {
                             const iterateDay: number = (index + 1 + (7 * upperIndex)) - firstDay;
+                            const isAfter = (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day);
                             const importEventInfo = importantMap.get(iterateDay + monthDaysMax[calendarTracker]);
                             let importEvent;
                             if (importEventInfo)
                                 importEvent = importEventInfo[0];
                             const eventsInformation = eventMap.get(iterateDay + monthDaysMax[calendarTracker]);
                         return <div key={index + (7 * upperIndex)}>
-                            <div className={clsx( "border-l-2 border-b-2 border-black w-full h-40 relative",
-                                {"border-t-2": upperIndex === 0, 
-                                "border-r-2": index === 6,
-                                
-                                "bg-blue-300 font-bold": current.getMonth() == calendarTracker && (iterateDay) === current_day,
+                            <div className={clsx( "w-full h-40 relative",
+                                {"bg-sky-300/50 font-bold": current.getMonth() == calendarTracker && (iterateDay) === current_day,
                                 })}>
                                 <>
                                     {iterateDay > 0 && iterateDay <= maxDays &&
                                     <>
                                     {importEvent != undefined ?
                                     <div className="w-full h-full justify-center flex items-center">
-                                        <div className="w-full" key={importEvent.title}>
-                                            <div onClick={importEvent?.summary ? ()=> eventClickHandler(importEvent): undefined} className={clsx("text-center w-full", 
-                                                eventFor[importEvent.for as keyof typeof eventFor] ?? "bg-gray-200",
-                                                {"text-white rounded-lg cursor-pointer py-1" : importEvent?.summary,
-                                                })}>
-                                                <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : importEvent.title_es.length > 20})}>
+                                        <div className="w-full h-full flex items-center justify-center" key={importEvent.title}>
+                                            <div onClick={importEvent?.summary ? ()=> eventClickHandler(importEvent): undefined} className={clsx(" w-9/10 drop-shadow-lg flex bg-white border-l-3 lg:border-l-10", 
+                                                {"rounded-lg cursor-pointer py-1" : importEvent?.summary},
+
+                                                eventFor[importEvent.for as keyof typeof eventFor][1] ?? "border-gray-200"
+                                                )}>
+                                                {/* <div className = {clsx("w-1/30 ml-2 h-10 rounded-lg",
+                                                    eventFor[importEvent.for as keyof typeof eventFor] ?? "bg-gray-200"
+                                                )}>
+                                                    
+                                                </div> */}
+                                                <div className="text-black w-9/10 lg:w-full text-center">
+                                                    <div className= {clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none px-1", {"text-xs lg:text-sm" : importEvent.title_es.length > 20})}>
+                                                        {(locale == "en" ?  importEvent.title: importEvent.title_es)}
+                                                    </div>
+                                                    <div className="text-[10px] lg:text-base line-clamp-1">
+                                                        {importEvent.time}
+                                                    </div>                                                </div>
+                                                {/* <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : importEvent.title_es.length > 20})}>
                                                     {(locale == "en" ?  importEvent.title: importEvent.title_es)}
                                                 </div>
                                                 <div className="text-xs lg:text-base">   
                                                     {importEvent.time}
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
                                     :
                                     <>
                                         
-                                        <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2">
+                                        <div className="w-full h-full flex flex-col justify-center items-center gap-2">
                                        
                                         {eventsInformation?.map((eve) => {
                                             return (
-                                            <div className="w-full" key={eve.id * 1000}>
-                                                    <div onClick={eve?.summary ? ()=> eventClickHandler(eve): undefined} className={clsx("text-center w-full drop-shadow-md", 
+                                            <div className="w-full flex justify-center" key={eve.id * 1000}>
+                                                    <div onClick={eve?.summary ? ()=> eventClickHandler(eve): undefined} className={clsx("flex drop-shadow-md text-center",
+                                                        {"text-gray-700": isAfter, "text-gray-300": !isAfter}, 
                                                         eventFor[eve.for as keyof typeof eventFor] ?? "drop-shadow-none text-[10px] md:text-base",
-                                                        {"text-white rounded-lg cursor-pointer py-1" : eve?.summary,
+                                                        {"w-9/10 drop-shadow-lg flex bg-white border-l-3 lg:border-l-10 rounded-lg cursor-pointer py-1" : eve?.summary,
                                                         })}>
-                                                        <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none", {"text-xs lg:text-sm" : eve.title_es.length > 20})}>
-                                                            {locale == "en" ?  eve.title: eve.title_es}
-                                                        </div>
-                                                        <div className="text-xs lg:text-base">
-                                                            {eve.time}
+                                                        <div className=" w-9/10 lg:w-full">
+                                                            <div className={clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none px-1", {"text-xs lg:text-sm" : eve.title_es.length > 20})}>
+                                                                {locale == "en" ?  eve.title: eve.title_es}
+                                                            </div>
+                                                            <div className="text-[10px] lg:text-base line-clamp-1 text-center">
+                                                                {eve.time}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -380,8 +432,8 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                         </div>
                                     </>
                                     }
-                                        <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} />
-                                        <div className="absolute top-0 left-0 pt-1 px-1"> {iterateDay}</div>
+                                        {/* <div className= {clsx("w-1 h-15 lg:h-35 absolute bg-red-600 z-10 left-1/2 top-1/3 lg:left-1/2 lg:top-0 inset-0 -rotate-45", {"hidden": (current.getMonth() < calendarTracker) || (current.getMonth() == calendarTracker) && (iterateDay >= current_day)  })} /> */}
+                                        <div className={clsx("absolute top-0 left-0 pt-1 px-1", {"text-gray-600": isAfter, "text-gray-300": !isAfter})}> {iterateDay}</div>
                                     </>
                                     }
                                 </>
@@ -398,3 +450,11 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
     </>
     )
 }
+
+
+
+/*
+
+
+
+*/

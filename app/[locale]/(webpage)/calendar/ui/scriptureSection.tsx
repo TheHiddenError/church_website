@@ -2,6 +2,7 @@ import clsx from "clsx"
 import styles from "./calendar.module.css"
 import { formatDate } from "@/app/helperFunctions/dates_functions"
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 /*
 
@@ -67,37 +68,46 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
         successful = true;
 
     return (
-        <div className={`${styles.calendarBG} mt-4 py-7 w-screen flex justify-center`}>
-            <div className="w-9/10">
-                <div className="font-extrabold text-3xl border-b-2 border-b-black pb-3 text-center w-full">
-                    {t("verse_day")}: {todays_date}
-                </div>
-                {successful == true ?
-                <>
-                    <div className={`${styles.wrapper} flex w-full justify-center`}>
-                        <div className="text-xl py-3" dangerouslySetInnerHTML={{ __html: text }} >
+        <div className={`${styles.calendarBG} mt-4 py-7 w-screen h-[60vh] sm:h-[70vh] lg:h-[60vh]  relative`}>
+            <Image className="object-cover object-[50%_40%] opacity-40"
+            src = "/flyers/center_bible.jpg"
+            alt = "Center bible image"
+            fill
+            />
+            <div className = "w-full h-full flex justify-center lg:items-center absolute top-1/8 lg:top-0 bg-orange-100/10">
+                <div className="w-9/10 lg:w-7/10">
+                    <div className="font-extrabold text-xl sm:text-3xl border-b-2 border-b-black pb-3 text-center w-full">
+                        {t("verse_day")}: {todays_date}
+                    </div>
+                    {successful == true ?
+                    <>
+                        <div className={`${styles.wrapper} flex w-full justify-center italic`}>
+                            <div className="text-sm xs:text-base sm:text-lg lg:text-xl py-3" dangerouslySetInnerHTML={{ __html: text }} >
+                            </div>
                         </div>
-                    </div>
-                    <div className="text-center font-bold text-2xl">
-                        - {verse} ({translation})
-                    </div>
-                    <div className="text-center text-lg underline text-blue-600 my-2">
-                        <a className="hover:text-blue-400" href={link} target="_blank" rel="noopener noreferrer">
-                            {t("full_chapter")}
-                        </a>
-                    </div>
-                    <div className = "text-center text-base">
-                        {"Powered by "}
-                        <a className="text-blue-600 underline hover:text-blue-400" href = "https://www.biblegateway.com/"  target="_blank" rel="noopener noreferrer">
-                            Bible Gateway
-                        </a>
-                    </div>
-                </>
-                    :
-                    <div className="text-center text-2xl my-5">
-                        {t("error_message")}
-                    </div>    
-                }
+                        <div className="text-center font-bold text-lg sm:text-2xl">
+                            - {verse} ({translation})
+                        </div>
+                        <div className="text-center text-lg underline text-blue-700 my-2 font-bold">
+                            <a className="hover:text-sky-400" href={link} target="_blank" rel="noopener noreferrer">
+                                {t("full_chapter")}
+                            </a>
+                        </div>
+                        <div className = "text-center text-base">
+                            {"Powered by "}
+                            <a className="text-blue-700 underline hover:text-sky-400" href = "https://www.biblegateway.com/"  target="_blank" rel="noopener noreferrer">
+                                Bible Gateway
+                            </a>
+                        </div>
+                    </>
+                        :
+                        <div className="text-center text-2xl my-5">
+                            {t("error_message")}
+                        </div>    
+                    }
+                </div>
+            </div>
+            <div className="absolute w-full h-full flex justify-center items-center">
             </div>
         </div>
     )
