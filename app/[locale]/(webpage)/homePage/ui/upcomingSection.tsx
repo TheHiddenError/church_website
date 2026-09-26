@@ -57,7 +57,7 @@ export default function UpcomingSec({temp}: UpcomingSecProps){
           </div>
           <div className="px-1 col-span-7 flex flex-col">
             <div className="text-lg lg:text-2xl font-bold text-white">
-              {temp.title}
+              {locale == 'en' ? temp.title: temp.title_es}
             </div>
             <div className="text-sm lg:text-base text-gray-200">
               {locale == 'en' ? temp.summary: temp.summary_es}

@@ -49,36 +49,34 @@ export default function HomeCardSection(){
     }
 
     const theServices: serviceTimes [] = [
-        {title: "Sunday Service - Sundays at 10:30 AM", imageSrc: "/icons/church_icon.png", alt: "Church icon"},
-        {title: "Prayer Service - Mondays at 7:00 PM", imageSrc: "/icons/prayer_icon.png", alt: "Prayer icon"},
-        {title: "Wednesday Bible Study - Wednesdays at 7:00 PM", imageSrc: "/icons/bible_icon.png", alt: "Bible icon"},
-        {title: "Prayer and Worship Service - Every First Monday at 7:00 PM (Monthly)", imageSrc: "/icons/worship_icon.png", alt: "Worship icon"},
+        {title: t("info_sunday"), imageSrc: "/icons/church_icon.png", alt: "Church icon"},
+        {title: t("info_monday"), imageSrc: "/icons/prayer_icon.png", alt: "Prayer icon"},
+        {title: t("info_wednesday"), imageSrc: "/icons/bible_icon.png", alt: "Bible icon"},
+        {title: t("info_prayer"), imageSrc: "/icons/worship_icon.png", alt: "Worship icon"},
         {title: "3100 Billman Rd, Donna TX 78537", imageSrc: "/icons/map_icon.png", alt: "Map icon"}
     ] 
 
 
     return (
         <>
-            <div className="mt-10 lg:mt-20 w-full h-[90vh] flex lg:items-center lg:justify-center">
+            <div className="mt-10 lg:mt-20 w-full h-[70vh] h-md:h-[90vh] flex lg:items-center lg:justify-center">
                 <Card card_info={aboutCard}
                 />
             </div>
-            <div className=" lg:my-20 w-full h-[120vh] lg:h-[60vh] flex justify-center items-center lg:py-10 relative bg-slate-700">
+            <div className=" lg:my-20 w-full h-[120vh] h-lg:h-[100vh] lg:h-[60vh] flex justify-center items-center lg:py-10 relative bg-slate-700">
                 <div className="grid lg:grid-cols-2 w-9/10 justify-items-center">
                     <div className="flex flex-col gap-4 w-9/10 lg:w-3/4">
                         <div className="text-sky-500 font-semibold">
-                            Service Times
+                            {t("information_heading")}
                         </div>
                         <div className="font-semibold text-3xl text-white">
-                            Join Us!
+                            {t("information_subheading")}
                         </div>
                         <div className="text-gray-200 text-lg/10">
-                            No matter where you are on your walk with Christ, we welcome you with open arms!
-                            Join us as we gather to worship, pray, serve, and grow in the Word.
-                            We would love to have you as a member!
+                            {t("information_summary")}
                         </div>
                         <div className="bg-sky-600 rounded-xl text-white text-base lg:text-sm font-bold p-2 w-2/5 lg:w-1/4 text-center self-center lg:self-start">
-                            View Calendar
+                            {t("info_button")}
                         </div>
                     </div>
                     <div className="flex flex-col w-full h-full mt-10 lg:mt-0">
@@ -92,7 +90,7 @@ export default function HomeCardSection(){
                                     fill
                                     />
                                 </div>
-                                <div className="w-4/5 ml-3 text-gray-200 text-base/8 lg:text-sm ">
+                                <div className="w-4/5 ml-3 text-gray-200 text-sm ">
                                     {element.title}
                                 </div>
                             </div>)
@@ -103,7 +101,7 @@ export default function HomeCardSection(){
                     </div>
                 </div>
             </div>
-            <div className="mt-10 lg:mt-20 w-full h-[90vh] flex items-center justify-center mb-20">
+            <div className="mt-10 lg:mt-20 w-full h-[70vh] h-md:h-[80vh] flex items-center justify-center mb-20">
                 <Card card_info={prayerCard} />   
             </div>
             {componentClicked &&

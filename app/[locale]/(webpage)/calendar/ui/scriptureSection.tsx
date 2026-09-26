@@ -68,13 +68,13 @@ export default function ScriptureSec({text, verse, translation, link}: {text: st
         successful = true;
 
     return (
-        <div className={`${styles.calendarBG} mt-4 py-7 w-screen h-[60vh] sm:h-[70vh] lg:h-[60vh]  relative`}>
+        <div className={`${styles.calendarBG} mt-4 py-7 w-screen h-[60vh] h-md:h-[40vh] relative`}>
             <Image className="object-cover object-[50%_40%] opacity-40"
             src = "/flyers/center_bible.jpg"
             alt = "Center bible image"
             fill
             />
-            <div className = "w-full h-full flex justify-center lg:items-center absolute top-1/8 lg:top-0 bg-orange-100/10">
+            <div className = "w-full h-full flex justify-center lg:items-center absolute top-1/8 lg:top-0 bg-orange-100/10 tall:bg-black">
                 <div className="w-9/10 lg:w-7/10">
                     <div className="font-extrabold text-xl sm:text-3xl border-b-2 border-b-black pb-3 text-center w-full">
                         {t("verse_day")}: {todays_date}

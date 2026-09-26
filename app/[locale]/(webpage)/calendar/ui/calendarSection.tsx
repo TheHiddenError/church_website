@@ -183,7 +183,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                             "bg-green-200 border-green-600 text-green-700": eventInfo["for"] == "Other",
                             }
                         )}>
-                            {eventInfo["for"]}
+                            {t("legend." + eventInfo["for"]?.toLowerCase())}
                         </div>
                     </div>
                     <div className="text-base sm:text-xl">
@@ -381,7 +381,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                         <div className="w-full h-full flex items-center justify-center" key={importEvent.title}>
                                             <div onClick={importEvent?.summary ? ()=> eventClickHandler(importEvent): undefined} className={clsx(" w-9/10 drop-shadow-lg flex bg-white border-l-3 lg:border-l-10", 
                                                 {"rounded-lg cursor-pointer py-1" : importEvent?.summary},
-
+                                                {"text-gray-700": isAfter, "text-gray-300": !isAfter},
                                                 eventFor[importEvent.for as keyof typeof eventFor][1] ?? "border-gray-200"
                                                 )}>
                                                 {/* <div className = {clsx("w-1/30 ml-2 h-10 rounded-lg",
@@ -389,7 +389,7 @@ export default function CalendarSec({eventData, importantEvents}: {eventData: Ev
                                                 )}>
                                                     
                                                 </div> */}
-                                                <div className="text-black w-9/10 lg:w-full text-center">
+                                                <div className=" w-9/10 lg:w-full text-center">
                                                     <div className= {clsx("text-sm lg:text-base line-clamp-1 lg:text-clamp-none px-1", {"text-xs lg:text-sm" : importEvent.title_es.length > 20})}>
                                                         {(locale == "en" ?  importEvent.title: importEvent.title_es)}
                                                     </div>

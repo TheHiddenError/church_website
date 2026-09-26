@@ -190,7 +190,7 @@ export async function getMonthEvents(adv: number){
                 const date_day = temp_tracker;
                 const date_day_string = date_day > 9 ? date_day.toString() : `0${date_day}`
                 const utcTime = fromZonedTime(new Date(`${current_year}-${date_month_string}-${date_day_string}T19:00:00.000`), "America/Chicago")
-                constantEvents.push({id: 3000, title: "Disciple Service", title_es: "Servicio de Discipulado", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
+                constantEvents.push({id: 3000, title: "Bible Study", title_es: "Estudio Bíblico", type: "", summary: null, summary_es: null, location: null, importance: null, for: null,
                     date: toZonedTime(utcTime, "America/Chicago"), day_span: 1, no_time_events: false})
                 temp_tracker ++; 
                 startDay ++; 

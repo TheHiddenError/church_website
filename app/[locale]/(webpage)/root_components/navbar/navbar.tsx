@@ -21,6 +21,8 @@ export default function NavBar(){
 
     const switchLocale = (newLocale: string) => {
         if (newLocale !== locale) {
+        pressLocale(false);
+        showLink(false);
         router.replace(pathname, { locale: newLocale });
         router.refresh();
         }
@@ -112,7 +114,7 @@ export default function NavBar(){
     <div className={clsx("flex p-4 flex-col gap-2 bg-white h-[75vh] lg:hidden", {"block": phoneLinks === true, "hidden": phoneLinks === false})}>
         {links.map((link) => {
             return (
-                <div key = {link.name + '1000'} className="text-xl w-full h-full flex justify-center items-center text-gray-500 ">
+                <div onClick={()=>showLink(false)} key = {link.name + '1000'} className="text-xl w-full h-full flex justify-center items-center text-gray-500 ">
                     <Link
                         href = {link.href}
                         className = {clsx({"text-blue-600 font-bold" : pathname  === link.href })}>

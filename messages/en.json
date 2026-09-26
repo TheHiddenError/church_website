@@ -45,6 +45,16 @@
         "about": "About Our Church",
         "about_button": "Learn More",
         "about_text": "Learn more about what our church believes in, the biblical foundations of why we believe it, and what we are doing to advance God's kingdom. Click below for more information.",
+        "title_heading": "Welcome to",        
+        "information_heading": "Service Times",
+        "information_subheading": "Join Us!",
+        "information_summary": "No matter where you are on your walk with Christ, we welcome you with open arms! Join us as we gather to worship, pray, serve, and grow in the Word. We would love to have you as a member!",
+        "info_sunday": "Sunday Service - Sundays at 10:30 AM",
+        "info_monday": "Prayer Service - Mondays at 7:00 PM",
+        "info_wednesday": "Wednesday Bible Study - Wednesdays at 7:00 PM",
+        "info_prayer" : "Prayer And Worship Service - Every First Monday at 7:00 PM (Monthly)",
+        "info_button": "View Calendar",
+        "mission_statement": "A church where disciples are made and the love of Christ is shared with every person and family.",
         "prayer": "Prayer Request",
         "prayer_text": "Prayer is important and we believe that having many pray for you would help you in so many ways. Click below to send a petition to pray for.",
         "prayer_button": "Make a Prayer",
@@ -62,6 +72,7 @@
             "fri": "Friday",
             "sat": "Saturday"
         },
+        "upcoming_button": "View All Events",
         "flyers": {
             "mission": {
                 "heading": "Our Mission",
@@ -91,8 +102,10 @@
     },
     "AboutPage": {
         "mission_heading": "Our Mission",
+        "mission_info": "A church where disciples are made and the love of Christ is shared with every person and family.",
         "about_heading": "What We Do",
-        "leader_heading": "Meet Our Leader",
+        "leader_heading": "Meet Our Pastor",
+        "church_heading": "Know Our Story",
         "beliefs_heading": "Our Beliefs"
     },
     "Calendar": {

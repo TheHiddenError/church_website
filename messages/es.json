@@ -45,6 +45,16 @@
         "about": "Sobre Nuestra Iglesia",
         "about_text": "Aprenda más sobre las creencias de nuestra iglesia, los fundamentos bíblicos que las sustentan y lo que hacemos para el avance del reino de Dios. Haga clic a continuación para más información.",
         "about_button": "Aprende Más",
+        "title_heading": "Bienvenidos a",
+        "mission_statement": "Una iglesia donde se hacen discipulos y se imparte el amor de Cristo a cada persona y familia.",
+        "information_heading": "Servicios Tiempos",
+        "information_subheading": "Únete a Nosotros!",
+        "information_summary": "Sin importar en qué etapa de tu caminar con Cristo te encuentres, ¡te recibimos con los brazos abiertos! Acompáñanos mientras nos reunimos para adorar, orar, servir y crecer en la Palabra. ¡Nos encantaría que fueras miembro!",
+        "info_sunday": "Servicio Dominical - Domingos a las 10:30 AM",
+        "info_monday": "Servicio de Oración - Lunes a las 7:00 PM",
+        "info_wednesday": "Estudio Bíblico - Miércoles a las 7:00 PM",
+        "info_prayer": "Servicio de Adoración y Oración - Primer Lunes de cada mes a las 7:00 PM (Mensual)",
+        "info_button": "Ver Calendario",
         "prayer": "Solicitud de Oración",
         "prayer_text": "La oración es importante y creemos que si muchas personas oran por ti, te beneficiarás enormemente. Haz clic abajo para enviar una petición de oración.",
         "prayer_button": "Hace un Oracion",
@@ -62,6 +72,7 @@
             "fri": "Viernes",
             "sat": "Sábado"
         },
+        "upcoming_button": "Ver Todos Eventos",
         "flyers": {
             "mission": {
                 "heading": "Nuestra Misión",
@@ -92,8 +103,10 @@
     },
     "AboutPage": {
         "mission_heading": "Nuestra Misión",
+        "mission_info": "Una iglesia donde se hacen discipulos y se imparte el amor de Cristo a cada persona y familia.",
         "about_heading": "Lo Que Hacemos",
-        "leader_heading": "Conoce a Nuestro Líder",
+        "leader_heading": "Conoce a Nuestro Pastor",
+        "church_heading": "Conoce a Nuetra Estoria",
         "beliefs_heading": "Nuestras Creencias"
     },
     "Calendar": {

@@ -27,10 +27,10 @@ export default function Footer(){
     const t = useTranslations("Footer");
 
     return(
-      <div className="h-[120vh] xs:h-[100vh] lg:h-[60vh] bg-blue-950 relative">
+      <div className="h-[60vh] h-md:h-[120vh] h-lg:h-[110vh] bg-blue-950 relative">
         <div className="absolute top-1/15 left-1/10 lg:top-1/7 lg:left-1/10 text-white w-4/5 grid grid-cols-1 lg:grid-cols-3 flex place-items-center items-start py-2 gap-10">
             <div className="">
-              <div className="w-full grid grid-cols-3 mb-2">
+              <div className="w-full grid grid-cols-3 mb-2 ">
                 <div className="w-12 h-12 relative justify-self-end">
                   <Image className="object-cover"
                   src = "/white_dove.png"
@@ -47,7 +47,7 @@ export default function Footer(){
                   </div>
                 </div>
               </div>
-              <div className="px-10">
+              <div className="lg:px-10">
                 <div className="italic text-lg/7 lg:text-base/7 mb-2">
                   Una iglesia donde se hacen discipulos y se imparte el amor de Cristo a cada persona y familia. 
                 </div>
@@ -67,7 +67,7 @@ export default function Footer(){
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-2 w-full items-center w-1/3  text-base">
+            <div className="grid grid-cols-1 gap-2 w-full items-center w-1/3 text-base h-lg:text-xl">
               <div className="text-2xl lg:text-xl font-bold mb-5">
                 {t("services_title")}
               </div>
@@ -100,17 +100,17 @@ export default function Footer(){
                 3100 Billman Rd, Donna TX 78537
               </div>
             </div>
-            <div className="grid grid-cols-1 w-full lg:w-4/5 lg:items-center">
+            <div className="grid grid-cols-1 gap-3 w-full lg:w-4/5 lg:items-center">
               <div className="text-2xl lg:text-xl font-bold mb-5">
                 {t("contact")}
               </div>
-              <div className="text-base">
+              <div className="text-base h-lg:text-xl">
                 <b>{t("phone")} </b>
                 <span className="text-gray-300">
                   956-460-3600
                 </span>
               </div>
-              <div className="text-base">
+              <div className="text-base h-lg:text-xl">
                 <b>{t("email")}: </b>
                 <span className="text-gray-300">
                   Unavaliable

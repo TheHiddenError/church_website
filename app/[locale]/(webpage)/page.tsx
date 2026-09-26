@@ -87,7 +87,7 @@ export default async function Start_Page(){
         <div className="absolute top-1/4 left-1/2"></div>
         <div className = "absolute top-1/4 lg:top-1/6 left-0 flex flex-col items-center w-screen">
           <div className="italic text-gray-200 text-xl">
-            Welcome to
+            {t("title_heading")}
           </div>
           <div className="text-white text-5xl lg:text-8xl font-bold">
             Iglesia Nueva
@@ -96,10 +96,10 @@ export default async function Start_Page(){
             Esperanza
           </div>
           <div className="text-white italic my-3 text-2xl w-4/5 lg:w-1/3 text-center">
-            Una iglesia donde se hacen discipulos y se imparte el amor de Cristo a cada persona y familia. 
+            {t("mission_statement")}
           </div>
           <div className="py-3 px-5 bg-sky-600 text-white text-lg font-bold">
-            Learn More
+            {t("about_button")}
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@ export default async function Start_Page(){
           </div>
         </div>
         <div className = "text-lg absolute bottom-1/50 lg:bottom-1/20 bg-sky-600 py-3 px-3 text-white font-bold">
-            View All Events
+            {t("upcoming_button")}
         </div>
       </div>
       <HomeCardSection />

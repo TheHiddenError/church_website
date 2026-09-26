@@ -9,7 +9,7 @@ type CardObj = {
 export default function Card({card_info}: CardObj){
     return (
       <>
-        <div className = "w-full lg:w-3/4 h-full lg:h-4/5 flex flex-col lg:flex-row  place-items-center">
+        <div className = "w-full lg:w-3/4 h-full lg:h-4/5 flex flex-col lg:flex-row  place-items-center gap-10">
           <div className = {clsx("flex flex-col w-4/5 h-1/2  items-center lg:justify-self-end ", {"lg:order-last": card_info.reverse == true, "order-last lg:order-first": card_info.reverse === false} )}>
             <div className="h-full flex flex-col justify-center items-center lg:items-start gap-3">
               <div className="flex w-full items-center">
@@ -24,7 +24,7 @@ export default function Card({card_info}: CardObj){
               <div className="text-lg/8 text-gray-600">
                 {card_info.description}
               </div>
-              <div className="cursor-pointer bg-sky-600/80 text-white w-2/5 text-center text-base p-3 font-semibold mt-3">
+              <div className="cursor-pointer bg-sky-600/80 text-white w-2/5 h-md:w-1/2 text-center text-base p-3 font-semibold mt-3">
                 {card_info.button_name}
               </div>
             </div>
